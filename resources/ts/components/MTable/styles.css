@@ -1,0 +1,80 @@
+.synergy-small {
+    padding: 0.6em 1em 0.6em 1em;
+    font-size: 10px;
+}
+
+.synergy-pagination {
+    /* @apply w-full flex text-sm px-4 justify-between py-5; */
+    width: 100%;
+    display: flex;
+    font-size: small;
+    justify-content: space-between;
+}
+
+.pagination__navigation button {
+    outline: none;
+    border: none;
+}
+
+.synergy-pagination__navigation {
+    /* @apply flex gap-5 font-[400] */
+    display: flex;
+    gap: 10px;
+    font-size: 400;
+}
+
+.synergy-pagination__page-button {
+    /* @apply bg-[#F5F5F7] w-[20px] h-[20px] p-4 flex items-center justify-center rounded-sm; */
+    background-color: #f5f5f7;
+    min-width: 20px;
+    height: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: #1a3159;
+    border: none;
+}
+
+.synergy-pagination__page-button--active {
+    /* @apply bg-primary w-[20px] h-[20px] p-4 flex items-center justify-center rounded-md text-light; */
+    background-color: #1a3159;
+    min-width: 20px;
+    height: 20px;
+    padding: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    color: white;
+    border: none;
+}
+
+.synergy-pagination button:hover {
+    /* @apply cursor-pointer bg-primary duration-150 text-light; */
+    cursor: pointer;
+    animation-duration: 150ms;
+    opacity: 0.7;
+}
+
+.synergy-pagination__button-list {
+    /* @apply flex gap-3 */
+    display: flex;
+    gap: 10px;
+}
+
+.synergy-pagination__information {
+    @apply text-sm text-[#5C5C5E];
+}
+
+.button-filter {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+}
+.button-filter button {
+    border: none;
+    outline: none;
+    border-radius: 5px;
+}

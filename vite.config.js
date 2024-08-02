@@ -8,12 +8,12 @@ export default defineConfig({
     plugins: [
         react(),
         laravel({
-            input: ["resources/js/index.js"],
+            input: ["resources/ts/index.tsx"],
             refresh: true,
         }),
         nodeResolve({
             browser: true,
-            extensions: [".js", ".jsx"],
+            extensions: [".ts", ".tsx"],
         }),
     ],
     define: {
@@ -25,19 +25,19 @@ export default defineConfig({
                 find: /~(.+)/,
                 replacement: join(process.cwd(), "node_modules/$1"),
             },
-            { find: "@", replacement: resolve(__dirname, "./resources/js") },
+            { find: "@", replacement: resolve(__dirname, "./resources/ts") },
         ],
     },
     esbuild: {
-        loader: "jsx",
-        include: /resources\/js\/.*\.jsx?$/,
+        loader: "tsx",
+        include: /resources\/ts\/.*\.tsx?$/,
         exclude: [],
     },
     optimizeDeps: {
         force: true,
         esbuildOptions: {
             loader: {
-                ".js": "jsx",
+                ".ts": "tsx",
             },
         },
     },

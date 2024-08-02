@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
     <title>{{ config('app.name', 'Laravel') }}</title>
     <link rel="icon" href="{{ asset('favicon.ico') }}" />
-    @vite(['resources/js/index.js'])
+    @vite(['resources/ts/index.tsx'])
 </head>
 
 <body>
