@@ -1,5 +1,3 @@
-import { legacy_createStore as createStore } from 'redux'
-
 const initialState = {
   sidebarShow: true,
   theme: 'light',
@@ -14,5 +12,4 @@ const changeState = (state = initialState, { type, ...rest }) => {
   }
 }
 
-const store = createStore(changeState)
-export default store
+export default changeState
