@@ -4,6 +4,7 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 // routes config
 import routes from '../routes'
+import Starter from '@/views/pages/starter'
 
 const AppContent = () => {
   return (
@@ -23,6 +24,7 @@ const AppContent = () => {
               )
             )
           })}
+          <Route path='/starter' element={<Starter />} />
           <Route path="/" element={<Navigate to="dashboard" replace />} />
         </Routes>
       </Suspense>
