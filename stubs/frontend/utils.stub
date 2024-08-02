@@ -1,0 +1,38 @@
+import React from 'react'
+
+import useQtableHook from '@/app/mindgate/components/QTable/hooks/Qtable.hook'
+
+import { getColumns } from './columns'
+
+export const use{{ actionName }}Util = () => {
+    const [modal, setModal] = React.useState<any>(false)
+    // const [searchParams, setSearchParams] = useSearchParams()
+    const [typeModal, setTypeModal] = React.useState<'create' | 'update'>('create')
+    const datatable = useQtableHook()
+
+    const columns = React.useMemo(() => getColumns(), [])
+
+    const onCreate = React.useCallback(() => {
+        setModal(true)
+        setTypeModal('create')
+    }, [])
+
+    const onEdit = React.useCallback((payload) => {
+        setModal(payload)
+        setTypeModal('update')
+    }, [])
+
+    const onCloseModal = React.useCallback(() => {
+        setModal(null)
+    }, [])
+
+    return {
+        ...datatable,
+        columns,
+        onCreate,
+        modal,
+        onCloseModal,
+        onEdit,
+        typeModal,
+    }
+}

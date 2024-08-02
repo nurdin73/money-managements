@@ -1,0 +1,5 @@
+Route::group(['prefix' => '{{ path }}', 'as' => '{{ path }}.'], function () {
+  require '{{ path }}.php';
+});
+
+//:end-bindings:

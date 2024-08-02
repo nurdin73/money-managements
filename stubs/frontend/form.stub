@@ -1,0 +1,11 @@
+import React from 'react'
+
+import { FormController } from '@/app/mindgate/components/FormController/FormController'
+
+export default function {{ actionName }}Form({ defaultValues }) {
+    return (
+        <>
+            {{ fields }}
+        </>
+    )
+}

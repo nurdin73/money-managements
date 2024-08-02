@@ -1,0 +1,116 @@
+import React from 'react'
+import { connect } from 'react-redux'
+import Swal from 'sweetalert2'
+import { toast } from 'react-toastify'
+
+import { load{{ actionName }} } from '@/app/{{ directoryAction }}/action'
+import QTable from '@/app/mindgate/components/QTable'
+import { {{ actionName }}Service } from '@/app/services/api/{{ actionName }}Service'
+
+import { use{{ actionName }}Util } from './utils'
+import {{ actionName }}Modal from './modal'
+
+function {{ actionName }}Page({
+    load{{ actionName }}List,
+    {{ reducerName }}App,
+}) {
+    const {
+        columns,
+        onSearch,
+        onSort,
+        onChangePage,
+        onCreate,
+        onChangeLimit,
+        filters,
+        onMultiSearch,
+        modal,
+        onCloseModal,
+        onEdit,
+        typeModal,
+    } = use{{ actionName }}Util()
+    const { data, loading, meta } = {{ reducerName }}App
+
+    React.useEffect(() => {
+        load{{ actionName }}List(filters)
+    }, [filters])
+
+    const onDestroy = React.useCallback(
+        (data) => {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Hapus {{ moduleTitle }}',
+                text: `Apa kamu yakin ingin menghapus {{ moduleTitle }} ${data.name}?`,
+                showCancelButton: true,
+                confirmButtonText: 'Ya, Hapus',
+                confirmButtonColor: '#1A3159',
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    toast
+                        .promise({{ actionName }}Service.Delete(data.id), {
+                            pending: 'Menghapus data {{ moduleTitle }}',
+                            success: 'Data {{ moduleTitle }} berhasil dihapus',
+                        })
+                        .catch((err) => {
+                            toast(err?.message, {
+                                type: 'error',
+                            })
+                        })
+                        .then(() => {
+                            load{{ actionName }}List(filters)
+                        })
+                }
+            })
+        },
+        [filters]
+    )
+
+    return (
+        <>
+            <QTable
+                title='{{ moduleTitle }}'
+                columns={columns}
+                data={data}
+                meta={meta}
+                loading={loading}
+                onSort={onSort}
+                onSearch={onSearch}
+                onChangePage={onChangePage}
+                onChangeLimit={onChangeLimit}
+                onMultiSearch={onMultiSearch}
+                onCreate={onCreate}
+                filters={filters}
+                actions={[
+                    {
+                        iconName: 'pencil',
+                        title: 'Edit',
+                        variant: 'secondary',
+                        onClick: (item) => {
+                            onEdit(item)
+                        },
+                    },
+                    {
+                        iconName: 'trash',
+                        title: 'Hapus',
+                        variant: 'secondary',
+                        onClick: (item) => {
+                            onDestroy(item)
+                        },
+                    },
+                ]}
+            />
+            <{{ actionName }}Modal
+                onClose={onCloseModal}
+                modal={modal}
+                type={typeModal}
+            />
+        </>
+    )
+}
+
+const mapStateToProps = ({ {{ reducerName }}App }) => ({
+    {{ reducerName }}App,
+})
+
+export default connect(mapStateToProps, {
+    load{{ actionName }}List: load{{ actionName }},
+})({{ actionName }}Page)

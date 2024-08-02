@@ -1,0 +1,2 @@
+import {{ pageName }}Page from './modules/{{ path }}'
+//:end-import: jangan dihapus!

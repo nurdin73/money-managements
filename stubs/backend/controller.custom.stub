@@ -1,0 +1,72 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Http\Controllers\Controller;
+use App\Repositories\{{ model }}Repository;
+use App\Http\Requests\{{ model }}Request;
+use App\Http\Resources\{{ model }}Resource;
+
+/**
+ * Class {{ modelName }}RepositoryEloquent.
+ *
+ * @package namespace {{ namespace }};
+ */
+class {{ modelName }}Controller extends Controller
+{
+    protected {{ modelName }}Repository $repository;
+
+    public function __construct({{ modelName }}Repository $repository)
+    {
+        $this->repository = $repository;
+    }
+
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        $results = $this->repository->paginate($this->limit());
+        return $this->sendResponse(trans('messages.list', ['attr' => '{{ modelName }}']), {{ modelName }}Resource::collection($results), true);
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store({{ modelName }}Request $request)
+    {
+        $payload = $request->validated();
+        $this->repository->create($payload);
+        return $this->sendResponse(trans('messages.create', ['attr' => "{{ modelName }}"]));
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(string $id)
+    {
+        $find = $this->repository->find($id);
+        return $this->sendResponse(trans('messages.list', ['attr' => "{{ modelName }}"]), new {{ modelName }}Resource($find));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update({{ modelName }}Request $request, string $id)
+    {
+        $data = $request->validated();
+        $find = $this->repository->find($id);
+        $find->update($data);
+        return $this->sendResponse(trans('messages.update', ['attr' => "{{ modelName }}"]), new {{ modelName }}Resource($find));
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy(string $id)
+    {
+        $find = $this->repository->find($id);
+        $find->delete();
+        return $this->sendResponse(trans('messages.destroy', ['attr' => "{{ modelName }}"]), new {{ modelName }}Resource($find));
+    }
+}

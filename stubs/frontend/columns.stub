@@ -1,0 +1,11 @@
+import dayjs from 'dayjs'
+import { CBadge as Badge } from '@coreui/react'
+import { IColumns } from '@/app/mindgate/components/TableView/Table.type'
+
+export type T{{ columnTypeName }} = {
+    {{ columnData }}
+}
+
+export const getColumns = (): IColumns<T{{ columnTypeName }}>[] => [
+    {{ columns }}
+]

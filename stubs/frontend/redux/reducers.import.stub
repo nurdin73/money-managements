@@ -1,0 +1,2 @@
+import {{ actionName }}sApp from './{{ api }}/reducer'
+//:end-import: jangan dihapus!

@@ -1,0 +1,15 @@
+<?php
+
+namespace {{ namespace }};
+
+use App\Repositories\BaseRepositoryInterface;
+
+/**
+ * Interface {{ modelName }}Repository.
+ *
+ * @package namespace {{ namespace }};
+ */
+interface {{ modelName }}Repository extends BaseRepositoryInterface
+{
+    //   
+}

@@ -1,0 +1,12 @@
+<Route
+            path='{{ path }}'
+            element={
+                <>
+                    <PageTitle breadcrumbs={[]}>{{ pageTitle }}</PageTitle>
+                    <QTableProvider>
+                        <{{ pageName }}Page />
+                    </QTableProvider>
+                </>
+            }
+        />
+        {/* end-combine: jangan dihapus! */}

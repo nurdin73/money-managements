@@ -1,0 +1,28 @@
+import { all, call, fork, takeEvery, put } from 'redux-saga/effects'
+
+import { {{ actionName }}Service } from '@/app/services/api/{{ actionName }}Service'
+import {
+    LOAD_{{ logName }},
+    load{{ actionName }}Success,
+    load{{ actionName }}Error,
+} from './action'
+
+const load{{ actionName }}sAsync = async (params?: any) =>
+    {{ actionName }}Service.List(params)
+
+function* load{{ actionName }}({ payload }) {
+    try {
+        const response = yield call(load{{ actionName }}sAsync, payload)
+        yield put(load{{ actionName }}Success(response.data.data, response.data.meta))
+    } catch (error: any) {
+        yield put(load{{ actionName }}Error(error?.message ?? 'Unknown error'))
+    }
+}
+
+function* watchLoad{{ actionName }}() {
+    yield takeEvery<any>(LOAD_{{ logName }}, load{{ actionName }})
+}
+
+export default function* rootSaga() {
+    yield all([fork(watchLoad{{ actionName }})])
+}

@@ -1,0 +1,25 @@
+import { TMeta } from '@/app/mindgate/components/TableView/Table.type'
+
+export const LOAD_{{ logName }} = '[PENDING] {{ logName }}'
+export const LOAD_{{ logName }}_SUCCESS = '[SUCCESS] {{ logName }}'
+export const LOAD_{{ logName }}_ERROR = '[ERROR] {{ logName }}'
+
+export const load{{ actionName }} = (params?: any) => ({
+    type: LOAD_{{ logName }},
+    payload: params,
+})
+
+export const load{{ actionName }}Success = (data: any[], meta: TMeta) => ({
+    type: LOAD_{{ logName }}_SUCCESS,
+    payload: {
+        data,
+        meta,
+    },
+})
+
+export const load{{ actionName }}Error = (message?: string) => ({
+    type: LOAD_{{ logName }}_ERROR,
+    payload: {
+        message,
+    },
+})

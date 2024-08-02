@@ -1,0 +1,9 @@
+<?php
+
+use Illuminate\Support\Facades\Route;
+
+Route::group(['prefix' => '{{ path }}', 'as' => '{{ path }}.'], function () {
+  require '{{ path }}.php';
+});
+
+// :end-bindings:

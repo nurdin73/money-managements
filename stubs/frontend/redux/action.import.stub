@@ -1,0 +1,2 @@
+export * from './{{ path }}/action'
+//:end-import: jangan dihapus!

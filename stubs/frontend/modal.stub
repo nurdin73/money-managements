@@ -1,0 +1,138 @@
+import { Formik, FormikHelpers } from 'formik'
+import React from 'react'
+import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
+import { toast } from 'react-toastify'
+import { connect } from 'react-redux'
+
+import { UniqueID } from '@/app/helpers/uniqueid'
+import { load{{ actionName }} } from '@/app/{{ directoryRedux }}/action'
+import { Button } from '@/app/mindgate/components/Buttons/Button'
+import { {{ actionName }}Service } from '@/app/services/api/{{ actionName }}Service'
+
+import { initialValues, validationSchema } from './constants'
+import {{ formComponent }}Form from './form'
+
+interface I{{ actionName }}Modal {
+    modal: any
+    onClose: () => void
+    type: 'update' | 'create'
+    load{{ actionName }}List: any
+}
+
+function {{ actionName }}Modal({
+    modal,
+    onClose,
+    type,
+    load{{ actionName }}List,
+}: I{{ actionName }}Modal) {
+    const onSubmitHandler = React.useCallback(
+        (values: any, formikHelper: FormikHelpers<any>) => {
+            const payload = {
+                ...values,
+            }
+            formikHelper.setSubmitting(true)
+            if (type === 'create') {
+                toast
+                    .promise({{ actionName }}Service.Create(payload), {
+                        success: '{{ moduleTitle }} berhasil dibuat',
+                        pending: 'Menambahkan {{ moduleTitle }}',
+                    })
+                    .then(() => {
+                        onClose()
+                        load{{ actionName }}List({
+                            orderBy: 'created_date',
+                            sortedBy: 'desc',
+                        })
+                    })
+                    .catch((err) => {
+                        toast(err?.message, {
+                            type: 'error',
+                        })
+                    })
+                    .finally(() => formikHelper.setSubmitting(false))
+                return
+            }
+            toast
+                .promise({{ actionName }}Service.Update(modal?.id, payload), {
+                    success: '{{ moduleTitle }} berhasil diubah',
+                    pending: 'Mengubah {{ moduleTitle }}',
+                })
+                .then(() => {
+                    onClose()
+                    load{{ actionName }}List({
+                        orderBy: 'created_date',
+                        sortedBy: 'desc',
+                    })
+                })
+                .catch((err) => {
+                    toast(err?.message, {
+                        type: 'error',
+                    })
+                })
+                .finally(() => formikHelper.setSubmitting(false))
+        },
+        [type, modal]
+    )
+
+    return (
+        <Formik
+            key={`evaluasi-${type}-${UniqueID()}`}
+            initialValues={type === 'create' ? initialValues : modal}
+            validationSchema={validationSchema}
+            onSubmit={onSubmitHandler}
+        >
+            {({ handleSubmit, resetForm, isSubmitting }) => (
+                <Modal
+                    isOpen={!!modal}
+                    toggle={() => {
+                        resetForm()
+                        onClose()
+                    }}
+                >
+                    <ModalHeader
+                        toggle={() => {
+                            onClose()
+                            resetForm()
+                        }}
+                    >
+                        {{ moduleTitle }}
+                    </ModalHeader>
+                    <ModalBody>
+                        <{{ formComponent }}Form
+                            defaultValues={type === 'create' ? initialValues : modal}
+                        />
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button
+                            variant='secondary'
+                            type='label'
+                            label='Tutup'
+                            role='button'
+                            size='lg'
+                            onClick={() => {
+                                resetForm()
+                                onClose()
+                            }}
+                            loading={isSubmitting}
+                        />
+                        <Button
+                            variant='primary'
+                            type='label'
+                            label='Simpan'
+                            role='submit'
+                            size='lg'
+                            onClick={() => {
+                                handleSubmit()
+                            }}
+                            loading={isSubmitting}
+                        />
+                    </ModalFooter>
+                </Modal>
+            )}
+        </Formik>
+    )
+}
+
+export default connect(null, {
+    load{{ actionName }}List: load{{ actionName }},
+})({{ actionName }}Modal)

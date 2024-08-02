@@ -1,0 +1,6 @@
+<FormController
+                label='{{ label }}'
+                type='{{ type }}'
+                name='{{ fieldName }}'{{ validation }}
+                {{ defaultValueAttr }}={defaultValues?.{{ fieldName }}}
+            />

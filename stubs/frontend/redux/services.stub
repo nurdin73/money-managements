@@ -1,0 +1,18 @@
+import axiosInterceptorInstance from '@/app/helpers/axiosInterceptor'
+
+export class {{ actionName }}Service {
+    static List(params?: any) {
+        return axiosInterceptorInstance.get('{{ api }}', {
+            params,
+        })
+    }
+    static Create(payload: any) {
+        return axiosInterceptorInstance.post('{{ api }}', payload)
+    }
+    static Update(id: any, payload: any) {
+        return axiosInterceptorInstance.put(`{{ api }}/${id}`, payload)
+    }
+    static Delete(id: any) {
+        return axiosInterceptorInstance.delete(`{{ api }}/${id}`)
+    }
+}
