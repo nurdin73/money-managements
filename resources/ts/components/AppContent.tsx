@@ -4,28 +4,20 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 // routes config
 import routes from '../routes'
-import Starter from '@/views/pages/starter'
 
 const AppContent = () => {
   return (
-    <CContainer className="px-4" lg>
-      <Suspense fallback={<CSpinner color="primary" />}>
+    <CContainer className='px-4 pb-4' lg>
+      <Suspense fallback={<CSpinner color='primary' />}>
         <Routes>
           {routes.map((route, idx) => {
             return (
               route.element && (
-                <Route
-                  key={idx}
-                  path={route.path}
-                  exact={route.exact}
-                  name={route.name}
-                  element={<route.element />}
-                />
+                <Route key={idx} path={route.path} id={route.name} element={<route.element />} />
               )
             )
           })}
-          <Route path='/starter' element={<Starter />} />
-          <Route path="/" element={<Navigate to="dashboard" replace />} />
+          <Route path='/' element={<Navigate to='dashboard' replace />} />
         </Routes>
       </Suspense>
     </CContainer>
