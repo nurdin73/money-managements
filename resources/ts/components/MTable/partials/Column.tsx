@@ -1,10 +1,10 @@
 import React from 'react'
-import { Popover, PopoverBody, PopoverHeader } from 'reactstrap'
+import { CPopover } from '@coreui/react'
 
-import { KTIcon } from '@/_metronic/helpers'
-
-import { IColumns, IFilters } from '../../TableView/Table.type'
+import { IColumns, IFilters } from '../types'
 import FieldFilter from './FieldFilter'
+import CIcon from '@coreui/icons-react'
+import { cilFilter, cilSortAscending, cilSortDescending } from '@coreui/icons'
 
 interface IColumnItem {
     col: IColumns<any>
@@ -29,41 +29,33 @@ function Column({ col, onSort, filters, onMultiSearch, index }: IColumnItem) {
                                 onSort(col.id, filters?.sortedBy == 'asc' ? 'desc' : 'asc')
                             }}
                         >
-                            <KTIcon
-                                iconName='arrow-up-down'
-                                // iconName={
-                                //     filters?.orderBy === col.id
-                                //         ? filters?.sortedBy === 'asc'
-                                //             ? 'double-down'
-                                //             : 'double-up'
-                                //         : 'double-up'
-                                // }
-                                iconType='solid'
+                            <CIcon
+                                icon={
+                                    filters?.sortedBy === 'asc'
+                                        ? cilSortAscending
+                                        : cilSortDescending
+                                }
                             />
                         </button>
                     )}
                     {col.filters && (
-                        <>
+                        <CPopover
+                            isOpen={showFilter}
+                            toggle={() => setShowFilter(!showFilter)}
+                            target={`filter${index}`}
+                            title={`Filter ${col.label}`}
+                            content={<FieldFilter column={col} onMultiSearch={onMultiSearch} />}
+                            placement='bottom-end'
+                        >
                             <button
                                 type='button'
                                 title='filter'
-                                onClick={() => setShowFilter(!showFilter)}
+                                // onClick={() => setShowFilter(!showFilter)}
                                 id={`filter${index}`}
                             >
-                                <KTIcon iconName='filter-tick' iconType='solid' />
+                                <CIcon icon={cilFilter} />
                             </button>
-                            <Popover
-                                isOpen={showFilter}
-                                toggle={() => setShowFilter(!showFilter)}
-                                target={`filter${index}`}
-                                placement='bottom-end'
-                            >
-                                <PopoverHeader className='fs-3'>Filter {col.label}</PopoverHeader>
-                                <PopoverBody>
-                                    <FieldFilter column={col} onMultiSearch={onMultiSearch} />
-                                </PopoverBody>
-                            </Popover>
-                        </>
+                        </CPopover>
                     )}
                 </div>
             </div>

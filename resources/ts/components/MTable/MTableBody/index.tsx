@@ -1,14 +1,10 @@
 import React from 'react'
-import { Spinner } from 'reactstrap'
-import clsx from 'clsx'
-
 import NotfoundData from '../partials/NotfoundData'
-import { Button } from '../../Buttons/Button'
-import { IColumns, TAction, TMeta } from '../../TableView/Table.type'
+import { IColumns, TAction, TMeta } from '../types'
 import TableCell from '../partials/TableCell'
-import Skeleton from '../../Skeleton'
+import { CButton, CPlaceholder } from '@coreui/react'
 
-interface IQTableBody {
+interface IMTableBody {
     actions?: TAction[]
     data: any[]
     loading: boolean
@@ -16,7 +12,7 @@ interface IQTableBody {
     meta?: TMeta
 }
 
-function QTableBody({ actions, loading, data, columns, meta }: IQTableBody) {
+function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
     const startIndex = ((meta?.page ?? 1) - 1) * (meta?.perPage ?? 10) + 1
     return (
         <tbody>
@@ -27,12 +23,12 @@ function QTableBody({ actions, loading, data, columns, meta }: IQTableBody) {
                         <tr key={`loading-${idx}-${_}`}>
                             {actions && (
                                 <td key={`load-${idx}-action`}>
-                                    <Skeleton />
+                                    <CPlaceholder />
                                 </td>
                             )}
                             {columns.map((col) => (
                                 <td key={`load-${idx}-${col.id}`}>
-                                    <Skeleton />
+                                    <CPlaceholder />
                                 </td>
                             ))}
                         </tr>
@@ -62,17 +58,18 @@ function QTableBody({ actions, loading, data, columns, meta }: IQTableBody) {
                         >
                             <div className='d-flex gap-2'>
                                 {actions.map((a) => (
-                                    <Button
-                                        type='icon'
-                                        iconName={a.iconName}
-                                        iconType='solid'
-                                        onClick={() => a.onClick(item)}
-                                        role='button'
-                                        iconColor={a.iconColor}
-                                        variant={a.variant}
-                                        size='sm'
-                                        title={a.title}
-                                    />
+                                    // <Button
+                                    //     type='icon'
+                                    //     iconName={a.iconName}
+                                    //     iconType='solid'
+                                    //     onClick={() => a.onClick(item)}
+                                    //     role='button'
+                                    //     iconColor={a.iconColor}
+                                    //     variant={a.variant}
+                                    //     size='sm'
+                                    //     title={a.title}
+                                    // />
+                                    <CButton onClick={() => a.onClick(item)}>{a.title}</CButton>
                                 ))}
                             </div>
                         </td>
@@ -108,23 +105,10 @@ function QTableBody({ actions, loading, data, columns, meta }: IQTableBody) {
                             </TableCell>
                         )
                     })}
-                    {/* {columns?.map((col) => (
-                        <td
-                            key={`item-${item.id}-${col.id}`}
-                            className={clsx(
-                                'w-100',
-                                col.center
-                                    ? 'd-flex justify-content-center align-items-center text-center align-middle'
-                                    : ''
-                            )}
-                        >
-                            {col.render ? col.render(item) : item[col.id]}
-                        </td>
-                    ))} */}
                 </tr>
             ))}
         </tbody>
     )
 }
 
-export default QTableBody
+export default MTableBody

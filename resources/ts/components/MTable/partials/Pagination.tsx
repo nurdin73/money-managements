@@ -1,17 +1,11 @@
 import React from 'react'
-import {
-    Dropdown,
-    DropdownItem,
-    DropdownMenu,
-    DropdownToggle,
-    UncontrolledDropdown,
-} from 'reactstrap'
 
-import { KTIcon } from '@/_metronic/helpers'
-
-import { TMeta } from '../../TableView/Table.type'
+import { TMeta } from '../types'
 import { limits } from '../constants'
 import PageItems from './PageItems'
+import { CDropdown, CDropdownItem, CDropdownMenu, CDropdownToggle } from '@coreui/react'
+import CIcon from '@coreui/icons-react'
+import { cilChevronCircleDownAlt } from '@coreui/icons'
 interface IPagination {
     meta?: TMeta
     onChangePage: (page) => void
@@ -29,23 +23,23 @@ function Pagination({ meta, onChangePage, onChangeLimit }: IPagination) {
             <div className='d-flex justify-content-end align-items-center gap-4'>
                 <div className='d-flex align-items-center me-2 gap-2'>
                     <span>Show</span>
-                    <UncontrolledDropdown
+                    <CDropdown
                         // isOpen={showLimit}
                         // toggle={() => setShowLimit(!showLimit)}
-                        direction='down'
-                        size='sm'
+                        direction='dropend'
                     >
-                        <DropdownToggle
+                        <CDropdownToggle
+                            caret
                             style={{
                                 padding: '5px 10px',
                             }}
                         >
-                            <KTIcon iconName='down' iconType='outline' />
+                            <CIcon icon={cilChevronCircleDownAlt} />
                             <span className='ml-2'>{limit}</span>
-                        </DropdownToggle>
-                        <DropdownMenu>
+                        </CDropdownToggle>
+                        <CDropdownMenu>
                             {limits.map((l) => (
-                                <DropdownItem
+                                <CDropdownItem
                                     key={l}
                                     onClick={() => {
                                         setLimit(l)
@@ -55,10 +49,10 @@ function Pagination({ meta, onChangePage, onChangeLimit }: IPagination) {
                                     }}
                                 >
                                     {l}
-                                </DropdownItem>
+                                </CDropdownItem>
                             ))}
-                        </DropdownMenu>
-                    </UncontrolledDropdown>
+                        </CDropdownMenu>
+                    </CDropdown>
                 </div>
                 <PageItems
                     total={meta?.totalPage ?? 1}

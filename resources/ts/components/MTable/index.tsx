@@ -1,4 +1,3 @@
-import { Card, Table } from 'react-bootstrap'
 import React from 'react'
 
 import './styles.css'
@@ -9,7 +8,7 @@ import Pagination from './partials/Pagination'
 import QTableHeader from './MTableHeader'
 import QTableBody from './MTableBody'
 import { IColumns, IFilters, TAction, TMeta } from './types'
-import { CButton } from '@coreui/react'
+import { CButton, CCard, CCardBody, CCardFooter, CCardHeader, CTable } from '@coreui/react'
 
 interface TQTable {
     columns: IColumns<any>[]
@@ -62,10 +61,10 @@ const QTable = ({
     }, [])
 
     return (
-        <Card className='shadow-none'>
-            <Card.Header className='d-flex justify-content-between align-items-center p-3'>
+        <CCard className='shadow-none'>
+            <CCardHeader className='d-flex justify-content-between align-items-center p-3'>
                 <div className='d-flex align-items-center justify-content-start gap-4'>
-                    {showButtonBack && <CButton>Kembali</CButton>}
+                    {showButtonBack && <CButton onClick={() => navigate(-1)}>Kembali</CButton>}
                     <h2 className='fs-2 fw-bold mb-0'>{title}</h2>
                 </div>
                 <div className='d-flex justify-content-end gap-2'>
@@ -90,11 +89,11 @@ const QTable = ({
                             //     onClick={() => action.onClick()}
                             // />
                         ))}
-                    <CButton>Tambah Data</CButton>
+                    <CButton onClick={onCreate}>Tambah Data</CButton>
                 </div>
-            </Card.Header>
-            <Card.Body className='p-0'>
-                <Table hover borderless className='table-row-dashed' responsive>
+            </CCardHeader>
+            <CCardBody className='p-0'>
+                <CTable hover borderless className='table-row-dashed' responsive>
                     <QTableHeader
                         actions={actions}
                         columns={columnFilters}
@@ -109,12 +108,12 @@ const QTable = ({
                         data={data}
                         loading={loading}
                     />
-                </Table>
-            </Card.Body>
-            <Card.Footer className='p-3'>
+                </CTable>
+            </CCardBody>
+            <CCardFooter className='p-3'>
                 <Pagination meta={meta} onChangePage={onChangePage} onChangeLimit={onChangeLimit} />
-            </Card.Footer>
-        </Card>
+            </CCardFooter>
+        </CCard>
     )
 }
 

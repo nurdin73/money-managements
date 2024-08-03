@@ -1,7 +1,7 @@
 import React, { useContext } from 'react'
 
-import { QTableContext } from '../QTable.provider'
-import { IFilters } from '../../TableView/Table.type'
+import { QTableContext } from '../provider'
+import { IFilters } from '../types'
 
 const useQtableHook = () => {
     const [filters, setFilters] = React.useState<IFilters>({

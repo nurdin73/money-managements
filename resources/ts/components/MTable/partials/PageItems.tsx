@@ -1,6 +1,5 @@
 import React from 'react'
-
-import PaginationEllipsis from '../../PaginationView/PaginationEllipsis'
+import PaginationEllipsis from './PaginationElipsis'
 
 interface IPageItems {
     total: number

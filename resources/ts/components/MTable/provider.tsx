@@ -1,18 +1,14 @@
-import { IApiHooks, useApiHooks } from '@/app/hooks/api.hook'
 import { createContext } from 'react'
+import useQtableHook from './hooks/Qtable.hook'
 
-interface IQTableContext extends IApiHooks {
+interface IQTableContext {
     //
 }
 
 export const QTableContext = createContext<IQTableContext>(null as any)
 
 const QTableProvider = ({ children }) => {
-    const state = useApiHooks()
-
-    const values = {
-        ...state,
-    }
+    const values = useQtableHook()
     return <QTableContext.Provider value={values}>{children}</QTableContext.Provider>
 }
 

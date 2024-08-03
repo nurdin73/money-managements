@@ -1,11 +1,11 @@
 import React from 'react'
-import { Input } from 'reactstrap'
+import { CFormInput } from '@coreui/react'
 import DatePicker from 'react-datepicker'
 import 'react-datepicker/dist/react-datepicker.min.css'
 import dayjs from 'dayjs'
 import ReactSelect from 'react-select'
 
-import { IColumns } from '../../TableView/Table.type'
+import { IColumns } from '../types'
 
 interface IFieldFilter {
     column: IColumns<any>
@@ -17,7 +17,7 @@ function FieldFilter({ column, onMultiSearch }: IFieldFilter) {
     const render = React.useCallback(() => {
         const fields = {
             input: (
-                <Input
+                <CFormInput
                     onChange={(e) => {
                         if (onMultiSearch) onMultiSearch(column.id, e.target.value)
                     }}
@@ -56,7 +56,7 @@ function FieldFilter({ column, onMultiSearch }: IFieldFilter) {
         }
         if (!column.filters) {
             return (
-                <Input
+                <CFormInput
                     onChange={(e) => {
                         if (onMultiSearch) onMultiSearch(column.id, e.target.value)
                     }}
@@ -66,7 +66,7 @@ function FieldFilter({ column, onMultiSearch }: IFieldFilter) {
         }
         if (!fields[column.filters.type]) {
             return (
-                <Input
+                <CFormInput
                     onChange={(e) => {
                         if (onMultiSearch) onMultiSearch(column.id, e.target.value)
                     }}

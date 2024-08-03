@@ -1,9 +1,9 @@
 import React from 'react'
 
 import Column from '../partials/Column'
-import { IColumns, IFilters, TAction } from '../../TableView/Table.type'
+import { IColumns, IFilters, TAction } from '../types'
 
-interface IQTableHeader {
+interface IMTableHeader {
     actions?: TAction[]
     columns: IColumns<any>[]
     filters?: IFilters
@@ -11,7 +11,7 @@ interface IQTableHeader {
     onMultiSearch?: (key: string, value: string) => void
 }
 
-function QTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IQTableHeader) {
+function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTableHeader) {
     return (
         <thead
             className='fs-6'
@@ -60,4 +60,4 @@ function QTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IQTa
     )
 }
 
-export default QTableHeader
+export default MTableHeader
