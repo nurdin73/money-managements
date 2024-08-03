@@ -10,13 +10,16 @@ import {
 } from '@coreui/react'
 import { getIn, useFormikContext } from 'formik'
 import DatePickerForm from './DatePicker'
+import axios from 'axios'
+import debouncePromise, { DebouncedFunction } from '@/helpers/debounce'
+import AutoComplete from './AutoComplete'
 
 type JsonOptions = {
   label: any
   value: any
 }
 
-interface FormControllerProps {
+export interface FormControllerProps {
   name: string
   label: string
   size?: any
@@ -127,6 +130,7 @@ function FormControllerMemo(props: FormControllerProps) {
           disabled={props.disabled}
         />
       ),
+      autocomplete: <AutoComplete {...props} onChange={handleChange} onBlur={handleBlur} />,
       date: <DatePickerForm {...props} onChange={handleChange} onBlur={handleBlur} />,
     }
     return mapping[props.type]

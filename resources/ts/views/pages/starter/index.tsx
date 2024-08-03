@@ -33,6 +33,27 @@ export default function Starter() {
                 name='date'
                 dateFormat='dd-MM-YYYY'
               />
+              <FormController
+                type='autocomplete'
+                label='Auto Complete'
+                name='autocomplete'
+                urlAutoComplete='http://api.olahanku.test/v1/master/products'
+                jsonOptions={(opt) => ({
+                  label: opt.name,
+                  value: opt.id,
+                })}
+              />
+              <FormController
+                type='autocomplete'
+                label='Auto Complete'
+                name='autocomplete2'
+                urlAutoComplete='http://api.olahanku.test/v1/master/products'
+                jsonOptions={(opt) => ({
+                  label: opt.name,
+                  value: opt.id,
+                })}
+                multiple
+              />
               <CButton
                 type='submit'
                 color='primary'
