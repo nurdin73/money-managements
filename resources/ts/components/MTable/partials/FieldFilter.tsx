@@ -1,7 +1,6 @@
 import React from 'react'
 import { CFormInput } from '@coreui/react'
 import DatePicker from 'react-datepicker'
-import 'react-datepicker/dist/react-datepicker.min.css'
 import dayjs from 'dayjs'
 import ReactSelect from 'react-select'
 
