@@ -12,7 +12,7 @@ function ColumnFilter({ columns, hiddenColumns, onChange }: IColumnFilter) {
     return (
         <CPopover
             title='Filter Columns'
-            placement='left-start'
+            placement='left'
             content={
                 <ul className='list-unstyled d-flex flex-column gap-4'>
                     {columns.map((col) => (

@@ -1,15 +1,15 @@
 import { createContext } from 'react'
 import useQtableHook from './hooks/Qtable.hook'
 
-interface IQTableContext {
+interface IMTableContext {
     //
 }
 
-export const QTableContext = createContext<IQTableContext>(null as any)
+export const MTableContext = createContext<IMTableContext>(null as any)
 
 const QTableProvider = ({ children }) => {
     const values = useQtableHook()
-    return <QTableContext.Provider value={values}>{children}</QTableContext.Provider>
+    return <MTableContext.Provider value={values}>{children}</MTableContext.Provider>
 }
 
 export default QTableProvider

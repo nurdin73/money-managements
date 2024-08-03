@@ -40,12 +40,9 @@ function Column({ col, onSort, filters, onMultiSearch, index }: IColumnItem) {
                     )}
                     {col.filters && (
                         <CPopover
-                            isOpen={showFilter}
-                            toggle={() => setShowFilter(!showFilter)}
-                            target={`filter${index}`}
                             title={`Filter ${col.label}`}
                             content={<FieldFilter column={col} onMultiSearch={onMultiSearch} />}
-                            placement='bottom-end'
+                            placement='bottom'
                         >
                             <button
                                 type='button'

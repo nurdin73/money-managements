@@ -2,10 +2,9 @@
             path='{{ path }}'
             element={
                 <>
-                    <PageTitle breadcrumbs={[]}>{{ pageTitle }}</PageTitle>
-                    <QTableProvider>
+                    <MTableProvider>
                         <{{ pageName }}Page />
-                    </QTableProvider>
+                    </MTableProvider>
                 </>
             }
         />

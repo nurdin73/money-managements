@@ -1,12 +1,18 @@
 import { Formik, FormikHelpers } from 'formik'
 import React from 'react'
-import { Modal, ModalBody, ModalFooter, ModalHeader } from 'reactstrap'
 import { toast } from 'react-toastify'
 import { connect } from 'react-redux'
+import { 
+    CButton, 
+    CModal,
+    CModalBody,
+    CModalFooter,
+    CModalHeader,
+    CModalTitle, 
+} from '@coreui/react'
 
 import { UniqueID } from '@/app/helpers/uniqueid'
 import { load{{ actionName }} } from '@/app/{{ directoryRedux }}/action'
-import { Button } from '@/app/mindgate/components/Buttons/Button'
 import { {{ actionName }}Service } from '@/app/services/api/{{ actionName }}Service'
 
 import { initialValues, validationSchema } from './constants'
@@ -82,52 +88,50 @@ function {{ actionName }}Modal({
             onSubmit={onSubmitHandler}
         >
             {({ handleSubmit, resetForm, isSubmitting }) => (
-                <Modal
-                    isOpen={!!modal}
-                    toggle={() => {
+                <CModal
+                    visible={!!modal}
+                    onClose={() => {
                         resetForm()
                         onClose()
                     }}
                 >
-                    <ModalHeader
+                    <CModalHeader
                         toggle={() => {
                             onClose()
                             resetForm()
                         }}
                     >
-                        {{ moduleTitle }}
-                    </ModalHeader>
-                    <ModalBody>
+                        <CModalTitle>{{ moduleTitle }}</CModalTitle>
+                    </CModalHeader>
+                    <CModalBody>
                         <{{ formComponent }}Form
                             defaultValues={type === 'create' ? initialValues : modal}
                         />
-                    </ModalBody>
-                    <ModalFooter>
-                        <Button
-                            variant='secondary'
-                            type='label'
-                            label='Tutup'
-                            role='button'
-                            size='lg'
+                    </CModalBody>
+                    <CModalFooter>
+                        <CButton 
+                            color='secondary'
+                            disabled={isSubmitting}
                             onClick={() => {
                                 resetForm()
                                 onClose()
                             }}
-                            loading={isSubmitting}
-                        />
-                        <Button
-                            variant='primary'
-                            type='label'
-                            label='Simpan'
-                            role='submit'
-                            size='lg'
+                            type='button'
+                        >
+                            Tutup
+                        </CButton>
+                        <CButton 
+                            color='primary'
+                            disabled={isSubmitting}
                             onClick={() => {
                                 handleSubmit()
                             }}
-                            loading={isSubmitting}
-                        />
-                    </ModalFooter>
-                </Modal>
+                            type='submit'
+                        >
+                            Simpan
+                        </CButton>
+                    </CModalFooter>
+                </CModal>
             )}
         </Formik>
     )

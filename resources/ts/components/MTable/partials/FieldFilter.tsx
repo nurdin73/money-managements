@@ -13,7 +13,7 @@ interface IFieldFilter {
 }
 
 function FieldFilter({ column, onMultiSearch }: IFieldFilter) {
-    const [date, setDate] = React.useState(null)
+    const [date, setDate] = React.useState<any>(null)
     const render = React.useCallback(() => {
         const fields = {
             input: (
@@ -39,7 +39,7 @@ function FieldFilter({ column, onMultiSearch }: IFieldFilter) {
                         }
                     }}
                     className='form-control'
-                    format='DD/MM/YYYY'
+                    dateFormat='DD/MM/YYYY'
                     isClearable
                     placeholderText={`Pilih ${column.label}`}
                 />
