@@ -43,10 +43,12 @@ class LoginController extends Authentication
             ]);
         }
 
-        $token = $user->createToken('users')->plainTextToken;
+        $token = $user->createToken('users');
 
         return $this->sendResponse("Login success", [
-            'access_token' => $token,
+            'access_token' => $token->plainTextToken,
+            'token_id' => $token->accessToken->id,
+            'expires_at' => $token->accessToken->expires_at
         ]);
     }
 }

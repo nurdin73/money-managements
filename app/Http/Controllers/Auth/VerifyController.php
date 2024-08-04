@@ -23,14 +23,18 @@ class VerifyController extends Authentication
             unset($cred['otp']);
             unset($cred['expired']);
             $user = $this->checkEmailIsExist($cred['email']);
-            $createToken = $this->createToken($cred);
             Cache::delete($payload['key']);
             Cache::delete("cred-user-{$user->email}");
             // AuthenticationLog::create([
             //     'user_id' => $user->id,
             //     'user_agent' => request()->userAgent(),
             // ]);
-            return $this->sendResponse("Login Successfully", $createToken);
+            $token = $user->createToken('users');
+            return $this->sendResponse("Login Successfully", [
+                'access_token' => $token->plainTextToken,
+                'token_id' => $token->accessToken->id,
+                'expires_at' => $token->accessToken->expires_at
+            ]);
         }
         if ($payload['type'] == 'forgot-password') {
             $cred = $this->verifyOtp($payload);
