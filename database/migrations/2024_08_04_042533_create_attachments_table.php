@@ -11,10 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('attachments', function (Blueprint $table) {
             $table->id();
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->morphs('attachable');
+            $table->string('name');
+            $table->string('mime_type');
+            $table->string('extension', 20);
+            $table->string('disk', 20);
+            $table->string('path');
+            $table->string('tag')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('attachments');
     }
 };

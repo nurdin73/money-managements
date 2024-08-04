@@ -11,7 +11,7 @@ import {
     CModalTitle, 
 } from '@coreui/react'
 
-import { UniqueID } from '@/app/helpers/uniqueid'
+import { UniqueID } from '@/helpers/uniqueid'
 import { load{{ actionName }} } from '@/app/{{ directoryRedux }}/action'
 import { {{ actionName }}Service } from '@/app/services/api/{{ actionName }}Service'
 

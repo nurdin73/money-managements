@@ -11,10 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
+            $table->morphs('reference');
+            $table->string('type', 20);
+            $table->string('title');
+            $table->text('description');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }
@@ -24,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('notifications');
     }
 };

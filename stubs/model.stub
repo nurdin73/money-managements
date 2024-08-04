@@ -4,8 +4,19 @@ namespace {{ namespace }};
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Observers\AuthorObserver;
 
 class {{ class }} extends Model
 {
     use HasFactory;
+
+    public static function bootAuthorModelObservantTrait()
+    {
+        static::observe(AuthorObserver::class);
+    }
+
+    protected $fillable = [
+        'created_by',
+        'updated_by'
+    ];
 }

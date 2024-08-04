@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('{{ table }}', function (Blueprint $table) {
+        Schema::create('auto_numbers', function (Blueprint $table) {
             $table->id();
-            $table->string('created_by')->nullable();
-            $table->string('modified_by')->nullable();
-            $table->timestamps();
+            $table->string('key', 50);
+            $table->string('template');
+            $table->integer('sequence')->default(0);
         });
     }
 
@@ -24,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('{{ table }}');
+        Schema::dropIfExists('auto_numbers');
     }
 };
