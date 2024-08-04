@@ -4,6 +4,7 @@ import { CContainer, CSpinner } from '@coreui/react'
 
 // routes config
 import routes from '../routes'
+import MTableProvider from './MTable/provider'
 
 const AppContent = () => {
   return (
@@ -13,7 +14,16 @@ const AppContent = () => {
           {routes.map((route, idx) => {
             return (
               route.element && (
-                <Route key={idx} path={route.path} id={route.name} element={<route.element />} />
+                <Route
+                  key={idx}
+                  path={route.path}
+                  id={route.name}
+                  element={
+                    <MTableProvider>
+                      <route.element />
+                    </MTableProvider>
+                  }
+                />
               )
             )
           })}

@@ -51,8 +51,9 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
-// pages
+// pages app
 const StarterPage = React.lazy(() => import('@/views/pages/starter'))
+//:end-import: jangan dihapus!
 
 const routes = [
   { path: '/', exact: true, name: 'Home' },
@@ -101,6 +102,7 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
+  {/* end-combine: jangan dihapus! */ }
 ]
 
 export default routes

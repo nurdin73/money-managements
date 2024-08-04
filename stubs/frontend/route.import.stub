@@ -1,2 +1,2 @@
-import {{ pageName }}Page from './modules/{{ path }}'
+import {{ pageName }}Page from '@/pages/{{ path }}'
 //:end-import: jangan dihapus!

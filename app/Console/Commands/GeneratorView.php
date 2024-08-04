@@ -37,7 +37,7 @@ class GeneratorView extends Generator implements PromptsForMissingInput
             $this->error("API url salah atau belum terdaftar!");
             return;
         }
-        $rootFolder = $this->choice('Pilih Root Folder', ['master-data', 'transactions', 'managements']);
+        $rootFolder = $this->choice('Pilih Root Folder', ['master', 'transaction']);
         $this->rootFolder = $rootFolder;
 
         $this->generateColumns();
@@ -270,7 +270,7 @@ class GeneratorView extends Generator implements PromptsForMissingInput
 
     protected function getPath()
     {
-        $path = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.view_path') . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR . 'modules' . DIRECTORY_SEPARATOR . $this->getNameFolder();
+        $path = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.view_path') . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR . $this->getNameFolder();
         $this->makeDirectory($path);
         return $path;
     }
