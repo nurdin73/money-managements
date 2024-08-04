@@ -28,7 +28,7 @@ const AppContent = () => {
             )
           })}
           <Route index path='/' element={<Navigate to='dashboard' replace />} />
-          {/* <Route path='*' element={<Navigate to='/404' />} /> */}
+          <Route path='*' element={<Navigate to='/404' />} />
         </Routes>
       </Suspense>
     </CContainer>

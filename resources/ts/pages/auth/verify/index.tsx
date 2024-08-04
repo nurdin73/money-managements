@@ -41,10 +41,7 @@ const Verify = ({ loginUserSuccessAction, loadCurrentUserAction }) => {
         if (type === 'login') {
           setCurrentToken(response.data.data)
           loginUserSuccessAction(response.data.data)
-          loadCurrentUserAction(history)
-          navigate('/dashboard', {
-            replace: true,
-          })
+          loadCurrentUserAction(navigate)
           return
         }
         if (type === 'forgot-password') {
