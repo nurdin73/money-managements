@@ -19,7 +19,7 @@ use App\Http\Controllers\Controller;
 use App\Notifications\OtpNotification;
 use Illuminate\Http\UploadedFile;
 
-class Authentication
+class Authentication extends Controller
 {
   public function model()
   {

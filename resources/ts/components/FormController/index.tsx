@@ -1,6 +1,7 @@
 import React from 'react'
 import { TOptions } from '../MTable/types'
 import {
+  CButton,
   CFormCheck,
   CFormInput,
   CFormLabel,
@@ -13,6 +14,7 @@ import DatePickerForm from './DatePicker'
 import axios from 'axios'
 import debouncePromise, { DebouncedFunction } from '@/helpers/debounce'
 import AutoComplete from './AutoComplete'
+import { BsEye, BsEyeSlash } from 'react-icons/bs'
 
 type JsonOptions = {
   label: any
@@ -53,6 +55,7 @@ export interface FormControllerProps {
 }
 
 function FormControllerMemo(props: FormControllerProps) {
+  const [isShowPassword, setIsShowPassword] = React.useState<boolean>(false)
   const formikContext = useFormikContext()
   const errorMessage = React.useMemo(() => {
     if (formikContext) {
@@ -70,9 +73,24 @@ function FormControllerMemo(props: FormControllerProps) {
     }
   }, [formikContext])
 
+  const togglePassword = React.useCallback(() => {
+    setIsShowPassword((prev) => !prev)
+  }, [])
+
   const render = React.useMemo(() => {
     const { handleChange, handleBlur, touched } = useFormikContext()
     const mapping = {
+      email: (
+        <CFormInput
+          invalid={!!errorMessage}
+          valid={getIn(touched, props.name) && !errorMessage}
+          {...props}
+          feedbackInvalid={errorMessage}
+          defaultValue={defaultValue}
+          onChange={handleChange}
+          onBlur={handleBlur}
+        />
+      ),
       text: (
         <CFormInput
           invalid={!!errorMessage}
@@ -130,15 +148,47 @@ function FormControllerMemo(props: FormControllerProps) {
           disabled={props.disabled}
         />
       ),
+      password: (
+        <div className='position-relative'>
+          <CFormInput
+            invalid={!!errorMessage}
+            {...props}
+            type={isShowPassword ? 'text' : 'password'}
+            feedbackInvalid={errorMessage}
+            defaultValue={defaultValue}
+            onChange={handleChange}
+            onBlur={handleBlur}
+          />
+          <CButton
+            onClick={togglePassword}
+            variant='ghost'
+            type='button'
+            color='secondary'
+            className='position-absolute d-flex justify-content-center align-items-center'
+            style={{
+              top: 32,
+              right: 0,
+              width: 42,
+              height: 37,
+            }}
+          >
+            {isShowPassword ? <BsEyeSlash /> : <BsEye />}
+          </CButton>
+        </div>
+      ),
       autocomplete: <AutoComplete {...props} onChange={handleChange} onBlur={handleBlur} />,
       date: <DatePickerForm {...props} onChange={handleChange} onBlur={handleBlur} />,
     }
     return mapping[props.type]
-  }, [props, errorMessage, defaultValue])
+  }, [props, errorMessage, defaultValue, togglePassword, isShowPassword])
 
   return (
-    <div className='mb-3'>
-      <CFormLabel>{props.required && <sup className='text-danger'>*</sup>}</CFormLabel>
+    <div className='mb-2'>
+      {props.required && (
+        <CFormLabel>
+          <sup className='text-danger'>*</sup>
+        </CFormLabel>
+      )}
       {render}
     </div>
   )

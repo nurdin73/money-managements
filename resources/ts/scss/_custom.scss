@@ -3,3 +3,17 @@
 .bg-active {
   background-color: var(--cui-body-bg);
 }
+
+.separator {
+  position: relative;
+}
+
+.separator::after {
+  content: '';
+  width: 100%;
+}
+
+.separator span {
+  background-color: var(--cui-body-bg);
+  color: var(--cui-body-color)
+}
