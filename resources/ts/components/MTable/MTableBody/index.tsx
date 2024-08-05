@@ -59,18 +59,9 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
             >
               <div className='d-flex gap-2'>
                 {actions.map((a) => (
-                  // <Button
-                  //     type='icon'
-                  //     iconName={a.iconName}
-                  //     iconType='solid'
-                  //     onClick={() => a.onClick(item)}
-                  //     role='button'
-                  //     iconColor={a.iconColor}
-                  //     variant={a.variant}
-                  //     size='sm'
-                  //     title={a.title}
-                  // />
-                  <CButton onClick={() => a.onClick(item)}>{a.title}</CButton>
+                  <CButton color={a.variant} onClick={() => a.onClick(item)}>
+                    {a.title}
+                  </CButton>
                 ))}
               </div>
             </td>

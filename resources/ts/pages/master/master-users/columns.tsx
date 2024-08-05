@@ -36,5 +36,6 @@ export const getColumns = (): IColumns<TMasterUser>[] => [
     filters: {
       type: 'date',
     },
+    width: 300,
   },
 ]

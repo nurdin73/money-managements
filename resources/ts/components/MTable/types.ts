@@ -5,7 +5,7 @@ export type TOptions = {
 
 export interface IColumns<T> {
   id: string
-  width?: string
+  width?: string | number
   label: any
   filters?: {
     type: 'select' | 'input' | 'date'

@@ -5,12 +5,12 @@ import { useNavigate } from 'react-router-dom'
 
 import ColumnFilter from './partials/ColumnFilter'
 import Pagination from './partials/Pagination'
-import QTableHeader from './MTableHeader'
-import QTableBody from './MTableBody'
+import MTableHeader from './MTableHeader'
+import MTableBody from './MTableBody'
 import { IColumns, IFilters, TAction, TMeta } from './types'
 import { CButton, CCard, CCardBody, CCardFooter, CCardHeader, CTable } from '@coreui/react'
 
-interface TQTable {
+interface TMTable {
   columns: IColumns<any>[]
   actions?: TAction[]
   data: any[]
@@ -28,7 +28,7 @@ interface TQTable {
   onChangeLimit: (limit) => void
 }
 
-const QTable = ({
+const MTable = ({
   columns,
   data,
   loading,
@@ -43,7 +43,7 @@ const QTable = ({
   onCreate,
   showButtonBack,
   additionalActions,
-}: TQTable) => {
+}: TMTable) => {
   const navigate = useNavigate()
   const [hiddenColumns, setHiddenColumns] = React.useState<any[]>([])
   const columnFilters = React.useMemo(
@@ -79,16 +79,6 @@ const QTable = ({
               >
                 {action.title}
               </CButton>
-              // <Button
-              //     role='button'
-              //     size='lg'
-              //     label={action.title}
-              //     variant={action.variant}
-              //     type='icon'
-              //     iconName={action.iconName}
-              //     iconType='duotone'
-              //     onClick={() => action.onClick()}
-              // />
             ))}
           <CButton color='primary' onClick={onCreate}>
             Tambah Data
@@ -96,15 +86,15 @@ const QTable = ({
         </div>
       </CCardHeader>
       <CCardBody className='p-0'>
-        <CTable align='middle' hover bordered className='table-row-dashed' responsive>
-          <QTableHeader
+        <CTable align='middle' hover striped stripedColumns responsive>
+          <MTableHeader
             actions={actions}
             columns={columnFilters}
             filters={filters}
             onMultiSearch={onMultiSearch}
             onSort={onSort}
           />
-          <QTableBody
+          <MTableBody
             meta={meta}
             actions={actions}
             columns={columnFilters}
@@ -120,4 +110,4 @@ const QTable = ({
   )
 }
 
-export default QTable
+export default MTable
