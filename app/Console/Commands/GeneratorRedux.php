@@ -53,7 +53,8 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
     protected function appendToActions()
     {
         $basePath = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.redux_path');
-        $path = $basePath . DIRECTORY_SEPARATOR . 'actions.tsx';
+        $path = $basePath . DIRECTORY_SEPARATOR . 'actions.ts';
+        info($path);
         if ($this->files->exists($path)) {
             $content = $this->files->get($path);
             $findPathOfActions = $this->getApiPath();
@@ -64,13 +65,15 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
                 $content = Str::replace("//:end-import: jangan dihapus!", $generate, $content);
                 $this->files->put($path, $content);
             }
+            return;
         }
+        $this->warn("Action root tidak tersedia");
     }
 
     protected function appendToSagas()
     {
         $basePath = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.redux_path');
-        $path = $basePath . DIRECTORY_SEPARATOR . 'sagas.tsx';
+        $path = $basePath . DIRECTORY_SEPARATOR . 'sagas.ts';
         if ($this->files->exists($path)) {
             $content = $this->files->get($path);
             $getActionName = Str::camel($this->getActionName());
@@ -91,13 +94,13 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
             $this->files->put($path, $content);
             return;
         }
-        $this->info("Sagas file tidak tersedia");
+        $this->warn("Sagas file tidak tersedia");
     }
 
     protected function appendToReducers()
     {
         $basePath = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.redux_path');
-        $path = $basePath . DIRECTORY_SEPARATOR . 'reducers.tsx';
+        $path = $basePath . DIRECTORY_SEPARATOR . 'reducers.ts';
         if ($this->files->exists($path)) {
             $content = $this->files->get($path);
             $getActionName = Str::camel($this->getActionName());
@@ -118,7 +121,7 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
             $this->files->put($path, $content);
             return;
         }
-        $this->info("Reducers file tidak tersedia");
+        $this->warn("Reducers file tidak tersedia");
     }
 
     protected function getPathDirectory()
@@ -137,6 +140,7 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
             'actionName' => $actionName
         ]);
         $path = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.service_api_path');
+        $this->makeDirectory($path);
         if (!$this->files->exists($path . DIRECTORY_SEPARATOR . "{$actionName}Service.ts")) {
             $this->files->put($path . DIRECTORY_SEPARATOR . "{$actionName}Service.ts", $generate);
             return;
@@ -147,7 +151,7 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
     protected function generateAction()
     {
         $getContentFile = $this->getActionSourceFile();
-        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'action.tsx';
+        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'action.ts';
         if (!$this->files->exists($path)) {
             $this->files->put($path, $getContentFile);
             return;
@@ -160,7 +164,7 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
         $getContentFile = $this->getStubContents($this->getStubPath('frontend/redux/reducer'), [
             'logName' => $this->getLogName()
         ]);
-        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'reducer.tsx';
+        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'reducer.ts';
         if (!$this->files->exists($path)) {
             $this->files->put($path, $getContentFile);
             return;
@@ -175,7 +179,7 @@ class GeneratorRedux extends Generator implements PromptsForMissingInput
             'logName' => $this->getLogName(),
             'api' => $this->getApi()
         ]);
-        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'saga.tsx';
+        $path = $this->getPathDirectory() . DIRECTORY_SEPARATOR . 'saga.ts';
         if (!$this->files->exists($path)) {
             $this->files->put($path, $getContentFile);
             return;

@@ -12,25 +12,25 @@ import {
 } from '@coreui/react'
 
 import { UniqueID } from '@/helpers/uniqueid'
-import { load{{ actionName }} } from '@/{{ directoryRedux }}/action'
-import { {{ actionName }}Service } from '@/services/api/{{ actionName }}Service'
+import { loadMasterUser } from '@/redux/master/users/action'
+import { MasterUserService } from '@/services/api/MasterUserService'
 
 import { initialValues, validationSchema } from './constants'
-import {{ formComponent }}Form from './form'
+import MasterUserForm from './form'
 
-interface I{{ actionName }}Modal {
+interface IMasterUserModal {
     modal: any
     onClose: () => void
     type: 'update' | 'create'
-    load{{ actionName }}List: any
+    loadMasterUserList: any
 }
 
-function {{ actionName }}Modal({
+function MasterUserModal({
     modal,
     onClose,
     type,
-    load{{ actionName }}List,
-}: I{{ actionName }}Modal) {
+    loadMasterUserList,
+}: IMasterUserModal) {
     const onSubmitHandler = React.useCallback(
         (values: any, formikHelper: FormikHelpers<any>) => {
             const payload = {
@@ -39,13 +39,13 @@ function {{ actionName }}Modal({
             formikHelper.setSubmitting(true)
             if (type === 'create') {
                 toast
-                    .promise({{ actionName }}Service.Create(payload), {
-                        success: '{{ moduleTitle }} berhasil dibuat',
-                        pending: 'Menambahkan {{ moduleTitle }}',
+                    .promise(MasterUserService.Create(payload), {
+                        success: 'Master User berhasil dibuat',
+                        pending: 'Menambahkan Master User',
                     })
                     .then(() => {
                         onClose()
-                        load{{ actionName }}List({
+                        loadMasterUserList({
                             orderBy: 'created_date',
                             sortedBy: 'desc',
                         })
@@ -59,13 +59,13 @@ function {{ actionName }}Modal({
                 return
             }
             toast
-                .promise({{ actionName }}Service.Update(modal?.id, payload), {
-                    success: '{{ moduleTitle }} berhasil diubah',
-                    pending: 'Mengubah {{ moduleTitle }}',
+                .promise(MasterUserService.Update(modal?.id, payload), {
+                    success: 'Master User berhasil diubah',
+                    pending: 'Mengubah Master User',
                 })
                 .then(() => {
                     onClose()
-                    load{{ actionName }}List({
+                    loadMasterUserList({
                         orderBy: 'created_date',
                         sortedBy: 'desc',
                     })
@@ -96,10 +96,10 @@ function {{ actionName }}Modal({
                     }}
                 >
                     <CModalHeader closeButton>
-                        <CModalTitle>{{ moduleTitle }}</CModalTitle>
+                        <CModalTitle>Master User</CModalTitle>
                     </CModalHeader>
                     <CModalBody>
-                        <{{ formComponent }}Form
+                        <MasterUserForm
                             defaultValues={type === 'create' ? initialValues : modal}
                         />
                     </CModalBody>
@@ -133,5 +133,5 @@ function {{ actionName }}Modal({
 }
 
 export default connect(null, {
-    load{{ actionName }}List: load{{ actionName }},
-})({{ actionName }}Modal)
+    loadMasterUserList: loadMasterUser,
+})(MasterUserModal)

@@ -1,4 +1,4 @@
-import { TMeta } from '@/app/mindgate/components/TableView/Table.type'
+import { TMeta } from '@/components/MTable/types'
 
 export const LOAD_{{ logName }} = '[PENDING] {{ logName }}'
 export const LOAD_{{ logName }}_SUCCESS = '[SUCCESS] {{ logName }}'

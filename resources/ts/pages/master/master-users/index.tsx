@@ -3,16 +3,16 @@ import { connect } from 'react-redux'
 import Swal from 'sweetalert2'
 import { toast } from 'react-toastify'
 
-import { load{{ actionName }} } from '@/{{ directoryAction }}/action'
+import { loadMasterUser } from '@/redux/master/users/action'
 import MTable from '@/components/MTable'
-import { {{ actionName }}Service } from '@/services/api/{{ actionName }}Service'
+import { MasterUserService } from '@/services/api/MasterUserService'
 
-import { use{{ actionName }}Util } from './utils'
-import {{ actionName }}Modal from './modal'
+import { useMasterUserUtil } from './utils'
+import MasterUserModal from './modal'
 
-function {{ actionName }}Page({
-    load{{ actionName }}List,
-    {{ reducerName }}App,
+function MasterUserPage({
+    loadMasterUserList,
+    masterUsersApp,
 }) {
     const {
         columns,
@@ -27,28 +27,28 @@ function {{ actionName }}Page({
         onCloseModal,
         onEdit,
         typeModal,
-    } = use{{ actionName }}Util()
-    const { data, loading, meta } = {{ reducerName }}App
+    } = useMasterUserUtil()
+    const { data, loading, meta } = masterUsersApp
 
     React.useEffect(() => {
-        load{{ actionName }}List(filters)
+        loadMasterUserList(filters)
     }, [filters])
 
     const onDestroy = React.useCallback(
         (data) => {
             Swal.fire({
                 icon: 'warning',
-                title: 'Hapus {{ moduleTitle }}',
-                text: `Apa kamu yakin ingin menghapus {{ moduleTitle }} ${data.name}?`,
+                title: 'Hapus Master User',
+                text: `Apa kamu yakin ingin menghapus Master User ${data.name}?`,
                 showCancelButton: true,
                 confirmButtonText: 'Ya, Hapus',
                 confirmButtonColor: '#1A3159',
             }).then((result) => {
                 if (result.isConfirmed) {
                     toast
-                        .promise({{ actionName }}Service.Delete(data.id), {
-                            pending: 'Menghapus data {{ moduleTitle }}',
-                            success: 'Data {{ moduleTitle }} berhasil dihapus',
+                        .promise(MasterUserService.Delete(data.id), {
+                            pending: 'Menghapus data Master User',
+                            success: 'Data Master User berhasil dihapus',
                         })
                         .catch((err) => {
                             toast(err?.message, {
@@ -56,7 +56,7 @@ function {{ actionName }}Page({
                             })
                         })
                         .then(() => {
-                            load{{ actionName }}List(filters)
+                            loadMasterUserList(filters)
                         })
                 }
             })
@@ -67,7 +67,7 @@ function {{ actionName }}Page({
     return (
         <>
             <MTable
-                title='{{ moduleTitle }}'
+                title='Master User'
                 columns={columns}
                 data={data}
                 meta={meta}
@@ -98,7 +98,7 @@ function {{ actionName }}Page({
                     },
                 ]}
             />
-            <{{ actionName }}Modal
+            <MasterUserModal
                 onClose={onCloseModal}
                 modal={modal}
                 type={typeModal}
@@ -107,10 +107,10 @@ function {{ actionName }}Page({
     )
 }
 
-const mapStateToProps = ({ {{ reducerName }}App }) => ({
-    {{ reducerName }}App,
+const mapStateToProps = ({ masterUsersApp }) => ({
+    masterUsersApp,
 })
 
 export default connect(mapStateToProps, {
-    load{{ actionName }}List: load{{ actionName }},
-})({{ actionName }}Page)
+    loadMasterUserList: loadMasterUser,
+})(MasterUserPage)

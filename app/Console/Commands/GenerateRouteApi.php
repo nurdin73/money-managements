@@ -42,7 +42,7 @@ class GenerateRouteApi extends Generator implements PromptsForMissingInput
         if ($this->files->exists($path)) return;
         $this->makeDirectory(dirname($path));
 
-        $contentRepo = $this->getSourceFile('route');
+        $contentRepo = $this->getSourceFile('backend/route');
 
         if (!$this->files->exists($path)) {
             $this->files->put($path, $contentRepo);

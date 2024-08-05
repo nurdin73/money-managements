@@ -1,4 +1,4 @@
-import axiosInterceptorInstance from '@/app/helpers/axiosInterceptor'
+import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
 
 export class {{ actionName }}Service {
     static List(params?: any) {

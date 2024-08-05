@@ -1,14 +1,13 @@
-import React from 'react'
+import React, { useContext } from 'react'
 
 import { getColumns } from './columns'
-import { MTableContext } from '@/components/provider'
+import useMtableHook from '@/components/MTable/hooks/Mtable.hook'
 
 export const use{{ actionName }}Util = () => {
     const [modal, setModal] = React.useState<any>(false)
-    // const [searchParams, setSearchParams] = useSearchParams()
     const [typeModal, setTypeModal] = React.useState<'create' | 'update'>('create')
     
-    const state = useContext(MTableContext)
+    const state = useMtableHook()
 
     const columns = React.useMemo(() => getColumns(), [])
 

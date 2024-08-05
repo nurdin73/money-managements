@@ -321,11 +321,11 @@ class GeneratorView extends Generator implements PromptsForMissingInput
             $column = explode(':', $col);
             $label = Str::title(Str::replace('_', ' ', $column[0]));
             $id = $column[0];
-            if ($column[0] == 'created_date') {
+            if (in_array($column[0], ['created_date', 'created_at'])) {
                 return "{
         label: '{$label}',
         id: '{$id}',
-        render: (data) => dayjs(data.created_date).format('DD/MM/YYYY'),
+        render: (data) => dayjs(data.{$column[0]}).format('DD/MM/YYYY'),
         filters: {
             type: 'date',
         },
@@ -335,6 +335,7 @@ class GeneratorView extends Generator implements PromptsForMissingInput
                 return "{
         label: '{$label}',
         id: '{$id}',
+        width: '10px',
     },";
             }
             if ($column[0] == 'is_active') {

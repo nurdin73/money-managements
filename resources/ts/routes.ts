@@ -52,7 +52,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
 
 // pages app
-const StarterPage = React.lazy(() => import('@/views/pages/starter'))
+const StarterPage = React.lazy(() => import('@/pages/master/master-users'))
 //:end-import: jangan dihapus!
 
 const routes = [
