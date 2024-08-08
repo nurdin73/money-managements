@@ -23,12 +23,16 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
             <tr key={`loading-${idx}-${_}`}>
               {actions && (
                 <td key={`load-${idx}-action`}>
-                  <CPlaceholder />
+                  <CPlaceholder animation='glow' className='d-block'>
+                    <CPlaceholder className='d-block' />
+                  </CPlaceholder>
                 </td>
               )}
               {columns.map((col) => (
                 <td key={`load-${idx}-${col.id}`}>
-                  <CPlaceholder />
+                  <CPlaceholder animation='glow' className='d-block'>
+                    <CPlaceholder className='d-block' />
+                  </CPlaceholder>
                 </td>
               ))}
             </tr>
@@ -50,7 +54,7 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           {actions && (
             <td
               style={{
-                width: 100,
+                width: 150,
                 position: 'sticky',
                 left: 0,
                 backgroundColor: 'var(--cui-body-bg)',
@@ -59,7 +63,7 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
             >
               <div className='d-flex gap-2'>
                 {actions.map((a) => (
-                  <CButton color={a.variant} onClick={() => a.onClick(item)}>
+                  <CButton size='sm' color={a.variant} onClick={() => a.onClick(item)}>
                     {a.title}
                   </CButton>
                 ))}
@@ -69,18 +73,33 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           {columns?.map((col) => {
             if (col.render)
               return (
-                <TableCell key={`item-${item.id}-${col.id}`} center={col.center} width={col?.width}>
+                <TableCell
+                  fixed={col.fixed}
+                  key={`item-${item.id}-${col.id}`}
+                  center={col.center}
+                  width={col?.width}
+                >
                   {col.render(item)}
                 </TableCell>
               )
             if (col.id === 'no')
               return (
-                <TableCell center={col.center} key={`item-${item.id}-${col.id}`} width={col?.width}>
+                <TableCell
+                  fixed={col.fixed}
+                  center={col.center}
+                  key={`item-${item.id}-${col.id}`}
+                  width={col?.width}
+                >
                   {startIndex + idx}
                 </TableCell>
               )
             return (
-              <TableCell key={`item-${item.id}-${col.id}`} center={col.center} width={col?.width}>
+              <TableCell
+                fixed={col.fixed}
+                key={`item-${item.id}-${col.id}`}
+                center={col.center}
+                width={col?.width}
+              >
                 {item[col.id]}
               </TableCell>
             )

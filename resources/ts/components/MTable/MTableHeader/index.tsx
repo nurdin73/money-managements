@@ -2,6 +2,7 @@ import React from 'react'
 
 import Column from '../partials/Column'
 import { IColumns, IFilters, TAction } from '../types'
+import clsx from 'clsx'
 
 interface IMTableHeader {
   actions?: TAction[]
@@ -30,6 +31,7 @@ function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTa
             left: 0,
             verticalAlign: 'baseline',
             width: 20,
+            backgroundColor: 'var(--cui-body-bg)',
           }}
         >
           Actions
@@ -44,8 +46,9 @@ function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTa
             // borderRight: '1px solid #ccc',
             // borderLeft: '1px solid #ccc',
             verticalAlign: 'baseline',
+            left: 145,
           }}
-          className='text-dark py-2 px-2 fw-bolder'
+          className={clsx('text-dark fw-bolder', { 'position-sticky': col.fixed })}
         >
           <Column
             index={idx}

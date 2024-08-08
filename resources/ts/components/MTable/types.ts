@@ -13,6 +13,7 @@ export interface IColumns<T> {
   }
   center?: boolean
   sort?: boolean
+  fixed?: boolean
   render?: (data: T) => any
 }
 

@@ -86,7 +86,7 @@ const MTable = ({
         </div>
       </CCardHeader>
       <CCardBody className='p-0'>
-        <CTable align='middle' hover striped stripedColumns responsive>
+        <CTable align='middle' responsive>
           <MTableHeader
             actions={actions}
             columns={columnFilters}

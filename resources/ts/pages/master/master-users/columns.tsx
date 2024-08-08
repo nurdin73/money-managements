@@ -14,6 +14,7 @@ export const getColumns = (): IColumns<TMasterUser>[] => [
     label: 'No',
     id: 'no',
     width: '10px',
+    fixed: true,
   },
   {
     label: 'Name',
