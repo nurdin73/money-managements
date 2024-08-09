@@ -3,6 +3,7 @@ import React from 'react'
 import Column from '../partials/Column'
 import { IColumns, IFilters, TAction } from '../types'
 import clsx from 'clsx'
+import { CTableHead, CTableHeaderCell } from '@coreui/react'
 
 interface IMTableHeader {
   actions?: TAction[]
@@ -10,11 +11,19 @@ interface IMTableHeader {
   filters?: IFilters
   onSort: (order: string, sort: 'asc' | 'desc') => void
   onMultiSearch?: (key: string, value: string) => void
+  onSearchFields?: (key: string, value: string) => void
 }
 
-function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTableHeader) {
+function MTableHeader({
+  actions,
+  columns,
+  filters,
+  onSort,
+  onMultiSearch,
+  onSearchFields,
+}: IMTableHeader) {
   return (
-    <thead
+    <CTableHead
       className='fs-6'
       style={{
         position: 'sticky',
@@ -24,7 +33,7 @@ function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTa
       }}
     >
       {actions && (
-        <th
+        <CTableHeaderCell
           className='py-2 px-4 text-center fw-bolder'
           style={{
             position: 'sticky',
@@ -35,10 +44,10 @@ function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTa
           }}
         >
           Actions
-        </th>
+        </CTableHeaderCell>
       )}
       {columns.map((col, idx) => (
-        <th
+        <CTableHeaderCell
           key={col.id}
           style={{
             width: col.width ?? 100,
@@ -56,10 +65,11 @@ function MTableHeader({ actions, columns, filters, onSort, onMultiSearch }: IMTa
             col={col}
             filters={filters}
             onMultiSearch={onMultiSearch}
+            onSearchFields={onSearchFields}
           />
-        </th>
+        </CTableHeaderCell>
       ))}
-    </thead>
+    </CTableHead>
   )
 }
 

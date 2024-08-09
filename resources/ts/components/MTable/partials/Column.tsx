@@ -11,11 +11,11 @@ interface IColumnItem {
   onSort: (id, sort) => void
   filters?: IFilters
   onMultiSearch?: (key: string, value: string) => void
+  onSearchFields?: (key: string, value: string) => void
   index: number
 }
 
-function Column({ col, onSort, filters, onMultiSearch, index }: IColumnItem) {
-  const [showFilter, setShowFilter] = React.useState(false)
+function Column({ col, onSort, filters, onMultiSearch, onSearchFields, index }: IColumnItem) {
   return (
     <div>
       <div className='d-flex justify-content-between align-items-center gap-2'>
@@ -40,8 +40,13 @@ function Column({ col, onSort, filters, onMultiSearch, index }: IColumnItem) {
           )}
           {col.filters && (
             <CPopover
-              title={`Filter ${col.label}`}
-              content={<FieldFilter column={col} onMultiSearch={onMultiSearch} />}
+              content={
+                <FieldFilter
+                  column={col}
+                  onSearchFields={onSearchFields}
+                  onMultiSearch={onMultiSearch}
+                />
+              }
               placement='bottom'
             >
               <button

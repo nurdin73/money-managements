@@ -1,3 +1,4 @@
+import { CTableDataCell } from '@coreui/react'
 import clsx from 'clsx'
 import React from 'react'
 
@@ -10,7 +11,7 @@ interface ITableCell {
 
 function TableCell({ width = '100%', center, children, fixed }: ITableCell) {
   return (
-    <td
+    <CTableDataCell
       className={clsx('align-middle', {
         'd-flex justify-content-center align-items-center text-center': center,
         'position-sticky': fixed,
@@ -21,7 +22,7 @@ function TableCell({ width = '100%', center, children, fixed }: ITableCell) {
       }}
     >
       {children}
-    </td>
+    </CTableDataCell>
   )
 }
 

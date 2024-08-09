@@ -24,6 +24,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
     onCloseModal,
     onEdit,
     typeModal,
+    onMultiSearchFields,
   } = useMasterUserUtil()
   const { data, loading, meta } = masterUsersApp
 
@@ -74,6 +75,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}
+        onSearchFields={onMultiSearchFields}
         onCreate={onCreate}
         filters={filters}
         actions={[

@@ -6,6 +6,7 @@ use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\{{ model }}Repository;
 use App\Models\{{ model }};
+use App\Criteria\DefaultRequestCriteriaCriteria;
 
 /**
  * Class {{ modelName }}RepositoryEloquent.
@@ -31,6 +32,6 @@ class {{ modelName }}RepositoryEloquent extends BaseRepository implements {{ mod
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(app(DefaultRequestCriteriaCriteria::class));
     }
 }

@@ -2,7 +2,7 @@ import React from 'react'
 import NotfoundData from '../partials/NotfoundData'
 import { IColumns, TAction, TMeta } from '../types'
 import TableCell from '../partials/TableCell'
-import { CButton, CPlaceholder } from '@coreui/react'
+import { CButton, CPlaceholder, CTableDataCell } from '@coreui/react'
 
 interface IMTableBody {
   actions?: TAction[]
@@ -39,9 +39,9 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           ))}
       {data?.length === 0 && !loading && (
         <tr>
-          <th colSpan={columns.length + (actions ? 1 : 0)} className='text-center'>
+          <CTableDataCell colSpan={columns.length + (actions ? 1 : 0)} className='text-center'>
             <NotfoundData message='Data tidak ditemukan' />
-          </th>
+          </CTableDataCell>
         </tr>
       )}
       {data?.map((item, idx) => (
@@ -52,7 +52,7 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           // }}
         >
           {actions && (
-            <td
+            <CTableDataCell
               style={{
                 width: 150,
                 position: 'sticky',
@@ -68,7 +68,7 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
                   </CButton>
                 ))}
               </div>
-            </td>
+            </CTableDataCell>
           )}
           {columns?.map((col) => {
             if (col.render)

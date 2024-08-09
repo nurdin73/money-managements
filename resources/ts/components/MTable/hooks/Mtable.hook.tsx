@@ -9,6 +9,7 @@ const useMtableHook = () => {
     sortedBy: 'desc',
   })
   const [multiSearch, setMultiSearch] = React.useState({})
+  const [multiSearchFields, setMultiSearchFields] = React.useState({})
 
   const state = useContext(MTableContext)
 
@@ -20,15 +21,21 @@ const useMtableHook = () => {
         .filter((obj) => multiSearch[obj] !== undefined && multiSearch[obj] !== '')
         .map((obj) => `${obj}:${multiSearch[obj]}`)
         .join(';')
+      const objSearchFields = Object.keys(multiSearchFields)
+      const searchFields = objSearchFields
+        .filter((obj) => multiSearchFields[obj] !== undefined && multiSearchFields[obj] !== '')
+        .map((obj) => `${obj}:${multiSearchFields[obj]}`)
+        .join(';')
       setFilters((filter) => ({
         ...filter,
         search: searchs !== '' ? searchs : undefined,
         searchJoin: searchs !== '' ? 'and' : undefined,
+        searchFields: searchFields != '' ? searchFields : undefined,
         page: 1,
       }))
     }, 1000)
     return () => clearTimeout(timeout)
-  }, [multiSearch])
+  }, [multiSearch, multiSearchFields])
 
   if (!state) throw new Error('useMtableHook must inside QTableProvider')
 
@@ -68,6 +75,13 @@ const useMtableHook = () => {
     }))
   }, [])
 
+  const onMultiSearchFields = React.useCallback((key: string, value: string) => {
+    setMultiSearchFields((prev) => ({
+      ...prev,
+      [key]: value,
+    }))
+  }, [])
+
   return {
     ...state,
     filters,
@@ -76,6 +90,7 @@ const useMtableHook = () => {
     onChangePage,
     onSort,
     onMultiSearch,
+    onMultiSearchFields,
   }
 }
 

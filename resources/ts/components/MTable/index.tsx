@@ -23,6 +23,7 @@ interface TMTable {
   onSort: (order: string, sort: 'asc' | 'desc') => void
   onSearch?: (search: string) => void
   onMultiSearch?: (key: string, value: string) => void
+  onSearchFields?: (key: string, value: string) => void
   onChangePage: (page) => void
   onCreate: () => void
   onChangeLimit: (limit) => void
@@ -43,6 +44,7 @@ const MTable = ({
   onCreate,
   showButtonBack,
   additionalActions,
+  onSearchFields,
 }: TMTable) => {
   const navigate = useNavigate()
   const [hiddenColumns, setHiddenColumns] = React.useState<any[]>([])
@@ -93,6 +95,7 @@ const MTable = ({
             filters={filters}
             onMultiSearch={onMultiSearch}
             onSort={onSort}
+            onSearchFields={onSearchFields}
           />
           <MTableBody
             meta={meta}

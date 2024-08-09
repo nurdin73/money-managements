@@ -2,6 +2,7 @@
 
 namespace App\Repositories\Master;
 
+use App\Criteria\DefaultRequestCriteriaCriteria;
 use Prettus\Repository\Eloquent\BaseRepository;
 use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Master\UserRepository;
@@ -14,6 +15,10 @@ use App\Models\Master\User;
  */
 class UserRepositoryEloquent extends BaseRepository implements UserRepository
 {
+    // protected $fieldSearchable = [
+    //     'name' => 'ilike',
+    //     'email' => 'ilike'
+    // ];
     /**
      * Specify Model class name
      *
@@ -31,6 +36,6 @@ class UserRepositoryEloquent extends BaseRepository implements UserRepository
      */
     public function boot()
     {
-        $this->pushCriteria(app(RequestCriteria::class));
+        $this->pushCriteria(app(DefaultRequestCriteriaCriteria::class));
     }
 }
