@@ -20,7 +20,7 @@ function Pagination({ meta, onChangePage, onChangeLimit }: IPagination) {
         Menampilkan <b>{meta?.firstItem}</b> sampai <b>{meta?.lastItem}</b> dari{' '}
         <b>{meta?.totalData}</b> data
       </span>
-      <div className='d-flex justify-content-end align-items-center gap-4'>
+      <div className='d-flex justify-content-end align-items-center gap-2'>
         <div className='d-flex align-items-center me-2 gap-2'>
           <span>Show</span>
           <CDropdown

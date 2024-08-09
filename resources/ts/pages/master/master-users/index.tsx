@@ -40,7 +40,10 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
         text: `Apa kamu yakin ingin menghapus Master User ${data.name}?`,
         showCancelButton: true,
         confirmButtonText: 'Ya, Hapus',
-        confirmButtonColor: '#1A3159',
+        confirmButtonColor: 'var(--cui-primary)',
+        cancelButtonColor: 'var(--cui-secondary)',
+        background: 'var(--cui-body-bg)',
+        color: 'var(--cui-body-color)',
       }).then((result) => {
         if (result.isConfirmed) {
           toast

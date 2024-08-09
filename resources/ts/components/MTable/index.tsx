@@ -88,7 +88,7 @@ const MTable = ({
         </div>
       </CCardHeader>
       <CCardBody className='p-0'>
-        <CTable align='middle' responsive>
+        <CTable align='middle' responsive className='mb-0'>
           <MTableHeader
             actions={actions}
             columns={columnFilters}

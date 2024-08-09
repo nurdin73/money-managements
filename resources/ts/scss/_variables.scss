@@ -5,3 +5,14 @@
 $enable-deprecation-messages: false !default;
 
 $primary: #468571;
+
+$form-switch-widths: (
+  lg: (
+    width: 1.75em,
+    height: 1.25em
+  ),
+  xl: (
+    width: 3em,
+    height: 1.5em
+  )
+) !default;

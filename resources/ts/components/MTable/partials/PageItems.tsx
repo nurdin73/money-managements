@@ -1,6 +1,6 @@
 import React from 'react'
 import PaginationEllipsis from './PaginationElipsis'
-import { CButton } from '@coreui/react'
+import { CButton, CPagination, CPaginationItem } from '@coreui/react'
 
 interface IPageItems {
   total: number
@@ -12,16 +12,14 @@ function renderButtons(total, currentPage, onChangePage) {
   const listPage = Array(Number(total))
     .fill({})
     .map((_, idx) => (
-      <CButton
+      <CPaginationItem
         key={idx}
-        shape='rounded-pill'
-        size='sm'
-        disabled={idx + 1 === currentPage}
         onClick={() => onChangePage(idx + 1)}
+        disabled={idx + 1 === currentPage}
         color={idx + 1 === currentPage ? 'primary' : 'secondary'}
       >
         {idx + 1}
-      </CButton>
+      </CPaginationItem>
     ))
   if (total > 9) {
     if (currentPage > 6 && currentPage < total - 4) {
@@ -43,27 +41,18 @@ function renderButtons(total, currentPage, onChangePage) {
 
 function PageItems({ total, currentPage, onChangePage }: IPageItems) {
   return (
-    <div className='synergy-pagination__navigation'>
-      <CButton
-        size='sm'
-        color='primary'
-        shape='rounded-pill'
-        disabled={currentPage === 1}
-        onClick={() => onChangePage(currentPage - 1)}
-      >
+    <CPagination align='end' className='mb-0'>
+      <CPaginationItem disabled={currentPage === 1} onClick={() => onChangePage(currentPage - 1)}>
         Prev
-      </CButton>
+      </CPaginationItem>
       {renderButtons(total, currentPage, onChangePage)}
-      <CButton
-        size='sm'
-        color='primary'
-        shape='rounded-pill'
+      <CPaginationItem
         disabled={currentPage === total}
         onClick={() => onChangePage(currentPage + 1)}
       >
         Next
-      </CButton>
-    </div>
+      </CPaginationItem>
+    </CPagination>
   )
 }
 
