@@ -1,11 +1,13 @@
+import { CPaginationItem } from '@coreui/react'
+
 const PaginationEllipsis = () => (
-    <div>
-        {Array(3)
-            .fill({})
-            .map((_, idx) => (
-                <span key={idx}>.</span>
-            ))}
-    </div>
+  <CPaginationItem as='a'>
+    {Array(3)
+      .fill({})
+      .map((_, idx) => (
+        <span key={idx}>.</span>
+      ))}
+  </CPaginationItem>
 )
 
 // export const PaginationEllipsis = memo(PaginationEllipsisMemo)

@@ -2,7 +2,7 @@ import React from 'react'
 import NotfoundData from '../partials/NotfoundData'
 import { IColumns, TAction, TMeta } from '../types'
 import TableCell from '../partials/TableCell'
-import { CButton, CPlaceholder, CTableDataCell } from '@coreui/react'
+import { CButton, CFormCheck, CPlaceholder, CTableDataCell } from '@coreui/react'
 
 interface IMTableBody {
   actions?: TAction[]
@@ -10,9 +10,21 @@ interface IMTableBody {
   loading: boolean
   columns: IColumns<any>[]
   meta?: TMeta
+  selected?: any[]
+  onSelectedItem: (id) => void
+  showCheckbox?: boolean
 }
 
-function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
+function MTableBody({
+  actions,
+  loading,
+  data,
+  columns,
+  meta,
+  showCheckbox,
+  selected,
+  onSelectedItem,
+}: IMTableBody) {
   const startIndex = ((meta?.page ?? 1) - 1) * (meta?.perPage ?? 10) + 1
   return (
     <tbody>
@@ -21,6 +33,13 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           .fill({})
           .map((_, idx) => (
             <tr key={`loading-${idx}-${_}`}>
+              {showCheckbox && (
+                <td key={`load-${idx}-checkbox`}>
+                  <CPlaceholder animation='glow' className='d-block'>
+                    <CPlaceholder className='d-block' />
+                  </CPlaceholder>
+                </td>
+              )}
               {actions && (
                 <td key={`load-${idx}-action`}>
                   <CPlaceholder animation='glow' className='d-block'>
@@ -39,7 +58,10 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           ))}
       {data?.length === 0 && !loading && (
         <tr>
-          <CTableDataCell colSpan={columns.length + (actions ? 1 : 0)} className='text-center'>
+          <CTableDataCell
+            colSpan={columns.length + (actions ? 1 : 0) + (showCheckbox ? 1 : 0)}
+            className='text-center'
+          >
             <NotfoundData message='Data tidak ditemukan' />
           </CTableDataCell>
         </tr>
@@ -51,15 +73,30 @@ function MTableBody({ actions, loading, data, columns, meta }: IMTableBody) {
           //     borderBottom: '2px dashed #ccc',
           // }}
         >
+          {showCheckbox && (
+            <CTableDataCell
+              className='px-2'
+              style={{
+                position: 'sticky',
+                left: 0,
+                backgroundColor: 'var(--cui-body-bg)',
+              }}
+            >
+              <CFormCheck
+                name={`selected-${item.id}`}
+                checked={selected?.some((select) => select === item.id)}
+                onChange={() => onSelectedItem(item.id)}
+              />
+            </CTableDataCell>
+          )}
           {actions && (
             <CTableDataCell
               style={{
                 width: 150,
                 position: 'sticky',
-                left: 0,
+                left: showCheckbox ? 20 : 0,
                 backgroundColor: 'var(--cui-body-bg)',
               }}
-              className='px-4'
             >
               <div className='d-flex gap-2'>
                 {actions.map((a) => (

@@ -14,6 +14,7 @@ function renderButtons(total, currentPage, onChangePage) {
     .map((_, idx) => (
       <CPaginationItem
         key={idx}
+        as='a'
         onClick={() => onChangePage(idx + 1)}
         disabled={idx + 1 === currentPage}
         color={idx + 1 === currentPage ? 'primary' : 'secondary'}
@@ -42,11 +43,16 @@ function renderButtons(total, currentPage, onChangePage) {
 function PageItems({ total, currentPage, onChangePage }: IPageItems) {
   return (
     <CPagination align='end' className='mb-0'>
-      <CPaginationItem disabled={currentPage === 1} onClick={() => onChangePage(currentPage - 1)}>
+      <CPaginationItem
+        as='a'
+        disabled={currentPage === 1}
+        onClick={() => onChangePage(currentPage - 1)}
+      >
         Prev
       </CPaginationItem>
       {renderButtons(total, currentPage, onChangePage)}
       <CPaginationItem
+        as='a'
         disabled={currentPage === total}
         onClick={() => onChangePage(currentPage + 1)}
       >

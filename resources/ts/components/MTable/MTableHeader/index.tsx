@@ -3,15 +3,18 @@ import React from 'react'
 import Column from '../partials/Column'
 import { IColumns, IFilters, TAction } from '../types'
 import clsx from 'clsx'
-import { CTableHead, CTableHeaderCell } from '@coreui/react'
+import { CFormCheck, CTableHead, CTableHeaderCell } from '@coreui/react'
 
 interface IMTableHeader {
   actions?: TAction[]
   columns: IColumns<any>[]
   filters?: IFilters
+  showCheckbox?: boolean
   onSort: (order: string, sort: 'asc' | 'desc') => void
   onMultiSearch?: (key: string, value: string) => void
   onSearchFields?: (key: string, value: string) => void
+  onSelectedAll: (checked: boolean) => void
+  selectedAll?: boolean
 }
 
 function MTableHeader({
@@ -21,6 +24,9 @@ function MTableHeader({
   onSort,
   onMultiSearch,
   onSearchFields,
+  showCheckbox,
+  onSelectedAll,
+  selectedAll,
 }: IMTableHeader) {
   return (
     <CTableHead
@@ -32,12 +38,30 @@ function MTableHeader({
         borderBottom: '2px solid var(--cui-border-color)',
       }}
     >
-      {actions && (
+      {showCheckbox && (
         <CTableHeaderCell
-          className='py-2 px-4 text-center fw-bolder'
+          className='px-2'
           style={{
             position: 'sticky',
             left: 0,
+            width: 20,
+            verticalAlign: 'baseline',
+            backgroundColor: 'var(--cui-body-bg)',
+          }}
+        >
+          <CFormCheck
+            name='select-all'
+            checked={selectedAll}
+            onChange={(e) => onSelectedAll(e.target.checked)}
+          />
+        </CTableHeaderCell>
+      )}
+      {actions && (
+        <CTableHeaderCell
+          className='text-center fw-bolder'
+          style={{
+            position: 'sticky',
+            left: showCheckbox ? 20 : 0,
             verticalAlign: 'baseline',
             width: 20,
             backgroundColor: 'var(--cui-body-bg)',

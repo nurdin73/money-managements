@@ -19,6 +19,7 @@ interface TMTable {
   loading: boolean
   filters?: IFilters
   showButtonBack?: boolean
+  showCheckbox?: boolean
   additionalActions?: TAction[]
   onSort: (order: string, sort: 'asc' | 'desc') => void
   onSearch?: (search: string) => void
@@ -27,6 +28,7 @@ interface TMTable {
   onChangePage: (page) => void
   onCreate: () => void
   onChangeLimit: (limit) => void
+  onHandlerSelected?: (selecteds: any[]) => void
 }
 
 const MTable = ({
@@ -45,9 +47,13 @@ const MTable = ({
   showButtonBack,
   additionalActions,
   onSearchFields,
+  showCheckbox,
+  onHandlerSelected,
 }: TMTable) => {
   const navigate = useNavigate()
   const [hiddenColumns, setHiddenColumns] = React.useState<any[]>([])
+  const [selected, setSelected] = React.useState<any[]>([])
+  const [, forceUpdate] = React.useReducer((x) => x + 1, 0)
   const columnFilters = React.useMemo(
     () => columns.filter((col) => !hiddenColumns.some((hidden) => hidden === col.id)),
     [hiddenColumns, columns]
@@ -62,6 +68,35 @@ const MTable = ({
     })
   }, [])
 
+  const onSelectedItem = React.useCallback((id) => {
+    setSelected((state: any) => {
+      const findIndex = state.findIndex((i) => i === id)
+      if (findIndex != -1) {
+        state.splice(findIndex, 1)
+        return state
+      }
+      state.push(id)
+      return state
+    })
+    forceUpdate()
+  }, [])
+
+  const onSelectedAll = React.useCallback(
+    (checked: boolean) => {
+      if (checked) {
+        const mappingIds = data.map((item) => item.id)
+        console.log(mappingIds)
+        setSelected(mappingIds)
+        forceUpdate()
+        return
+      }
+      setSelected([])
+      forceUpdate()
+      return
+    },
+    [data]
+  )
+
   return (
     <CCard className='shadow-none'>
       <CCardHeader className='d-flex justify-content-between align-items-center p-3'>
@@ -70,6 +105,11 @@ const MTable = ({
           <span className='fs-4 fw-bold mb-0'>{title}</span>
         </div>
         <div className='d-flex justify-content-end gap-2'>
+          {selected.length > 0 && onHandlerSelected && (
+            <CButton onClick={() => onHandlerSelected(selected)} color='danger'>
+              [{selected.length}] Item Selected
+            </CButton>
+          )}
           <ColumnFilter columns={columns} hiddenColumns={hiddenColumns} onChange={onFilterColumn} />
           {additionalActions &&
             additionalActions.map((action) => (
@@ -90,6 +130,9 @@ const MTable = ({
       <CCardBody className='p-0'>
         <CTable align='middle' responsive className='mb-0'>
           <MTableHeader
+            selectedAll={selected.length === data.length}
+            showCheckbox={showCheckbox}
+            onSelectedAll={onSelectedAll}
             actions={actions}
             columns={columnFilters}
             filters={filters}
@@ -98,6 +141,9 @@ const MTable = ({
             onSearchFields={onSearchFields}
           />
           <MTableBody
+            selected={selected}
+            onSelectedItem={onSelectedItem}
+            showCheckbox={showCheckbox}
             meta={meta}
             actions={actions}
             columns={columnFilters}

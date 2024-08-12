@@ -70,6 +70,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
       <MTable
         title='Master User'
         columns={columns}
+        showCheckbox
         data={data}
         meta={meta}
         loading={loading}
@@ -80,6 +81,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
         onMultiSearch={onMultiSearch}
         onSearchFields={onMultiSearchFields}
         onCreate={onCreate}
+        onHandlerSelected={(selecteds) => console.log(selecteds)}
         filters={filters}
         actions={[
           {
