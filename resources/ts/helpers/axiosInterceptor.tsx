@@ -27,7 +27,7 @@ const refreshAuthLogic = (failedRequest) =>
     .catch(() => {
       setCurrentToken(null)
       setCurrentUser(null)
-      window.location.reload()
+      // window.location.reload()
     })
 
 // request interceptor
@@ -53,7 +53,7 @@ axiosInterceptorInstance.interceptors.response.use(
     if (error.response?.status == 401) {
       setCurrentToken(null)
       setCurrentUser(null)
-      window.location.reload()
+      window.location.href = '/#/auth'
     }
 
     if (error.response?.data) {

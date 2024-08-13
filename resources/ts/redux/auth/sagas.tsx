@@ -60,11 +60,11 @@ function* logoutUser() {
   }
   setCurrentUser(null)
   setCurrentToken(null)
-  window.location.href = '/auth'
+  window.location.href = '/#/auth'
 }
 
 function* loadUser({ payload }) {
-  const { navigate } = payload
+  const navigate = payload?.navigate
   try {
     const response = yield call(loadUserAsync)
     if (response.data.id) {
