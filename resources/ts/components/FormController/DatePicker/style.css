@@ -36,6 +36,19 @@
   background-color: var(--cui-primary);
 }
 
+.react-datepicker__day:hover {
+  color: var(--cui-body-bg);
+  background-color: var(--cui-body-color);
+}
+
+.react-datepicker__day {
+  color: var(--cui-body-color);
+}
+
+.react-datepicker__current-month {
+  color: var(--cui-body-color);
+}
+
 .react-datepicker__day--keyboard-selected {
   background-color: var(--cui-primary);
 }

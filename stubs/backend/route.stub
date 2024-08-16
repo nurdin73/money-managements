@@ -8,4 +8,5 @@ Route::group(['middleware' => [{{ middleware }}]], function() {
   Route::get('/{id}', [{{ modelName }}Controller::class, 'show']);
   Route::put('/{id}', [{{ modelName }}Controller::class, 'update']);
   Route::delete('/{id}', [{{ modelName }}Controller::class, 'destroy']);
+  Route::delete('/', [{{ modelName }}Controller::class, 'bulkDestroy']);
 });

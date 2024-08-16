@@ -81,22 +81,6 @@ const MTable = ({
     forceUpdate()
   }, [])
 
-  const onSelectedAll = React.useCallback(
-    (checked: boolean) => {
-      if (checked) {
-        const mappingIds = data.map((item) => item.id)
-        console.log(mappingIds)
-        setSelected(mappingIds)
-        forceUpdate()
-        return
-      }
-      setSelected([])
-      forceUpdate()
-      return
-    },
-    [data]
-  )
-
   return (
     <CCard className='shadow-none'>
       <CCardHeader className='d-flex justify-content-between align-items-center p-3'>
@@ -130,9 +114,7 @@ const MTable = ({
       <CCardBody className='p-0'>
         <CTable align='middle' responsive className='mb-0'>
           <MTableHeader
-            selectedAll={selected.length === data.length}
             showCheckbox={showCheckbox}
-            onSelectedAll={onSelectedAll}
             actions={actions}
             columns={columnFilters}
             filters={filters}

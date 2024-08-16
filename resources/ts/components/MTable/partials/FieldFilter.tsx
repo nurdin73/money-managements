@@ -3,6 +3,7 @@ import { CFormInput, CFormSelect } from '@coreui/react'
 import DatePicker from 'react-datepicker'
 import dayjs from 'dayjs'
 import ReactSelect from 'react-select'
+import '@/components/FormController/DatePicker/style.css'
 
 import { IColumns } from '../types'
 
@@ -38,8 +39,9 @@ function FieldFilter({ column, onMultiSearch, onSearchFields }: IFieldFilter) {
               onMultiSearch(column.id, value)
             }
           }}
+          showPopperArrow={false}
           className='form-control'
-          dateFormat='DD/MM/YYYY'
+          dateFormat='dd/MM/yyyy'
           isClearable
           placeholderText={`Pilih ${column.label}`}
         />

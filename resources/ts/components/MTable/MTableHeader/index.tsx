@@ -13,8 +13,6 @@ interface IMTableHeader {
   onSort: (order: string, sort: 'asc' | 'desc') => void
   onMultiSearch?: (key: string, value: string) => void
   onSearchFields?: (key: string, value: string) => void
-  onSelectedAll: (checked: boolean) => void
-  selectedAll?: boolean
 }
 
 function MTableHeader({
@@ -25,8 +23,6 @@ function MTableHeader({
   onMultiSearch,
   onSearchFields,
   showCheckbox,
-  onSelectedAll,
-  selectedAll,
 }: IMTableHeader) {
   return (
     <CTableHead
@@ -49,11 +45,7 @@ function MTableHeader({
             backgroundColor: 'var(--cui-body-bg)',
           }}
         >
-          <CFormCheck
-            name='select-all'
-            checked={selectedAll}
-            onChange={(e) => onSelectedAll(e.target.checked)}
-          />
+          #
         </CTableHeaderCell>
       )}
       {actions && (
