@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Repositories\Master\UserRepository;
 use App\Http\Requests\Master\UserRequest;
 use App\Http\Resources\Master\UserResource;
+use Illuminate\Http\Request;
 
 /**
  * Class UserRepositoryEloquent.
@@ -68,5 +69,18 @@ class UserController extends Controller
         $find = $this->repository->find($id);
         $find->delete();
         return $this->sendResponse(trans('messages.destroy', ['attr' => "User"]), new UserResource($find));
+    }
+
+    /**
+     * Remove the bulk resource from storage.
+     */
+    public function bulkDestroy(Request $request)
+    {
+        $this->validate($request, [
+            'ids' => 'required|array'
+        ]);
+        $ids = $request->ids;
+        $find = $this->repository->whereIn('id', $ids)->delete();
+        return $this->sendResponse(trans('messages.destroy', ['attr' => "{{ modelName }}"]));
     }
 }

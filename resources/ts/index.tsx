@@ -1,8 +1,8 @@
 import { createRoot } from 'react-dom/client'
 import { Provider } from 'react-redux'
+import 'react-toastify/dist/ReactToastify.css'
 import 'core-js'
 import 'react-datepicker/dist/react-datepicker.min.css'
-import 'react-toastify/dist/ReactToastify.css'
 
 import App from './App'
 import store from './redux/store'

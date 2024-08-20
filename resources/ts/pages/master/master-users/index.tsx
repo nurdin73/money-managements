@@ -65,6 +65,39 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
     [filters]
   )
 
+  const onBulkDestroy = React.useCallback(
+    (ids: any[]) => {
+      Swal.fire({
+        icon: 'warning',
+        title: 'Hapus Beberapa Master User',
+        text: `Apa kamu yakin ingin menghapus beberapa Master User?`,
+        showCancelButton: true,
+        confirmButtonText: 'Ya, Hapus',
+        confirmButtonColor: 'var(--cui-primary)',
+        cancelButtonColor: 'var(--cui-secondary)',
+        background: 'var(--cui-body-bg)',
+        color: 'var(--cui-body-color)',
+      }).then((result) => {
+        if (result.isConfirmed) {
+          toast
+            .promise(MasterUserService.BulkDelete(ids), {
+              pending: 'Menghapus data Master User',
+              success: 'Data Master User berhasil dihapus',
+            })
+            .catch((err) => {
+              toast(err?.message, {
+                type: 'error',
+              })
+            })
+            .then(() => {
+              loadMasterUserList(filters)
+            })
+        }
+      })
+    },
+    [filters]
+  )
+
   return (
     <>
       <MTable
@@ -81,7 +114,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
         onMultiSearch={onMultiSearch}
         onSearchFields={onMultiSearchFields}
         onCreate={onCreate}
-        onHandlerSelected={(selecteds) => console.log(selecteds)}
+        onHandlerSelected={(selecteds) => onBulkDestroy(selecteds)}
         filters={filters}
         actions={[
           {

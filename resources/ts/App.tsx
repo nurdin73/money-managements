@@ -5,6 +5,7 @@ import { useSelector } from 'react-redux'
 import { CSpinner, useColorModes } from '@coreui/react'
 import './scss/style.scss'
 import AuthPage from './pages/auth'
+import { ToastContainer } from 'react-toastify'
 
 // Containers
 const DefaultLayout = React.lazy(() => import('./layout/DefaultLayout'))

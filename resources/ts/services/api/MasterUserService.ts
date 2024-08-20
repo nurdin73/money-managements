@@ -15,4 +15,11 @@ export class MasterUserService {
     static Delete(id: any) {
         return axiosInterceptorInstance.delete(`/master/users/${id}`)
     }
+    static BulkDelete(ids: any[]) {
+        return axiosInterceptorInstance.delete(`/master/users`, {
+            data: {
+                ids
+            }
+        })
+    }
 }
