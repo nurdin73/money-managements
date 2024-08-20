@@ -63,7 +63,7 @@ const GeneratorProvider = ({ children }) => {
       }
       setFields(newFields)
       // TODO for check value of fields realtime
-      // forceUpdate()
+      forceUpdate()
     },
     [fields]
   )

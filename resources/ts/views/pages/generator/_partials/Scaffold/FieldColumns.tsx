@@ -65,6 +65,7 @@ function FieldColumns() {
               </CTableDataCell>
               <CTableDataCell>
                 <CFormInput
+                  value={field.field as any}
                   onChange={(e) => {
                     onEditField(field.id, 'field', e.target.value)
                   }}
@@ -72,6 +73,7 @@ function FieldColumns() {
               </CTableDataCell>
               <CTableDataCell>
                 <CFormSelect
+                  value={field.type as any}
                   options={typeFields}
                   onChange={(e) => {
                     onEditField(field.id, 'type', e.target.value)
@@ -81,6 +83,7 @@ function FieldColumns() {
               <CTableDataCell>
                 <div className='d-flex justify-content-center w-100'>
                   <CFormCheck
+                    checked={field.nullable}
                     onChange={(e) => {
                       onEditField(field.id, 'nullable', e.target.checked)
                     }}
@@ -89,6 +92,7 @@ function FieldColumns() {
               </CTableDataCell>
               <CTableDataCell>
                 <CFormInput
+                  value={field.relationship}
                   onChange={(e) => {
                     onEditField(field.id, 'relationship', e.target.value)
                   }}
@@ -96,6 +100,7 @@ function FieldColumns() {
               </CTableDataCell>
               <CTableDataCell>
                 <CFormInput
+                  value={field.defaultValue}
                   onChange={(e) => {
                     onEditField(field.id, 'defaultValue', e.target.value)
                   }}
