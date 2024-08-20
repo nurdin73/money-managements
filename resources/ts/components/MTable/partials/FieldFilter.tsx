@@ -4,7 +4,7 @@ import DatePicker from 'react-datepicker'
 import dayjs from 'dayjs'
 import ReactSelect from 'react-select'
 import '@/components/FormController/DatePicker/style.css'
-
+import '@/components/FormController/AutoComplete/style.css'
 import { IColumns } from '../types'
 
 interface IFieldFilter {

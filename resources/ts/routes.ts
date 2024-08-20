@@ -50,6 +50,7 @@ const Modals = React.lazy(() => import('./views/notifications/modals/Modals'))
 const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 
 const Widgets = React.lazy(() => import('./views/widgets/Widgets'))
+const Generator = React.lazy(() => import('@/views/pages/generator'))
 
 // pages app
 const StarterPage = React.lazy(() => import('@/pages/master/master-users'))
@@ -58,6 +59,7 @@ const StarterPage = React.lazy(() => import('@/pages/master/master-users'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/starter', name: 'Starter', element: StarterPage },
+  { path: '/generator', name: 'Starter', element: Generator },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
   { path: '/theme', name: 'Theme', element: Colors, exact: true },
   { path: '/theme/colors', name: 'Colors', element: Colors },

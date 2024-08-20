@@ -8,6 +8,7 @@ import {
   cilCursor,
   cilDescription,
   cilDrop,
+  cilFire,
   cilNotes,
   cilPencil,
   cilPuzzle,
@@ -26,6 +27,12 @@ const _nav = [
       color: 'info',
       text: 'NEW',
     },
+  },
+  {
+    component: CNavItem,
+    name: 'Generator CRUD',
+    to: '/generator',
+    icon: <CIcon icon={cilFire} customClassName='nav-icon' />,
   },
   {
     component: CNavItem,

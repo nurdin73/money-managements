@@ -2,12 +2,14 @@ import React from 'react'
 import { TOptions } from '../MTable/types'
 import {
   CButton,
+  CCol,
   CFormCheck,
   CFormInput,
   CFormLabel,
   CFormSelect,
   CFormSwitch,
   CFormTextarea,
+  CRow,
 } from '@coreui/react'
 import { getIn, useFormikContext } from 'formik'
 import DatePickerForm from './DatePicker'
@@ -15,6 +17,7 @@ import axios from 'axios'
 import debouncePromise, { DebouncedFunction } from '@/helpers/debounce'
 import AutoComplete from './AutoComplete'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
+import clsx from 'clsx'
 
 type JsonOptions = {
   label: any
@@ -51,6 +54,8 @@ export interface FormControllerProps {
   onChange?: (event: any) => void
   asSingle?: boolean
   required?: boolean
+  readOnly?: boolean
+  direction?: 'horizontal' | 'vertical'
   children?: React.ReactNode
 }
 
@@ -84,7 +89,11 @@ function FormControllerMemo(props: FormControllerProps) {
         <CFormInput
           invalid={!!errorMessage}
           valid={getIn(touched, props.name) && !errorMessage}
-          {...props}
+          name={props.name}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
+          size={props.size}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
           onChange={handleChange}
@@ -95,7 +104,11 @@ function FormControllerMemo(props: FormControllerProps) {
         <CFormInput
           invalid={!!errorMessage}
           valid={getIn(touched, props.name) && !errorMessage}
-          {...props}
+          name={props.name}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+          size={props.size}
+          readOnly={props.readOnly}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
           onChange={handleChange}
@@ -106,7 +119,10 @@ function FormControllerMemo(props: FormControllerProps) {
         <CFormTextarea
           invalid={!!errorMessage}
           valid={getIn(touched, props.name) && !errorMessage}
-          {...props}
+          name={props.name}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+          readOnly={props.readOnly}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
           onChange={handleChange}
@@ -129,7 +145,12 @@ function FormControllerMemo(props: FormControllerProps) {
         <CFormSelect
           invalid={!!errorMessage}
           valid={getIn(touched, props.name) && !errorMessage}
-          {...props}
+          name={props.name}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+          size={props.size}
+          readOnly={props.readOnly}
+          options={props.options}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
           onChange={handleChange}
@@ -152,7 +173,10 @@ function FormControllerMemo(props: FormControllerProps) {
         <div className='position-relative'>
           <CFormInput
             invalid={!!errorMessage}
-            {...props}
+            name={props.name}
+            placeholder={props.placeholder}
+            disabled={props.disabled}
+            size={props.size}
             type={isShowPassword ? 'text' : 'password'}
             feedbackInvalid={errorMessage}
             defaultValue={defaultValue}
@@ -183,14 +207,17 @@ function FormControllerMemo(props: FormControllerProps) {
   }, [props, errorMessage, defaultValue, togglePassword, isShowPassword])
 
   return (
-    <div className='mb-2'>
-      {props.required && (
-        <CFormLabel>
-          <sup className='text-danger'>*</sup>
-        </CFormLabel>
-      )}
-      {render}
-    </div>
+    <CRow className='mb-2'>
+      <CFormLabel
+        htmlFor={props.name}
+        className={clsx('col-form-label', {
+          'col-md-2': props.direction === 'horizontal',
+        })}
+      >
+        {props.label} {props.required && <sup className='text-danger'>*</sup>}
+      </CFormLabel>
+      <CCol md={props.direction === 'horizontal' ? 10 : 12}>{render}</CCol>
+    </CRow>
   )
 }
 

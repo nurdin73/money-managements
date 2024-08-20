@@ -10,7 +10,7 @@ class {{ class }} extends Model
 {
     use HasFactory;
 
-    public static function bootAuthorModelObservantTrait()
+    public static function booted()
     {
         static::observe(AuthorObserver::class);
     }
