@@ -8,6 +8,7 @@ const useMtableHook = () => {
     orderBy: 'id',
     sortedBy: 'desc',
   })
+  const timeout: any = React.useRef()
   const [multiSearch, setMultiSearch] = React.useState({})
   const [multiSearchFields, setMultiSearchFields] = React.useState({})
 
@@ -48,11 +49,14 @@ const useMtableHook = () => {
     }))
   }, [])
   const onSearch = React.useCallback((search: string) => {
-    setFilters((prevFilter) => ({
-      ...prevFilter,
-      search,
-      page: 1,
-    }))
+    clearTimeout(timeout.current)
+    timeout.current = setTimeout(() => {
+      setFilters((prevFilter) => ({
+        ...prevFilter,
+        search,
+        page: 1,
+      }))
+    }, 1000)
   }, [])
   const onChangePage = React.useCallback((page) => {
     setFilters((prevFilter) => ({
