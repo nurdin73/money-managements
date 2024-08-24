@@ -8,7 +8,11 @@ function Scaffold() {
   const { values, setFieldValue } = useFormikContext<any>()
 
   React.useEffect(() => {
-    if (!values.model) return
+    if (!values.model) {
+      setFieldValue('controller', undefined)
+      setFieldValue('table_name', undefined)
+      return
+    }
     const timeout = setTimeout(() => {
       // generate name table
       const splitModelName = (values.model ?? '')?.split('/')
@@ -32,8 +36,20 @@ function Scaffold() {
   return (
     <>
       <FormController direction='horizontal' required name='model' label='Model' type='text' />
-      <FormController direction='horizontal' name='table_name' label='Table Name' type='text' />
-      <FormController direction='horizontal' name='controller' label='Controller' type='text' />
+      <FormController
+        direction='horizontal'
+        required
+        name='table_name'
+        label='Table Name'
+        type='text'
+      />
+      <FormController
+        direction='horizontal'
+        required
+        name='controller'
+        label='Controller'
+        type='text'
+      />
       <FieldColumns />
     </>
   )

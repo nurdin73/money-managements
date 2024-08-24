@@ -9,11 +9,13 @@ import {
   cilDescription,
   cilDrop,
   cilFire,
+  cilLockLocked,
   cilNotes,
   cilPencil,
   cilPuzzle,
   cilSpeedometer,
   cilStar,
+  cilUser,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 
@@ -39,6 +41,28 @@ const _nav = [
     name: 'Starter',
     to: '/starter',
     icon: <CIcon icon={cilBolt} customClassName='nav-icon' />,
+  },
+  {
+    component: CNavTitle,
+    name: 'Managements',
+  },
+  {
+    component: CNavItem,
+    name: 'Users',
+    to: '/users',
+    icon: <CIcon icon={cilUser} customClassName='nav-icon' />,
+  },
+  {
+    component: CNavItem,
+    name: 'Roles',
+    to: '/roles',
+    icon: <CIcon icon={cilBolt} customClassName='nav-icon' />,
+  },
+  {
+    component: CNavItem,
+    name: 'Permissions',
+    to: '/permissions',
+    icon: <CIcon icon={cilLockLocked} customClassName='nav-icon' />,
   },
   {
     component: CNavTitle,

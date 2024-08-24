@@ -15,6 +15,7 @@ import Scaffold from './_partials/Scaffold'
 import useGenerator from './hook'
 import GeneratorProvider from './provider'
 import clsx from 'clsx'
+import View from './_partials/View'
 
 function GeneratorPage() {
   const [tab, setTab] = React.useState('Scaffold')
@@ -44,7 +45,10 @@ function GeneratorPage() {
                 ))}
               </CNav>
             </CCardHeader>
-            <CCardBody>{tab === 'Scaffold' && <Scaffold />}</CCardBody>
+            <CCardBody>
+              {tab === 'Scaffold' && <Scaffold />}
+              {tab === 'View' && <View />}
+            </CCardBody>
             <CCardFooter
               className={clsx('d-flex align-items-center', {
                 'justify-content-between': tab !== 'Scaffold',

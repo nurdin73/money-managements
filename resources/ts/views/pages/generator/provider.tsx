@@ -68,8 +68,6 @@ const GeneratorProvider = ({ children }) => {
     [fields]
   )
 
-  console.log(fields)
-
   const values = {
     fields,
     onAddField,
