@@ -91,6 +91,7 @@ function {{ actionName }}Modal({
             {({ handleSubmit, resetForm, isSubmitting }) => (
                 <CModal
                     visible={!!modal}
+                    backdrop={isSubmitting ? 'static' : true}
                     onClose={() => {
                         resetForm()
                         onClose()

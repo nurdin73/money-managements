@@ -82,6 +82,7 @@ function MasterUserModal({ modal, onClose, type, loadMasterUserList }: IMasterUs
       {({ handleSubmit, resetForm, isSubmitting }) => (
         <CModal
           visible={!!modal}
+          backdrop={isSubmitting ? 'static' : true}
           onClose={() => {
             resetForm()
             onClose()
