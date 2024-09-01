@@ -1,9 +1,10 @@
 import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
 
 export class MasterUserService {
-    static List(params?: any) {
+    static List(params?: any, signal?: any) {
         return axiosInterceptorInstance.get('/master/users', {
             params,
+            signal
         })
     }
     static Create(payload: any) {

@@ -30,8 +30,14 @@ function {{ actionName }}Page({
     } = use{{ actionName }}Util()
     const { data, loading, meta } = {{ reducerName }}App
 
+    const controller = React.useRef<AbortController | null>()
+
     React.useEffect(() => {
-        load{{ actionName }}List(filters)
+        controller.current = new AbortController()
+        load{{ actionName }}List(filters, controller.current.signal)
+        return () => {
+            if (controller.current) controller.current.abort()
+        }
     }, [filters])
 
     const onDestroy = React.useCallback(
@@ -59,7 +65,7 @@ function {{ actionName }}Page({
                             })
                         })
                         .then(() => {
-                            load{{ actionName }}List(filters)
+                            load{{ actionName }}List(filters, controller.current?.signal)
                         })
                 }
             })
@@ -82,8 +88,8 @@ function {{ actionName }}Page({
             if (result.isConfirmed) {
                 toast
                     .promise({{ actionName }}Service.BulkDelete(ids), {
-                        pending: 'Menghapus data Master User',
-                        success: 'Data Master User berhasil dihapus',
+                        pending: 'Menghapus data {{ moduleTitle }}',
+                        success: 'Data {{ moduleTitle }} berhasil dihapus',
                     })
                     .catch((err) => {
                         toast(err?.message, {
@@ -91,7 +97,7 @@ function {{ actionName }}Page({
                         })
                     })
                     .then(() => {
-                        load{{ actionName }}List(filters)
+                        load{{ actionName }}List(filters, controller.current?.signal)
                     })
             }
         })

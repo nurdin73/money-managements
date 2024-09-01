@@ -7,12 +7,12 @@ import {
     load{{ actionName }}Error,
 } from './action'
 
-const load{{ actionName }}sAsync = async (params?: any) =>
-    {{ actionName }}Service.List(params)
+const load{{ actionName }}sAsync = async (params?: any, signal?: any) =>
+    {{ actionName }}Service.List(params, signal)
 
 function* load{{ actionName }}({ payload }) {
     try {
-        const response = yield call(load{{ actionName }}sAsync, payload)
+        const response = yield call(load{{ actionName }}sAsync, payload.params, params.signal)
         yield put(load{{ actionName }}Success(response.data.data, response.data.meta))
     } catch (error: any) {
         yield put(load{{ actionName }}Error(error?.message ?? 'Unknown error'))

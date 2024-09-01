@@ -7,12 +7,12 @@ import {
     loadMasterUserError,
 } from './action'
 
-const loadMasterUsersAsync = async (params?: any) =>
-    MasterUserService.List(params)
+const loadMasterUsersAsync = async (params?: any, signal?: any) =>
+    MasterUserService.List(params, signal)
 
 function* loadMasterUser({ payload }) {
     try {
-        const response = yield call(loadMasterUsersAsync, payload)
+        const response = yield call(loadMasterUsersAsync, payload.params, payload.signal)
         yield put(loadMasterUserSuccess(response.data.data, response.data.meta))
     } catch (error: any) {
         yield put(loadMasterUserError(error?.message ?? 'Unknown error'))

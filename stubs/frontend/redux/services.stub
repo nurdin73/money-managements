@@ -1,9 +1,10 @@
 import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
 
 export class {{ actionName }}Service {
-    static List(params?: any) {
+    static List(params?: any, signal?: any) {
         return axiosInterceptorInstance.get('{{ api }}', {
             params,
+            signal
         })
     }
     static Create(payload: any) {

@@ -66,83 +66,84 @@ function MTableBody({
           </CTableDataCell>
         </tr>
       )}
-      {data?.map((item, idx) => (
-        <tr
-          key={`item-${item.id}`}
-          // style={{
-          //     borderBottom: '2px dashed #ccc',
-          // }}
-        >
-          {showCheckbox && (
-            <CTableDataCell
-              className='px-2'
-              style={{
-                position: 'sticky',
-                left: 0,
-                backgroundColor: 'var(--cui-body-bg)',
-              }}
-            >
-              <CFormCheck
-                name={`selected-${item.id}`}
-                checked={selected?.some((select) => select === item.id)}
-                onChange={() => onSelectedItem(item.id)}
-              />
-            </CTableDataCell>
-          )}
-          {actions && (
-            <CTableDataCell
-              style={{
-                width: 150,
-                position: 'sticky',
-                left: showCheckbox ? 20 : 0,
-                backgroundColor: 'var(--cui-body-bg)',
-              }}
-            >
-              <div className='d-flex gap-2'>
-                {actions.map((a) => (
-                  <CButton size='sm' color={a.variant} onClick={() => a.onClick(item)}>
-                    {a.title}
-                  </CButton>
-                ))}
-              </div>
-            </CTableDataCell>
-          )}
-          {columns?.map((col) => {
-            if (col.render)
-              return (
-                <TableCell
-                  fixed={col.fixed}
-                  key={`item-${item.id}-${col.id}`}
-                  center={col.center}
-                  width={col?.width}
-                >
-                  {col.render(item)}
-                </TableCell>
-              )
-            if (col.id === 'no')
-              return (
-                <TableCell
-                  fixed={col.fixed}
-                  center={col.center}
-                  key={`item-${item.id}-${col.id}`}
-                  width={col?.width}
-                >
-                  {startIndex + idx}
-                </TableCell>
-              )
-            return (
-              <TableCell
-                fixed={col.fixed}
-                key={`item-${item.id}-${col.id}`}
-                center={col.center}
-                width={col?.width}
+      {!loading &&
+        data?.map((item, idx) => (
+          <tr
+            key={`item-${item.id}`}
+            // style={{
+            //     borderBottom: '2px dashed #ccc',
+            // }}
+          >
+            {showCheckbox && (
+              <CTableDataCell
+                className='px-2'
+                style={{
+                  position: 'sticky',
+                  left: 0,
+                  backgroundColor: 'var(--cui-body-bg)',
+                }}
               >
-                {item[col.id]}
-              </TableCell>
-            )
-          })}
-        </tr>
-      ))}
+                <CFormCheck
+                  name={`selected-${item.id}`}
+                  checked={selected?.some((select) => select === item.id)}
+                  onChange={() => onSelectedItem(item.id)}
+                />
+              </CTableDataCell>
+            )}
+            {actions && (
+              <CTableDataCell
+                style={{
+                  width: 150,
+                  position: 'sticky',
+                  left: showCheckbox ? 20 : 0,
+                  backgroundColor: 'var(--cui-body-bg)',
+                }}
+              >
+                <div className='d-flex gap-2'>
+                  {actions.map((a) => (
+                    <CButton size='sm' color={a.variant} onClick={() => a.onClick(item)}>
+                      {a.title}
+                    </CButton>
+                  ))}
+                </div>
+              </CTableDataCell>
+            )}
+            {columns?.map((col) => {
+              if (col.render)
+                return (
+                  <TableCell
+                    fixed={col.fixed}
+                    key={`item-${item.id}-${col.id}`}
+                    center={col.center}
+                    width={col?.width}
+                  >
+                    {col.render(item)}
+                  </TableCell>
+                )
+              if (col.id === 'no')
+                return (
+                  <TableCell
+                    fixed={col.fixed}
+                    center={col.center}
+                    key={`item-${item.id}-${col.id}`}
+                    width={col?.width}
+                  >
+                    {startIndex + idx}
+                  </TableCell>
+                )
+              return (
+                <TableCell
+                  fixed={col.fixed}
+                  key={`item-${item.id}-${col.id}`}
+                  center={col.center}
+                  width={col?.width}
+                >
+                  {item[col.id]}
+                </TableCell>
+              )
+            })}
+          </tr>
+        ))}
     </tbody>
   )
 }

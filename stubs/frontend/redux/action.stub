@@ -4,9 +4,9 @@ export const LOAD_{{ logName }} = '[PENDING] {{ logName }}'
 export const LOAD_{{ logName }}_SUCCESS = '[SUCCESS] {{ logName }}'
 export const LOAD_{{ logName }}_ERROR = '[ERROR] {{ logName }}'
 
-export const load{{ actionName }} = (params?: any) => ({
+export const load{{ actionName }} = (params?: any, signal?: any) => ({
     type: LOAD_{{ logName }},
-    payload: params,
+    payload: {params, signal},
 })
 
 export const load{{ actionName }}Success = (data: any[], meta: TMeta) => ({

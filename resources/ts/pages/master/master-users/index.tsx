@@ -28,8 +28,14 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
   } = useMasterUserUtil()
   const { data, loading, meta } = masterUsersApp
 
+  const controller = React.useRef<AbortController | null>()
+
   React.useEffect(() => {
-    loadMasterUserList(filters)
+    controller.current = new AbortController()
+    loadMasterUserList(filters, controller.current.signal)
+    return () => {
+      if (controller.current) controller.current.abort()
+    }
   }, [filters])
 
   const onDestroy = React.useCallback(
@@ -57,7 +63,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
               })
             })
             .then(() => {
-              loadMasterUserList(filters)
+              loadMasterUserList(filters, controller.current?.signal)
             })
         }
       })
@@ -90,7 +96,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
               })
             })
             .then(() => {
-              loadMasterUserList(filters)
+              loadMasterUserList(filters, controller.current?.signal)
             })
         }
       })

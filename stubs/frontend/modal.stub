@@ -45,10 +45,11 @@ function {{ actionName }}Modal({
                     })
                     .then(() => {
                         onClose()
+                        const controller = new AbortController()
                         load{{ actionName }}List({
                             orderBy: 'created_date',
                             sortedBy: 'desc',
-                        })
+                        }, controller.signal)
                     })
                     .catch((err) => {
                         toast(err?.message, {
