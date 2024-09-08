@@ -8,7 +8,15 @@ import Pagination from './partials/Pagination'
 import MTableHeader from './MTableHeader'
 import MTableBody from './MTableBody'
 import { IColumns, IFilters, TAction, TMeta } from './types'
-import { CButton, CCard, CCardBody, CCardFooter, CCardHeader, CTable } from '@coreui/react'
+import {
+  CButton,
+  CCard,
+  CCardBody,
+  CCardFooter,
+  CCardHeader,
+  CFormInput,
+  CTable,
+} from '@coreui/react'
 
 interface TMTable {
   columns: IColumns<any>[]
@@ -26,7 +34,7 @@ interface TMTable {
   onMultiSearch?: (key: string, value: string) => void
   onSearchFields?: (key: string, value: string) => void
   onChangePage: (page) => void
-  onCreate: () => void
+  onCreate?: () => void
   onChangeLimit: (limit) => void
   onHandlerSelected?: (selecteds: any[]) => void
 }
@@ -49,6 +57,7 @@ const MTable = ({
   onSearchFields,
   showCheckbox,
   onHandlerSelected,
+  onSearch,
 }: TMTable) => {
   const navigate = useNavigate()
   const [hiddenColumns, setHiddenColumns] = React.useState<any[]>([])
@@ -106,12 +115,24 @@ const MTable = ({
                 {action.title}
               </CButton>
             ))}
-          <CButton color='primary' onClick={onCreate}>
-            Tambah Data
-          </CButton>
+          {onCreate && (
+            <CButton color='primary' onClick={onCreate}>
+              Tambah Data
+            </CButton>
+          )}
         </div>
       </CCardHeader>
       <CCardBody className='p-0'>
+        {onSearch && (
+          <div className='d-flex justify-content-end'>
+            <CFormInput
+              name='search'
+              onChange={(e) => {
+                onSearch(e.target.value)
+              }}
+            />
+          </div>
+        )}
         <CTable align='middle' responsive className='mb-0'>
           <MTableHeader
             showCheckbox={showCheckbox}

@@ -1,0 +1,19 @@
+/**
+    * export resource from database.
+    */
+    public function export()
+    {
+        $results = $this->repository->get();
+        $export = new {{ modelName }}Export($results);
+        $path = 'exports/{{ path }}.xlsx';
+        $export->store($path, 'local', \Maatwebsite\Excel\Excel::XLSX);
+        $pathFile = Storage::disk('local')->path($path);
+        $content = file_get_contents($pathFile);
+        $base64 = base64_encode($content);
+        $mime_type = mime_content_type($pathFile);
+        Storage::disk('local')->delete($path);
+        return $this->sendResponse(trans('messages.export'), [
+            'mime_type' => $mime_type,
+            'base64' => $base64,
+        ]);
+    }

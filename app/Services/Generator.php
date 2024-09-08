@@ -5,6 +5,7 @@ namespace App\Services;
 use Illuminate\Console\Command;
 use Illuminate\Support\Pluralizer;
 use Illuminate\Filesystem\Filesystem;
+use Illuminate\Support\Str;
 
 class Generator extends Command
 {
@@ -22,9 +23,62 @@ class Generator extends Command
   function checkModelExists($model): bool
   {
     $path = base_path("app/Models/" . $this->getSingularClassName($model) . '.php');
-    info($this->files->exists($path));
     if ($this->files->exists($path)) return true;
     return false;
+  }
+
+  function checkControllerExist($model): bool|string
+  {
+    $path = base_path("app/Http/Controllers/" . $this->getSingularClassName($model) . 'Controller.php');
+    if ($this->files->exists($path)) return $path;
+    return false;
+  }
+
+  function getNameFile()
+  {
+    $path = explode('/', $this->getPathRoute());
+    if (count($path) == 0) return false;
+    $basePath = $path[0];
+    $nameFile = $basePath;
+    if (count($path) > 1) {
+      $nameFile = $path[1];
+    }
+    return $nameFile;
+  }
+
+  function getModelName()
+  {
+    $name = explode('/', $this->getSingularClassName($this->argument('model')));
+    return $name[count($name) - 1];
+  }
+
+  function checkRouteIsExist(): bool|string
+  {
+    $path = explode('/', $this->getPathRoute());
+    if (count($path) == 0) return false;
+    $basePath = $path[0];
+    $nameFile = $basePath;
+    if (count($path) > 1) {
+      $nameFile = $path[1];
+    }
+    if (empty($basePath)) {
+      $basePath = $nameFile;
+    }
+    $baseRoute = "routes/v1";
+    $filePath = base_path($baseRoute) . '/' . $basePath . '/' . "{$nameFile}.php";
+    if ($this->files->exists($filePath)) return $filePath;
+    return false;
+  }
+
+  public function getPathRoute()
+  {
+    $dir = strtolower($this->argument('model'));
+    $explode = explode('/', $dir);
+    $explodeForNameFile = explode('/', $this->argument('model'));
+    $nameFile = $explodeForNameFile[count($explodeForNameFile) - 1];
+    unset($explode[count($explode) - 1]);
+    $join = implode('/', $explode) . '/' . Pluralizer::plural(Str::slug(Str::snake($nameFile)));
+    return $join;
   }
 
   function getSourceFilePath($path)

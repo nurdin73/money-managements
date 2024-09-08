@@ -7,6 +7,8 @@ use App\Repositories\{{ model }}Repository;
 use App\Http\Requests\{{ model }}Request;
 use App\Http\Resources\{{ model }}Resource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+// export file content
 
 /**
  * Class {{ modelName }}RepositoryEloquent.
@@ -83,4 +85,6 @@ class {{ modelName }}Controller extends Controller
         $find = $this->repository->whereIn('id', $ids)->delete();
         return $this->sendResponse(trans('messages.destroy', ['attr' => "{{ modelName }}"]));
     }
+
+    // export resources
 }

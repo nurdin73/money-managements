@@ -7,6 +7,8 @@ use App\Repositories\Master\UserRepository;
 use App\Http\Requests\Master\UserRequest;
 use App\Http\Resources\Master\UserResource;
 use Illuminate\Http\Request;
+use App\Exports\Master\UserExport;
+use Illuminate\Support\Facades\Storage;
 
 /**
  * Class UserRepositoryEloquent.
@@ -82,5 +84,25 @@ class UserController extends Controller
         $ids = $request->ids;
         $find = $this->repository->whereIn('id', $ids)->delete();
         return $this->sendResponse(trans('messages.destroy', ['attr' => "{{ modelName }}"]));
+    }
+
+    /**
+     * export resource from database.
+     */
+    public function export()
+    {
+        $results = $this->repository->get();
+        $export = new UserExport($results);
+        $path = 'exports/users.xlsx';
+        $export->store($path, 'local', \Maatwebsite\Excel\Excel::XLSX);
+        $pathFile = Storage::disk('local')->path($path);
+        $content = file_get_contents($pathFile);
+        $base64 = base64_encode($content);
+        $mime_type = mime_content_type($pathFile);
+        Storage::disk('local')->delete($path);
+        return $this->sendResponse(trans('messages.export'), [
+            'mime_type' => $mime_type,
+            'base64' => $base64,
+        ]);
     }
 }
