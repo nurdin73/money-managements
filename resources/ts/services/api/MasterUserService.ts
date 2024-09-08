@@ -7,6 +7,11 @@ export class MasterUserService {
             signal
         })
     }
+    static Exports(params?: any) {
+        return axiosInterceptorInstance.get('/master/users/exports', {
+            params,
+        })
+    }
     static Create(payload: any) {
         return axiosInterceptorInstance.post('/master/users', payload)
     }

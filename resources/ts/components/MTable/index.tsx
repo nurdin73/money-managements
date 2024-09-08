@@ -17,6 +17,8 @@ import {
   CFormInput,
   CTable,
 } from '@coreui/react'
+import { BsFileExcel } from 'react-icons/bs'
+import Swal from 'sweetalert2'
 
 interface TMTable {
   columns: IColumns<any>[]
@@ -37,6 +39,7 @@ interface TMTable {
   onCreate?: () => void
   onChangeLimit: (limit) => void
   onHandlerSelected?: (selecteds: any[]) => void
+  onExport?: () => void
 }
 
 const MTable = ({
@@ -58,6 +61,7 @@ const MTable = ({
   showCheckbox,
   onHandlerSelected,
   onSearch,
+  onExport,
 }: TMTable) => {
   const navigate = useNavigate()
   const [hiddenColumns, setHiddenColumns] = React.useState<any[]>([])
@@ -90,6 +94,24 @@ const MTable = ({
     forceUpdate()
   }, [])
 
+  const handleExport = React.useCallback(() => {
+    if (!onExport) return
+    Swal.fire({
+      icon: 'question',
+      title: `Export ${title}`,
+      showCancelButton: true,
+      confirmButtonText: 'Ya, Export',
+      confirmButtonColor: 'var(--cui-primary)',
+      cancelButtonColor: 'var(--cui-secondary)',
+      background: 'var(--cui-body-bg)',
+      color: 'var(--cui-body-color)',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        onExport()
+      }
+    })
+  }, [])
+
   return (
     <CCard className='shadow-none'>
       <CCardHeader className='d-flex justify-content-between align-items-center p-3'>
@@ -115,6 +137,11 @@ const MTable = ({
                 {action.title}
               </CButton>
             ))}
+          {onExport && (
+            <CButton onClick={() => handleExport()} color='success'>
+              <BsFileExcel /> Export Excel
+            </CButton>
+          )}
           {onCreate && (
             <CButton color='primary' onClick={onCreate}>
               Tambah Data
@@ -124,9 +151,11 @@ const MTable = ({
       </CCardHeader>
       <CCardBody className='p-0'>
         {onSearch && (
-          <div className='d-flex justify-content-end'>
+          <div className='d-flex justify-content-end my-2'>
             <CFormInput
               name='search'
+              className='w-25'
+              placeholder='Search'
               onChange={(e) => {
                 onSearch(e.target.value)
               }}

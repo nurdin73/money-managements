@@ -104,6 +104,28 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
     [filters]
   )
 
+  const onExport = React.useCallback(() => {
+    toast
+      .promise(MasterUserService.Exports(filters), {
+        pending: 'Export data Master User',
+        success: 'Data Master User berhasil diexport',
+      })
+      .catch((err) => {
+        toast(err?.message, {
+          type: 'error',
+        })
+      })
+      .then((response: any) => {
+        const { data } = response
+        const base64 = `data:${data.data.mime_type};base64,${data.data.base64}`
+        const a = document.createElement('a')
+        a.href = base64
+        a.setAttribute('download', data.data.file_name)
+        a.target = '_blank'
+        a.click()
+      })
+  }, [filters])
+
   return (
     <>
       <MTable
@@ -120,6 +142,7 @@ function MasterUserPage({ loadMasterUserList, masterUsersApp }) {
         onMultiSearch={onMultiSearch}
         onSearchFields={onMultiSearchFields}
         onCreate={onCreate}
+        onExport={onExport}
         onHandlerSelected={(selecteds) => onBulkDestroy(selecteds)}
         filters={filters}
         actions={[

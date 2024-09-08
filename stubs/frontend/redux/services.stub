@@ -7,6 +7,12 @@ export class {{ actionName }}Service {
             signal
         })
     }
+    static Exports(params?: any, signal?: any) {
+        return axiosInterceptorInstance.get('{{ api }}/exports', {
+            params,
+            signal
+        })
+    }
     static Create(payload: any) {
         return axiosInterceptorInstance.post('{{ api }}', payload)
     }

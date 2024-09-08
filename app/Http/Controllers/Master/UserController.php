@@ -89,7 +89,7 @@ class UserController extends Controller
     /**
      * export resource from database.
      */
-    public function export()
+    public function exports()
     {
         $results = $this->repository->get();
         $export = new UserExport($results);
@@ -103,6 +103,7 @@ class UserController extends Controller
         return $this->sendResponse(trans('messages.export'), [
             'mime_type' => $mime_type,
             'base64' => $base64,
+            'file_name' => 'users.xlsx'
         ]);
     }
 }
