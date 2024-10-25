@@ -73,13 +73,15 @@ const Login = ({ loginUserAction }) => {
             <p className='text-body-secondary'>Sign In to your account</p>
             <FormController type='email' name='email' label='Email' required />
             <FormController type='password' name='password' label='Password' />
-            <ReCAPTCHA
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
-              value={values.captcha}
-              onChange={(captcha) => {
-                setFieldValue('captcha', captcha)
-              }}
-            />
+            {import.meta.env.VITE_CAPTCHA_ENABLED == 'true' && (
+              <ReCAPTCHA
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
+                value={values.captcha}
+                onChange={(captcha) => {
+                  setFieldValue('captcha', captcha)
+                }}
+              />
+            )}
             {errors.captcha && (
               <CFormFeedback
                 style={{

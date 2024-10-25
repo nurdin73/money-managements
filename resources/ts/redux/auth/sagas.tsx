@@ -12,6 +12,7 @@ import {
 } from './actions'
 import { setCurrentToken, setCurrentUser } from '../../helpers/utils'
 import axiosInterceptorInstance from '../../helpers/axiosInterceptor'
+import { toast } from 'react-toastify'
 
 const loginUserAsync = async (email, password, captcha) =>
   axiosInterceptorInstance.post(
@@ -46,8 +47,8 @@ function* loginUser({ payload }): any {
     }
     setCurrentToken(response.data.data)
     yield all([put(loginUserSuccess(response.data.data)), put(loadCurrentUser(navigate))])
-  } catch (error) {
-    console.log('error', error)
+  } catch (error: any) {
+    toast.error(error?.message ?? 'Server Error')
     yield put(loginUserError(`${error}`))
   }
 }
