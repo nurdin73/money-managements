@@ -35,7 +35,9 @@ class GeneratorApi extends Command implements PromptsForMissingInput
         Artisan::call("gen:repository {$this->argument('model')}");
         Artisan::call("gen:controller {$this->argument('model')}");
         Artisan::call("gen:route {$this->argument('model')} --middleware={$middleware}");
-        Artisan::call("gen:export {$this->argument('model')}");
+        if ($this->confirm('Apakah ingin menambahkan export pada api ini?')) {
+            Artisan::call("gen:export {$this->argument('model')}");
+        }
     }
 
     protected function promptForMissingArgumentsUsing(): array

@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('password');
             $table->timestamp('password_expired')->nullable();
             $table->rememberToken();
+            $table->string('created_by')->nullable();
+            $table->string('modified_by')->nullable();
             $table->timestamps();
         });
 
