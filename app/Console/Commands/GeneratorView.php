@@ -84,21 +84,21 @@ class GeneratorView extends Generator implements PromptsForMissingInput
         $pageTitle = Str::plural($this->getTitle());
         $pageName = Str::ucfirst($this->getActionName());
         $combine = $this->getStubContents($this->getStubPath('frontend/route.combine'), [
-            'path' => $path,
+            'path' => $this->rootFolder . DIRECTORY_SEPARATOR . $path,
             'pageTitle' => $pageTitle,
             'pageName' => $pageName
         ]);
         $import = $this->getStubContents($this->getStubPath('frontend/route.import'), [
             'pageName' => $pageName,
-            'path' => $path
+            'path' => $this->rootFolder . DIRECTORY_SEPARATOR . $path
         ]);
-        $rootModule = config('gen.path_frontend') . DIRECTORY_SEPARATOR . config('gen.view_path') . DIRECTORY_SEPARATOR . $this->rootFolder . DIRECTORY_SEPARATOR . 'index.tsx';
-        if ($this->files->exists($rootModule)) {
-            $content = $this->files->get($rootModule);
+        $routeFilePath = config('gen.path_frontend') . DIRECTORY_SEPARATOR . 'routes.ts';
+        if ($this->files->exists($routeFilePath)) {
+            $content = $this->files->get($routeFilePath);
             if (!Str::contains($content, "{$pageName}Page")) {
                 $content = Str::replace('//:end-import: jangan dihapus!', $import, $content);
-                $content = Str::replace('{/* end-combine: jangan dihapus! */}', $combine, $content);
-                $this->files->put($rootModule, $content);
+                $content = Str::replace('{/* end-combine: jangan dihapus! */ }', $combine, $content);
+                $this->files->put($routeFilePath, $content);
             }
         }
     }
@@ -295,7 +295,8 @@ class GeneratorView extends Generator implements PromptsForMissingInput
         if (Str::startsWith($str, '/')) {
             $str = Str::substrReplace($str, '', 0, 1);
         }
-        $str = Str::replace('/', '-', $str);
+        $url = explode('/', $str);
+        $str = $url[count($url) - 1];
         $str = Str::trim($str);
         return $str;
     }

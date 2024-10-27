@@ -1,6 +1,7 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import AuthContainer from './_partials/AuthContainer'
+import { useSelector } from 'react-redux'
 
 const Login = React.lazy(() => import('./login/Login'))
 const Verify = React.lazy(() => import('./verify'))
@@ -9,6 +10,17 @@ const ResetPassword = React.lazy(() => import('./reset-password'))
 const Register = React.lazy(() => import('./register/Register'))
 
 export default function AuthPage() {
+  const navigate = useNavigate()
+  const { currentUser } = useSelector((state: any) => state.authApp)
+
+  React.useEffect(() => {
+    if (currentUser) {
+      navigate('/dashboard', {
+        replace: true,
+      })
+    }
+  }, [currentUser])
+
   return (
     <Routes>
       <Route element={<AuthContainer />}>

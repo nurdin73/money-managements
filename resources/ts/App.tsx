@@ -18,8 +18,6 @@ const App = () => {
   const { isColorModeSet, setColorMode } = useColorModes('coreui-free-react-admin-template-theme')
   const storedTheme = useSelector((state: any) => state.defaultStateApp.theme)
 
-  const { currentUser } = useSelector((state: any) => state.authApp)
-
   useEffect(() => {
     const urlParams: any = new URLSearchParams(window.location.href.split('?')[1])
     const theme = urlParams.get('theme') && urlParams.get('theme').match(/^[A-Za-z0-9\s]+/)[0]

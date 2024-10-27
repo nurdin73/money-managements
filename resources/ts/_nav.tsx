@@ -13,6 +13,7 @@ import {
   cilNotes,
   cilPencil,
   cilPuzzle,
+  cilSettings,
   cilSpeedometer,
   cilStar,
   cilUser,
@@ -79,6 +80,19 @@ const _nav = [
     name: 'Typography',
     to: '/theme/typography',
     icon: <CIcon icon={cilPencil} customClassName='nav-icon' />,
+  },
+  {
+    component: CNavGroup,
+    name: 'Master',
+    to: '/master',
+    icon: <CIcon icon={cilSettings} customClassName='nav-icon' />,
+    items: [
+      {
+        component: CNavItem,
+        name: 'Roles',
+        to: '/master/roles',
+      },
+    ],
   },
   {
     component: CNavTitle,

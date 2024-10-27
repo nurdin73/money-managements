@@ -1,2 +1,2 @@
-import {{ pageName }}Page from '@/pages/{{ path }}'
+const {{ pageName }}Page = React.lazy(() => import('@/pages/{{ path }}'))
 //:end-import: jangan dihapus!

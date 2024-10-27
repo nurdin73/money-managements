@@ -54,6 +54,7 @@ const Generator = React.lazy(() => import('@/views/pages/generator'))
 
 // pages app
 const StarterPage = React.lazy(() => import('@/pages/master/master-users'))
+const MasterRolePage = React.lazy(() => import('@/pages/master/roles'))
 //:end-import: jangan dihapus!
 
 const routes = [
@@ -104,7 +105,9 @@ const routes = [
   { path: '/notifications/modals', name: 'Modals', element: Modals },
   { path: '/notifications/toasts', name: 'Toasts', element: Toasts },
   { path: '/widgets', name: 'Widgets', element: Widgets },
-  {/* end-combine: jangan dihapus! */ }
+  
+	{ path: 'master/roles', name: 'MasterRole', element: MasterRolePage },
+	{/* end-combine: jangan dihapus! */}
 ]
 
 export default routes
