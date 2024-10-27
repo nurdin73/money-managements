@@ -5,7 +5,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return response(['message' => 'Welcome to ' . config('app.name') . ' API'], 201);
 });
-Route::group(['as' => 'v1.'], function () {
+Route::group(['as' => 'v1.', 'middleware' => 'api'], function () {
     Route::get('/', function () {
         return response([
             'message' => 'Welcome to ' . config('app.name') . ' API version ' . config('app.api_version'),

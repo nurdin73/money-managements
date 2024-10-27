@@ -6,7 +6,9 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\LoginRequest;
 use App\Services\Authentication;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 
 class LoginController extends Authentication
@@ -43,12 +45,25 @@ class LoginController extends Authentication
             ]);
         }
 
-        $token = $user->createToken('users');
 
-        return $this->sendResponse("Login success", [
-            'access_token' => $token->plainTextToken,
-            'token_id' => $token->accessToken->id,
-            'expires_at' => $token->accessToken->expires_at
+        return $this->sendResponse("Login success", $this->createToken($attr));
+    }
+
+    function refreshToken(Request $request): JsonResponse
+    {
+        $newToken = auth()->refresh(true, true);
+        return $this->sendResponse("Refresh Token Successfully", [
+            'access_token' => $newToken
         ]);
+    }
+
+    public function logout()
+    {
+        auth()->logout();
+
+        // Pass true to force the token to be blacklisted "forever"
+        auth()->logout(true);
+
+        return response()->json(['message' => 'Successfully logged out']);
     }
 }

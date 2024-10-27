@@ -14,7 +14,9 @@ Route::post('/forgot-password', ForgotPasswordController::class)->middleware(['g
 Route::post('/reset-password', ResetPasswordController::class)->middleware('guest')->name('reset-password');
 Route::post('/resent-verify', ResentVerifyController::class)->middleware('guest')->name('resent-verify');
 Route::post('/verify', VerifyController::class)->middleware('guest')->name('verify');
-Route::post('/logout', LogoutController::class)->middleware('auth:sanctum')->name('logout');
-Route::get('/profile', [ProfileController::class, 'index'])->middleware(['auth:sanctum', 'verified'])->name('profile');
-Route::put('/profile', [ProfileController::class, 'changeProfile'])->middleware(['auth:sanctum', 'verified'])->name('change-profile');
-Route::post('/change-avatar', [ProfileController::class, 'changeAvatar'])->middleware(['auth:sanctum', 'verified'])->name('change-avatar');
+Route::post('/logout', LogoutController::class)->middleware('auth')->name('logout');
+Route::get('/profile', [ProfileController::class, 'index'])->middleware(['auth', 'verified'])->name('profile');
+Route::put('/profile', [ProfileController::class, 'changeProfile'])->middleware(['auth', 'verified'])->name('change-profile');
+Route::post('/change-avatar', [ProfileController::class, 'changeAvatar'])->middleware(['auth', 'verified'])->name('change-avatar');
+Route::post('refresh', [LoginController::class, 'refreshToken'])->name('refresh-token');
+Route::post('logout', [LoginController::class, 'logout'])->middleware('auth');

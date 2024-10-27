@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Master\UserController;
 
-Route::group(['middleware' => ['auth:sanctum']], function () {
+Route::group(['middleware' => ['auth']], function () {
   Route::get('/', [UserController::class, 'index']);
   Route::post('/', [UserController::class, 'store']);
   Route::get('/exports', [UserController::class, 'exports'])->name('exports');

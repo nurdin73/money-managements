@@ -77,9 +77,11 @@ function* loadUser({ payload }) {
       setCurrentUser(user)
       yield put(loadCurrentUserSuccess(user))
       if (navigate) {
-        navigate('/dashboard', {
-          replace: true,
-        })
+        setTimeout(() => {
+          navigate('/dashboard', {
+            replace: true,
+          })
+        }, 1500)
       }
     } else if (response.message) {
       yield put(loadCurrentUserError(response.message))

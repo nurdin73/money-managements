@@ -1,12 +1,21 @@
 import React from 'react'
 import { AppContent, AppSidebar, AppFooter, AppHeader } from '../components/index'
-import { connect } from 'react-redux'
+import { connect, useSelector } from 'react-redux'
 import { loadCurrentUser } from '@/redux/actions'
+import { useNavigate } from 'react-router-dom'
 
-const DefaultLayout = ({ loadCurrentUserAction }) => {
+const DefaultLayout = () => {
+  const navigate = useNavigate()
+  const { currentUser } = useSelector((state: any) => state.authApp)
+
   React.useEffect(() => {
-    loadCurrentUserAction()
-  }, [])
+    if (!currentUser) {
+      navigate('/auth', {
+        replace: true,
+      })
+      return
+    }
+  }, [currentUser])
 
   return (
     <div>

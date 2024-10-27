@@ -44,19 +44,9 @@ const App = () => {
         }
       >
         <Routes>
-          {/* <Route path='/login' id='Login Page' element={<Login />} />
-          <Route path='/register' id='Register Page' element={<Register />} /> */}
-          {currentUser ? (
-            <>
-              <Route path='*' id='Home' element={<DefaultLayout />} />
-            </>
-          ) : (
-            <>
-              <Route path='auth/*' element={<AuthPage />} />
-              <Route path='*' element={<Navigate to='/auth' />} />
-            </>
-          )}
-          {/* <Route path='auth/*' element={<AuthPage />} /> */}
+          <Route path='*' id='Home' element={<DefaultLayout />} />
+          <Route path='auth/*' element={<AuthPage />} />
+          <Route index element={<Navigate to='/auth' />} />
           <Route path='/404' id='Page 404' element={<Page404 />} />
           <Route path='/500' id='Page 500' element={<Page500 />} />
         </Routes>
