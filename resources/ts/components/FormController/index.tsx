@@ -186,10 +186,10 @@ function FormControllerMemo(props: FormControllerProps) {
             onClick={togglePassword}
             variant='ghost'
             type='button'
-            color='secondary'
+            color=''
             className='position-absolute d-flex justify-content-center align-items-center'
             style={{
-              top: 32,
+              top: 0,
               right: 0,
               width: 42,
               height: 37,
