@@ -40,12 +40,12 @@ class GeneratorView extends Generator implements PromptsForMissingInput
         $rootFolder = $this->choice('Pilih Root Folder', ['master', 'transaction']);
         $this->rootFolder = $rootFolder;
 
-        // $this->generateColumns();
-        // $this->generateConstants();
-        // $this->generateForm();
-        // $this->generateModal();
-        // $this->generateUtil();
-        // $this->generate();
+        $this->generateColumns();
+        $this->generateConstants();
+        $this->generateForm();
+        $this->generateModal();
+        $this->generateUtil();
+        $this->generate();
 
         $this->appendToRoute();
         $path = $this->getPathUrl();
