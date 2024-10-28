@@ -40,12 +40,12 @@ class GeneratorView extends Generator implements PromptsForMissingInput
         $rootFolder = $this->choice('Pilih Root Folder', ['master', 'transaction']);
         $this->rootFolder = $rootFolder;
 
-        $this->generateColumns();
-        $this->generateConstants();
-        $this->generateForm();
-        $this->generateModal();
-        $this->generateUtil();
-        $this->generate();
+        // $this->generateColumns();
+        // $this->generateConstants();
+        // $this->generateForm();
+        // $this->generateModal();
+        // $this->generateUtil();
+        // $this->generate();
 
         $this->appendToRoute();
         $path = $this->getPathUrl();
@@ -84,20 +84,20 @@ class GeneratorView extends Generator implements PromptsForMissingInput
         $pageTitle = Str::plural($this->getTitle());
         $pageName = Str::ucfirst($this->getActionName());
         $combine = $this->getStubContents($this->getStubPath('frontend/route.combine'), [
-            'path' => $this->rootFolder . DIRECTORY_SEPARATOR . $path,
+            'path' => $this->rootFolder . '/' . $path,
             'pageTitle' => $pageTitle,
             'pageName' => $pageName
         ]);
         $import = $this->getStubContents($this->getStubPath('frontend/route.import'), [
             'pageName' => $pageName,
-            'path' => $this->rootFolder . DIRECTORY_SEPARATOR . $path
+            'path' => $this->rootFolder . '/' . $path
         ]);
         $routeFilePath = config('gen.path_frontend') . DIRECTORY_SEPARATOR . 'routes.ts';
         if ($this->files->exists($routeFilePath)) {
             $content = $this->files->get($routeFilePath);
             if (!Str::contains($content, "{$pageName}Page")) {
                 $content = Str::replace('//:end-import: jangan dihapus!', $import, $content);
-                $content = Str::replace('{/* end-combine: jangan dihapus! */ }', $combine, $content);
+                $content = Str::replace('{/* end-combine: jangan dihapus! */}', $combine, $content);
                 $this->files->put($routeFilePath, $content);
             }
         }
