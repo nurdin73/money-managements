@@ -27,7 +27,7 @@ export interface ITable {
 }
 
 export type TAction = {
-  iconName: string
+  iconName?: string
   variant: 'primary' | 'secondary' | 'danger'
   iconColor?: string
   onClick: (data?: any) => void
