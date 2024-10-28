@@ -76,13 +76,15 @@ const ForgotPassword = () => {
             </div>
             <p className='text-body-secondary'>Masukkan Email untuk mereset sandi</p>
             <FormController type='email' size='lg' name='email' label='Email' required />
-            <ReCAPTCHA
-              sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
-              value={values.captcha}
-              onChange={(captcha) => {
-                setFieldValue('captcha', captcha)
-              }}
-            />
+            {import.meta.env.VITE_CAPTCHA_ENABLED == 'true' && (
+              <ReCAPTCHA
+                sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
+                value={values.captcha}
+                onChange={(captcha) => {
+                  setFieldValue('captcha', captcha)
+                }}
+              />
+            )}
             {errors.captcha && (
               <CFormFeedback
                 style={{
