@@ -2,6 +2,7 @@
 
 namespace App\Providers;
 
+use App\Services\Sha1Hasher;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Str;
@@ -22,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         $this->customString();
+        $this->app->make('hash')->extend('sha1', function () {
+            return new Sha1Hasher();
+        });
     }
 
     protected function customString()
