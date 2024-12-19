@@ -18,6 +18,7 @@ import { sygnet } from '@/assets/brand/sygnet'
 
 // sidebar nav config
 import navigation from '../_nav'
+import { cilDollar } from '@coreui/icons'
 
 const AppSidebar = () => {
   const dispatch = useDispatch()
@@ -37,8 +38,8 @@ const AppSidebar = () => {
     >
       <CSidebarHeader className='border-bottom'>
         <CSidebarBrand to='/'>
-          <CIcon customClassName='sidebar-brand-full' icon={logo} height={32} />
-          <CIcon customClassName='sidebar-brand-narrow' icon={sygnet} height={32} />
+          <CIcon customClassName='sidebar-brand-full' icon={cilDollar} height={32} />
+          <span>Managemen Keuangan</span>
         </CSidebarBrand>
         <CCloseButton
           className='d-lg-none'
