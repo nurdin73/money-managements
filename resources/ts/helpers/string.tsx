@@ -4,6 +4,7 @@ type TFormatter = {
   getLocaleDateString: (date: Date) => string | undefined
   getLocaleDateTimeString: (date: Date) => string | undefined
   transformDate: (date: any, format: string) => string
+  numberFormat: (value: string) => string
 }
 
 export const pluralize = (val, word, plural = word + 's') => {
@@ -86,11 +87,19 @@ export const stringFormatter = (): TFormatter => {
     return formatDate(date, format)
   }
 
+  function numberFormat(value) {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(value)
+  }
+
   return {
     capitalize,
     dateTimeFormat,
     getLocaleDateString,
     getLocaleDateTimeString,
     transformDate,
+    numberFormat,
   }
 }

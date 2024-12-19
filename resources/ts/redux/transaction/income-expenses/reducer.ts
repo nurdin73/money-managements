@@ -1,7 +1,7 @@
 import {
-    LOAD_MASTER_USERS,
-    LOAD_MASTER_USERS_ERROR,
-    LOAD_MASTER_USERS_SUCCESS,
+    LOAD_TRANSACTION_INCOME_EXPENSES,
+    LOAD_TRANSACTION_INCOME_EXPENSES_ERROR,
+    LOAD_TRANSACTION_INCOME_EXPENSES_SUCCESS,
 } from './action'
 
 const INITIAL_STATE = {
@@ -22,13 +22,13 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case LOAD_MASTER_USERS:
+        case LOAD_TRANSACTION_INCOME_EXPENSES:
             return {
                 ...state,
                 loading: true,
                 error: false,
             }
-        case LOAD_MASTER_USERS_SUCCESS:
+        case LOAD_TRANSACTION_INCOME_EXPENSES_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
                 data: action.payload.data,
                 meta: action.payload.meta,
             }
-        case LOAD_MASTER_USERS_ERROR:
+        case LOAD_TRANSACTION_INCOME_EXPENSES_ERROR:
             return {
                 ...state,
                 loading: false,

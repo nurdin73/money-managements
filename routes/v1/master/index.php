@@ -18,4 +18,8 @@ Route::group(['prefix' => 'module-previleges', 'as' => 'module-previleges.'], fu
   require 'module-previleges.php';
 });
 
+Route::group(['prefix' => 'categories', 'as' => 'categories.'], function () {
+  require 'categories.php';
+});
+
 //:end-bindings:

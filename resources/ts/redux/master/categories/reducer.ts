@@ -1,7 +1,7 @@
 import {
-    LOAD_MASTER_ROLES,
-    LOAD_MASTER_ROLES_ERROR,
-    LOAD_MASTER_ROLES_SUCCESS,
+    LOAD_MASTER_CATEGORIES,
+    LOAD_MASTER_CATEGORIES_ERROR,
+    LOAD_MASTER_CATEGORIES_SUCCESS,
 } from './action'
 
 const INITIAL_STATE = {
@@ -22,13 +22,13 @@ const INITIAL_STATE = {
 
 export default (state = INITIAL_STATE, action) => {
     switch (action.type) {
-        case LOAD_MASTER_ROLES:
+        case LOAD_MASTER_CATEGORIES:
             return {
                 ...state,
                 loading: true,
                 error: false,
             }
-        case LOAD_MASTER_ROLES_SUCCESS:
+        case LOAD_MASTER_CATEGORIES_SUCCESS:
             return {
                 ...state,
                 loading: false,
@@ -36,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
                 data: action.payload.data,
                 meta: action.payload.meta,
             }
-        case LOAD_MASTER_ROLES_ERROR:
+        case LOAD_MASTER_CATEGORIES_ERROR:
             return {
                 ...state,
                 loading: false,

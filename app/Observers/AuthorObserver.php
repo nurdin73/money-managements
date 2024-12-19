@@ -15,7 +15,7 @@ class AuthorObserver
             $this->author = sprintf(
                 '%s | %s | %s',
                 $user->id,
-                trim(sprintf('%s %s', $user->name)),
+                trim(sprintf('%s', $user->name)),
                 $user->email
             );
         }

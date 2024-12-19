@@ -21,10 +21,6 @@
   background-color: var(--cui-body-bg) !important;
 }
 
-.react-select__value-container {
-  padding: 0.5rem 1rem !important;
-}
-
 .react-select__input-container,
 .react-select__single-value {
   color: var(--cui-body-color) !important;

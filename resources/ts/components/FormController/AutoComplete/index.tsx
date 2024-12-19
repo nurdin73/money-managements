@@ -2,14 +2,22 @@ import React from 'react'
 import AsyncSelect from 'react-select/async'
 import debouncePromise, { DebouncedFunction } from '@/helpers/debounce'
 import { TOptions } from '@/components/MTable/types'
-import axios from 'axios'
 import './style.css'
+import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
+import { useFormikContext } from 'formik'
+import { toast } from 'react-toastify'
 
 export default function AutoComplete(props) {
+  const formikContext = useFormikContext<any>()
+  const [onRequest, setOnRequest] = React.useState(false)
   const fetchDataOptions = React.useCallback(
     async (inputValue: string) => {
-      if (props.urlAutoComplete) {
-        const response = await axios.get(props.urlAutoComplete, {
+      if (props.disabled) {
+        return []
+      }
+      if (props.urlAutoComplete && !onRequest && !props.disabled) {
+        setOnRequest(true)
+        const response = await axiosInterceptorInstance.get(props.urlAutoComplete, {
           params: {
             search: inputValue,
             ...props.paramAutoComplete,
@@ -24,6 +32,7 @@ export default function AutoComplete(props) {
           }
           return props.jsonOptions(item)
         })
+        setOnRequest(false)
         return items
       }
     },
@@ -47,6 +56,7 @@ export default function AutoComplete(props) {
           })
           .catch((err) => {
             reject(err)
+            toast.error(err?.message ?? '')
           })
       }),
     []
@@ -56,12 +66,16 @@ export default function AutoComplete(props) {
     <AsyncSelect
       loadOptions={loadOptions}
       defaultOptions
+      defaultValue={formikContext.values ? formikContext.values[props.name] : null}
       cacheOptions
-      placeholder={props.placeholder}
+      value={formikContext.values ? formikContext.values[props.name] : null}
+      placeholder={props.placeholder ?? `Search ${props.label}`}
       isMulti={props.multiple}
       isDisabled={props.disabled}
       className='react-select-container'
       classNamePrefix='react-select'
+      onChange={props.onChange}
+      onBlur={props.onBlur}
     />
   )
 }

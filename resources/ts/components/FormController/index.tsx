@@ -13,8 +13,6 @@ import {
 } from '@coreui/react'
 import { getIn, useFormikContext } from 'formik'
 import DatePickerForm from './DatePicker'
-import axios from 'axios'
-import debouncePromise, { DebouncedFunction } from '@/helpers/debounce'
 import AutoComplete from './AutoComplete'
 import { BsEye, BsEyeSlash } from 'react-icons/bs'
 import clsx from 'clsx'
@@ -95,7 +93,12 @@ function FormControllerMemo(props: FormControllerProps) {
           size={props.size}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
         />
       ),
@@ -110,7 +113,34 @@ function FormControllerMemo(props: FormControllerProps) {
           readOnly={props.readOnly}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
+          onBlur={formikContext.handleBlur}
+        />
+      ),
+      number: (
+        <CFormInput
+          invalid={!!errorMessage}
+          valid={getIn(formikContext.touched, props.name) && !errorMessage}
+          name={props.name}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+          size={props.size}
+          readOnly={props.readOnly}
+          feedbackInvalid={errorMessage}
+          defaultValue={defaultValue}
+          value={defaultValue}
+          type={props.type}
+          onChange={(e) => {
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
         />
       ),
@@ -124,8 +154,14 @@ function FormControllerMemo(props: FormControllerProps) {
           readOnly={props.readOnly}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
+          rows={7}
         />
       ),
       switch: (
@@ -133,7 +169,13 @@ function FormControllerMemo(props: FormControllerProps) {
           invalid={!!errorMessage}
           valid={getIn(formikContext.touched, props.name) && !errorMessage}
           defaultChecked={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.setFieldValue(props.name, e.target.checked)
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
           label={props.label}
           placeholder={props.placeholder}
@@ -152,7 +194,12 @@ function FormControllerMemo(props: FormControllerProps) {
           options={props.options}
           feedbackInvalid={errorMessage}
           defaultValue={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
         />
       ),
@@ -161,7 +208,32 @@ function FormControllerMemo(props: FormControllerProps) {
           invalid={!!errorMessage}
           valid={getIn(formikContext.touched, props.name) && !errorMessage}
           defaultChecked={defaultValue}
-          onChange={formikContext.handleChange}
+          onChange={(e) => {
+            formikContext.setFieldValue(props.name, e.target.checked)
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
+          onBlur={formikContext.handleBlur}
+          label={props.label}
+          placeholder={props.placeholder}
+          disabled={props.disabled}
+        />
+      ),
+      radio: (
+        <CFormCheck
+          type='radio'
+          invalid={!!errorMessage}
+          valid={getIn(formikContext.touched, props.name) && !errorMessage}
+          defaultChecked={defaultValue}
+          onChange={(e) => {
+            formikContext.setFieldValue(props.name, e.target.checked)
+            formikContext.handleChange(e)
+            if (props.onChange) {
+              props.onChange(e)
+            }
+          }}
           onBlur={formikContext.handleBlur}
           label={props.label}
           placeholder={props.placeholder}
@@ -179,7 +251,12 @@ function FormControllerMemo(props: FormControllerProps) {
             type={isShowPassword ? 'text' : 'password'}
             feedbackInvalid={errorMessage}
             defaultValue={defaultValue}
-            onChange={formikContext.handleChange}
+            onChange={(e) => {
+              formikContext.handleChange(e)
+              if (props.onChange) {
+                props.onChange(e)
+              }
+            }}
             onBlur={formikContext.handleBlur}
           />
           <CButton
@@ -202,14 +279,26 @@ function FormControllerMemo(props: FormControllerProps) {
       autocomplete: (
         <AutoComplete
           {...props}
-          onChange={formikContext.handleChange}
-          onBlur={formikContext.handleBlur}
+          onChange={(val) => {
+            formikContext.setFieldValue(props.name, val)
+            formikContext.setFieldTouched(props.name)
+            if (props.onChange) {
+              props.onChange(val)
+            }
+          }}
+          onBlur={() => formikContext.setFieldTouched(props.name)}
         />
       ),
       date: (
         <DatePickerForm
           {...props}
-          onChange={formikContext.handleChange}
+          defaultValue={defaultValue}
+          onChange={(val) => {
+            formikContext.setFieldValue(props.name, val)
+            if (props.onChange) {
+              props.onChange(val)
+            }
+          }}
           onBlur={formikContext.handleBlur}
         />
       ),
@@ -221,8 +310,9 @@ function FormControllerMemo(props: FormControllerProps) {
     <CRow className='mb-2'>
       <CFormLabel
         htmlFor={props.name}
-        className={clsx('col-form-label', {
+        className={clsx('col-form-label text-truncate', {
           'col-md-2': props.direction === 'horizontal',
+          'd-none': props.type === 'checkbox',
         })}
       >
         {props.label} {props.required && <sup className='text-danger'>*</sup>}

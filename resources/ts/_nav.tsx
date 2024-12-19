@@ -24,19 +24,19 @@ const _nav = [
   {
     component: CNavItem,
     name: 'Pemasukan',
-    to: '/in',
+    to: '/incomes',
     icon: <CIcon icon={cilMoney} customClassName='nav-icon' />,
   },
   {
     component: CNavItem,
     name: 'Pengeluaran',
-    to: '/out',
+    to: '/expenses',
     icon: <CIcon icon={cilWallet} customClassName='nav-icon' />,
   },
   {
     component: CNavItem,
     name: 'Anggaran',
-    to: '/budget',
+    to: '/budgets',
     icon: <CIcon icon={cilDollar} customClassName='nav-icon' />,
   },
   {

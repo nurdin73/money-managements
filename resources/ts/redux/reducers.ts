@@ -1,16 +1,18 @@
 import { combineReducers } from "redux";
 import defaultStateApp from '@/redux/defaultState/reducer'
 import authApp from './auth/reducer'
-import masterUsersApp from './master/users/reducer'
-import masterRolesApp from './master/roles/reducer'
+import transactionIncomeExpensesApp from './transaction/income-expenses/reducer'
+import transactionBudgetsApp from './transaction/budgets/reducer'
+import masterCategoriesApp from './master/categories/reducer'
 //:end-import: jangan dihapus!
 
 const reducers = combineReducers({
   defaultStateApp,
   authApp,
-  masterUsersApp,
-    masterRolesApp,
-    //:end-combine: jangan dihapus!
+  transactionIncomeExpensesApp,
+  transactionBudgetsApp,
+  masterCategoriesApp,
+  //:end-combine: jangan dihapus!
 })
 
 export default reducers;
