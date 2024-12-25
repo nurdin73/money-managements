@@ -1,71 +1,83 @@
 import React from 'react'
-import {
-  CButton,
-  CCard,
-  CCardBody,
-  CCol,
-  CContainer,
-  CForm,
-  CFormInput,
-  CInputGroup,
-  CInputGroupText,
-  CRow,
-} from '@coreui/react'
-import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+import { Link, useNavigate } from 'react-router-dom'
+import { CButton, CFormFeedback } from '@coreui/react'
+import ReCAPTCHA from 'react-google-recaptcha'
+import { Formik, FormikHelpers } from 'formik'
+import { initialValues, validationSchema } from './constant'
+import FormController from '@/components/FormController'
+import { connect } from 'react-redux'
+import { toast } from 'react-toastify'
+import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
 
 const Register = () => {
+  const navigate = useNavigate()
+  const onSubmitHandler = React.useCallback((values, formikState: FormikHelpers<any>) => {
+    formikState.setSubmitting(true)
+    toast
+      .promise(axiosInterceptorInstance.post('/auth/register', values), {
+        pending: 'Mendaftarkan akun',
+        success: 'Akun berhasil didaftarkan',
+      })
+      .then(() => {
+        navigate('/auth/login')
+      })
+      .catch((err) => {
+        toast.error(err?.message ?? 'Request Error')
+      })
+      .finally(() => {
+        formikState.setSubmitting(false)
+      })
+  }, [])
+
   return (
-    <div className="bg-body-tertiary min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
-        <CRow className="justify-content-center">
-          <CCol md={9} lg={7} xl={6}>
-            <CCard className="mx-4">
-              <CCardBody className="p-4">
-                <CForm>
-                  <h1>Register</h1>
-                  <p className="text-body-secondary">Create your account</p>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilUser} />
-                    </CInputGroupText>
-                    <CFormInput placeholder="Username" autoComplete="username" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>@</CInputGroupText>
-                    <CFormInput placeholder="Email" autoComplete="email" />
-                  </CInputGroup>
-                  <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <CInputGroup className="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
-                    <CFormInput
-                      type="password"
-                      placeholder="Repeat password"
-                      autoComplete="new-password"
-                    />
-                  </CInputGroup>
-                  <div className="d-grid">
-                    <CButton color="success">Create Account</CButton>
-                  </div>
-                </CForm>
-              </CCardBody>
-            </CCard>
-          </CCol>
-        </CRow>
-      </CContainer>
-    </div>
+    <>
+      <Formik
+        initialValues={initialValues}
+        validationSchema={validationSchema}
+        onSubmit={(values, formikState) => {
+          onSubmitHandler(values, formikState)
+        }}
+        autoComplete='off'
+      >
+        {({ handleSubmit, isSubmitting, values, setFieldValue, errors }) => (
+          <>
+            <h1>Login</h1>
+            <p className='text-body-secondary'>Buat akun baru</p>
+            <FormController type='text' name='name' label='Nama Lengkap' required />
+            <FormController type='email' name='email' label='Email' required />
+            <FormController type='password' name='password' label='Kata sandi' />
+            <FormController
+              type='password'
+              name='password_confirmation'
+              label='Ulangi kata sandi'
+            />
+            <CButton
+              color='primary'
+              disabled={isSubmitting}
+              onClick={() => handleSubmit()}
+              type='submit'
+              className='mt-4 w-100'
+              size='lg'
+            >
+              Register
+            </CButton>
+          </>
+        )}
+      </Formik>
+      <div className='separator text-center'>
+        <span>
+          Sudah memiliki akun? <Link to='/auth/login'>Masuk</Link>{' '}
+        </span>
+      </div>
+    </>
   )
 }
 
-export default Register
+const mapStateToProps = function ({ authApp }) {
+  const { loading } = authApp
+  return {
+    loading,
+  }
+}
+
+export default connect(mapStateToProps, {})(Register)

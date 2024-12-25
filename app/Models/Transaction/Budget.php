@@ -29,7 +29,8 @@ class Budget extends Model
         'name',
         'amount',
         'category_id',
-        'user_id'
+        'user_id',
+        'periode'
     ];
 
     public function category()

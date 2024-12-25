@@ -14,6 +14,7 @@ const routes = [
   { path: '/expenses', name: 'Expenses', element: TransactionExpensePage },
   { path: '/budgets', name: 'Budgets', element: TransactionBudgetPage },
   { path: '/categories', name: 'Categories', element: MasterCategoryPage },
+  { path: '/reports', name: 'Reports', element: Dashboard },
 
   {/* end-combine: jangan dihapus! */ }
 ]

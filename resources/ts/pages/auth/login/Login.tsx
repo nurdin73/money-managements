@@ -72,7 +72,7 @@ const Login = ({ loginUserAction }) => {
             <h1>Login</h1>
             <p className='text-body-secondary'>Sign In to your account</p>
             <FormController type='email' name='email' label='Email' required />
-            <FormController type='password' name='password' label='Password' />
+            <FormController type='password' name='password' label='Kata Sandi' />
             {import.meta.env.VITE_CAPTCHA_ENABLED == 'true' && (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
@@ -109,7 +109,9 @@ const Login = ({ loginUserAction }) => {
         <Link to='/auth/forgot-password'>Lupa kata sandi?</Link>
       </div>
       <div className='separator text-center'>
-        <span>Atau Masuk Dengan</span>
+        <span>
+          Tidak memiliki akun? <Link to='/auth/register'>Daftar</Link>{' '}
+        </span>
       </div>
     </>
   )

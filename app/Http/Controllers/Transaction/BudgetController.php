@@ -29,7 +29,7 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $results = $this->repository->paginate($this->limit());
+        $results = $this->repository->with('category')->paginate($this->limit());
         return $this->sendResponse(trans('messages.list', ['attr' => 'Budget']), BudgetResource::collection($results), true);
     }
 

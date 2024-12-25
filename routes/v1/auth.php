@@ -4,6 +4,7 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\LogoutController;
 use App\Http\Controllers\Auth\ProfileController;
+use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\ResentVerifyController;
 use App\Http\Controllers\Auth\ResetPasswordController;
 use App\Http\Controllers\Auth\VerifyController;
@@ -20,3 +21,4 @@ Route::put('/profile', [ProfileController::class, 'changeProfile'])->middleware(
 Route::post('/change-avatar', [ProfileController::class, 'changeAvatar'])->middleware(['auth', 'verified'])->name('change-avatar');
 Route::post('refresh', [LoginController::class, 'refreshToken'])->name('refresh-token');
 Route::post('logout', [LoginController::class, 'logout'])->middleware('auth');
+Route::post('/register', RegisterController::class)->name('register')->middleware('guest');

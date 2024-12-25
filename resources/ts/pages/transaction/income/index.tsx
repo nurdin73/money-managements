@@ -44,8 +44,8 @@ function TransactionIncomeExpensePage({
     (data) => {
       Swal.fire({
         icon: 'warning',
-        title: 'Hapus Transaction Income Expense',
-        text: `Apa kamu yakin ingin menghapus Transaction Income Expense ${data.name}?`,
+        title: 'Hapus pemasukkan',
+        text: `Apa kamu yakin ingin menghapus pemasukkan ${data.name}?`,
         showCancelButton: true,
         confirmButtonText: 'Ya, Hapus',
         confirmButtonColor: 'var(--cui-primary)',
@@ -56,8 +56,8 @@ function TransactionIncomeExpensePage({
         if (result.isConfirmed) {
           toast
             .promise(TransactionIncomeExpenseService.Delete(data.id), {
-              pending: 'Menghapus data Transaction Income Expense',
-              success: 'Data Transaction Income Expense berhasil dihapus',
+              pending: 'Menghapus data pemasukkan',
+              success: 'Data pemasukkan berhasil dihapus',
             })
             .catch((err) => {
               toast(err?.message, {

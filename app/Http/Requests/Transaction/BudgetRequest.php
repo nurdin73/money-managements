@@ -16,6 +16,7 @@ class BudgetRequest extends FormRequest
         if ($id != '') {
             return IncomeExpense::where('user_id', auth()->id())->where('id', $id)->exists();
         }
+        return true;
     }
 
     /**
@@ -27,9 +28,9 @@ class BudgetRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:100',
-            'type' => 'required|in:income,expense',
             'amount' => 'required|numeric',
             'category_id' => 'nullable|exists:categories,id',
+            'periode' => 'required'
         ];
     }
 }
