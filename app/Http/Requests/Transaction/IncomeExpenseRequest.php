@@ -29,7 +29,7 @@ class IncomeExpenseRequest extends FormRequest
         return [
             'name' => 'required|string|max:100',
             'type' => 'required|in:income,expense',
-            'amount' => 'required|numeric',
+            'amount' => 'required|numeric|min:1',
             'category_id' => 'nullable|exists:categories,id',
         ];
     }

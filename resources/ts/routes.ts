@@ -5,6 +5,7 @@ const TransactionIncomePage = React.lazy(() => import('@/pages/transaction/incom
 const TransactionExpensePage = React.lazy(() => import('@/pages/transaction/expense'))
 const TransactionBudgetPage = React.lazy(() => import('@/pages/transaction/budgets'))
 const MasterCategoryPage = React.lazy(() => import('@/pages/master/categories'))
+const ReportPage = React.lazy(() => import('@/pages/report'))
 //:end-import: jangan dihapus!
 
 const routes = [
@@ -14,7 +15,7 @@ const routes = [
   { path: '/expenses', name: 'Expenses', element: TransactionExpensePage },
   { path: '/budgets', name: 'Budgets', element: TransactionBudgetPage },
   { path: '/categories', name: 'Categories', element: MasterCategoryPage },
-  { path: '/reports', name: 'Reports', element: Dashboard },
+  { path: '/reports', name: 'Reports', element: ReportPage },
 
   {/* end-combine: jangan dihapus! */ }
 ]

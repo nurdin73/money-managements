@@ -30,7 +30,8 @@ class IncomeExpense extends Model
         'amount',
         'category_id',
         'user_id',
-        'type'
+        'type',
+        'budget_id'
     ];
 
     public function category()

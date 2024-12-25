@@ -35,10 +35,14 @@ function TransactionIncomeExpenseModal({
       if (type === 'create') {
         toast
           .promise(TransactionIncomeExpenseService.Create(payload), {
-            success: 'Transaction Income Expense berhasil dibuat',
             pending: 'Menambahkan Transaction Income Expense',
           })
-          .then(() => {
+          .then((response) => {
+            if (response.data.data.over_budget) {
+              toast.warning(response.data.message)
+            } else {
+              toast.success(response.data.message)
+            }
             onClose()
             const controller = new AbortController()
             loadTransactionIncomeExpenseList(

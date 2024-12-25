@@ -11,5 +11,5 @@ use App\Repositories\BaseRepositoryInterface;
  */
 interface BudgetRepository extends BaseRepositoryInterface
 {
-    //   
+    public function getBudgetByCategory($category_id);
 }

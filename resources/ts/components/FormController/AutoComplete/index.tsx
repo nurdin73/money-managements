@@ -10,6 +10,7 @@ import { toast } from 'react-toastify'
 export default function AutoComplete(props) {
   const formikContext = useFormikContext<any>()
   const [onRequest, setOnRequest] = React.useState(false)
+
   const fetchDataOptions = React.useCallback(
     async (inputValue: string) => {
       if (props.disabled) {
@@ -63,19 +64,21 @@ export default function AutoComplete(props) {
   )
 
   return (
-    <AsyncSelect
-      loadOptions={loadOptions}
-      defaultOptions
-      defaultValue={formikContext.values ? formikContext.values[props.name] : null}
-      cacheOptions
-      value={formikContext.values ? formikContext.values[props.name] : null}
-      placeholder={props.placeholder ?? `Search ${props.label}`}
-      isMulti={props.multiple}
-      isDisabled={props.disabled}
-      className='react-select-container'
-      classNamePrefix='react-select'
-      onChange={props.onChange}
-      onBlur={props.onBlur}
-    />
+    <>
+      <AsyncSelect
+        loadOptions={loadOptions}
+        defaultOptions
+        defaultValue={formikContext.values ? formikContext.values[props.name] : null}
+        cacheOptions
+        value={formikContext.values ? formikContext.values[props.name] : null}
+        placeholder={props.placeholder ?? `Search ${props.label}`}
+        isMulti={props.multiple}
+        isDisabled={props.disabled}
+        className='react-select-container'
+        classNamePrefix='react-select'
+        onChange={props.onChange}
+        onBlur={props.onBlur}
+      />
+    </>
   )
 }

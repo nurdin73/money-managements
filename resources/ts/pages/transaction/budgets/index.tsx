@@ -108,7 +108,6 @@ function TransactionBudgetPage({ loadTransactionBudgetList, transactionBudgetsAp
       <MTable
         title='anggaran'
         columns={columns}
-        showCheckbox
         data={data}
         meta={meta}
         loading={loading}
@@ -117,7 +116,6 @@ function TransactionBudgetPage({ loadTransactionBudgetList, transactionBudgetsAp
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}
-        onHandlerSelected={(selecteds) => onBulkDestroy(selecteds)}
         onCreate={onCreate}
         filters={filters}
         actions={[
@@ -136,6 +134,7 @@ function TransactionBudgetPage({ loadTransactionBudgetList, transactionBudgetsAp
             onClick: (item) => {
               onDestroy(item)
             },
+            isShow: (data) => !data.expense,
           },
         ]}
       />

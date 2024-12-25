@@ -6,37 +6,16 @@ export default function TransactionBudgetForm({ defaultValues }) {
   return (
     <>
       <FormController label='Name' type='text' name='name' required />
-      <FormController label='Amount' type='text' name='amount' required />
+      <FormController label='Amount' type='number' name='amount' required />
       <FormController
-        label='Jenis Pengeluaran'
+        label='Jenis Anggaran'
         type='autocomplete'
         urlAutoComplete='/master/categories'
         name='category_id'
         required
       />
-      <FormController
-        label='Periode'
-        type='select'
-        name='periode'
-        options={[
-          {
-            label: 'Pilih',
-            value: undefined,
-          },
-          {
-            label: 'Harian',
-            value: 'Harian',
-          },
-          {
-            label: 'Bulanan',
-            value: 'Bulanan',
-          },
-          {
-            label: 'Tahunan',
-            value: 'Tahunan',
-          },
-        ]}
-      />
+      <FormController label='Start Periode' type='date' name='start_periode' />
+      <FormController label='End Periode' type='date' name='end_periode' />
     </>
   )
 }

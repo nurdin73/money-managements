@@ -8,6 +8,9 @@ export const initialValues = {
 
 export const validationSchema = Yup.object().shape({
     name: Yup.string().required(),
-    amount: Yup.number().required(),
-    category_id: Yup.mixed().required(),
+    amount: Yup.number().min(1).required(),
+    category_id: Yup.object().shape({
+        label: Yup.string(),
+        value: Yup.mixed()
+    }).required(),
 })

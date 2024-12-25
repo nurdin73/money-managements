@@ -8,18 +8,20 @@ export type TTransactionBudget = {
   amount: any
   category: any
   created_at: any
+  start_periode: any
+  end_periode: any
 }
 
 export const getColumns = (): IColumns<TTransactionBudget>[] => [
   {
-    label: 'Name',
+    label: 'Nama',
     id: 'name',
     filters: {
       type: 'input',
     },
   },
   {
-    label: 'Amount',
+    label: 'Sisa Anggaran',
     id: 'amount',
     filters: {
       type: 'input',
@@ -27,7 +29,7 @@ export const getColumns = (): IColumns<TTransactionBudget>[] => [
     render: (data) => stringFormatter().numberFormat(data.amount),
   },
   {
-    label: 'Category',
+    label: 'Jenis Anggaran',
     id: 'category',
     filters: {
       type: 'input',
@@ -40,13 +42,7 @@ export const getColumns = (): IColumns<TTransactionBudget>[] => [
     filters: {
       type: 'input',
     },
-  },
-  {
-    label: 'Created At',
-    id: 'created_at',
-    render: (data) => dayjs(data.created_at).format('DD/MM/YYYY'),
-    filters: {
-      type: 'date',
-    },
+    render: (data) =>
+      `${dayjs(data.start_periode).format('DD/MM/YYYY')} - ${dayjs(data.end_periode).format('DD/MM/YYYY')}`,
   },
 ]

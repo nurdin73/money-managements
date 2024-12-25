@@ -2,11 +2,15 @@
 
 namespace App\Http\Controllers\Transaction;
 
+use App\ActionBudgetHistory;
 use App\Http\Controllers\Controller;
 use App\Repositories\Transaction\IncomeExpenseRepository;
 use App\Http\Requests\Transaction\IncomeExpenseRequest;
 use App\Http\Resources\Transaction\IncomeExpenseResource;
+use App\Models\Transaction\BudgetHistory;
+use App\Repositories\Transaction\BudgetRepository;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 // export file content
 
@@ -18,10 +22,12 @@ use Illuminate\Support\Facades\Storage;
 class IncomeExpenseController extends Controller
 {
     protected IncomeExpenseRepository $repository;
+    protected BudgetRepository $budgetRepository;
 
-    public function __construct(IncomeExpenseRepository $repository)
+    public function __construct(IncomeExpenseRepository $repository, BudgetRepository $budgetRepository)
     {
         $this->repository = $repository;
+        $this->budgetRepository = $budgetRepository;
     }
 
     /**
@@ -42,9 +48,44 @@ class IncomeExpenseController extends Controller
      */
     public function store(IncomeExpenseRequest $request)
     {
+        $message = "Pemasukkan berhasil disimpan";
+        if ($request->type == 'expense') {
+            $message = "Pengeluaran berhasil disimpan";
+        }
+        $overBudget = false;
         $payload = $request->validated();
-        $this->repository->create($payload);
-        return $this->sendResponse(trans('messages.create', ['attr' => "IncomeExpense"]));
+        DB::beginTransaction();
+        try {
+            $create = $this->repository->create($payload);
+
+            if ($payload['type'] == 'expense') {
+                $budget = $this->budgetRepository->getBudgetByCategory($payload['category_id']);
+                if ($budget && $budget->amount < $payload['amount']) {
+                    $overBudget = true;
+                    $message = "Anggaran kategori di periode ini melebihi batas";
+                }
+                if ($budget) {
+                    BudgetHistory::create([
+                        'budget_id' => $budget->id,
+                        'old_value' => $budget->amount,
+                        'new_value' => $budget->amount - $payload['amount'],
+                        'action' => $overBudget ? ActionBudgetHistory::EXCEED : ActionBudgetHistory::UPDATE,
+                    ]);
+                    $budget->update([
+                        'amount' => $budget->amount - $payload['amount']
+                    ]);
+                    $create->budget_id = $budget->id;
+                    $create->save();
+                }
+            }
+            DB::commit();
+            return $this->sendResponse($message, [
+                'over_budget' => $overBudget
+            ]);
+        } catch (\Throwable $th) {
+            DB::rollBack();
+            throw $th;
+        }
     }
 
     /**
@@ -73,6 +114,22 @@ class IncomeExpenseController extends Controller
     public function destroy(string $id)
     {
         $find = $this->repository->find($id);
+
+        if ($find->type == 'expense') {
+            $budget = $this->budgetRepository->getBudgetByCategory($find->category_id);
+            if ($budget) {
+                BudgetHistory::create([
+                    'budget_id' => $budget->id,
+                    'old_value' => $budget->amount,
+                    'new_value' => $budget->amount + $find->amount,
+                    'action' => ActionBudgetHistory::DELETE,
+                ]);
+                $budget->update([
+                    'amount' => $budget->amount + $find->amount
+                ]);
+            }
+        }
+
         $find->delete();
         return $this->sendResponse(trans('messages.destroy', ['attr' => "IncomeExpense"]), new IncomeExpenseResource($find));
     }

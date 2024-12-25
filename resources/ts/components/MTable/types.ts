@@ -32,6 +32,7 @@ export type TAction = {
   iconColor?: string
   onClick: (data?: any) => void
   title?: string
+  isShow?: (item: any) => boolean
 }
 
 export type TMeta = {

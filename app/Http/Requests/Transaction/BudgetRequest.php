@@ -2,6 +2,7 @@
 
 namespace App\Http\Requests\Transaction;
 
+use App\Models\Transaction\Budget;
 use App\Models\Transaction\IncomeExpense;
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -14,7 +15,7 @@ class BudgetRequest extends FormRequest
     {
         $id = request()->route()->parameter('id') ?: '';
         if ($id != '') {
-            return IncomeExpense::where('user_id', auth()->id())->where('id', $id)->exists();
+            return Budget::where('user_id', auth()->id())->where('id', $id)->exists();
         }
         return true;
     }
@@ -30,7 +31,8 @@ class BudgetRequest extends FormRequest
             'name' => 'required|string|max:100',
             'amount' => 'required|numeric',
             'category_id' => 'nullable|exists:categories,id',
-            'periode' => 'required'
+            'start_periode' => 'required|date',
+            'end_periode' => 'required|date',
         ];
     }
 }

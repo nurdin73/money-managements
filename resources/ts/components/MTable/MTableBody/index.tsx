@@ -100,11 +100,18 @@ function MTableBody({
                 }}
               >
                 <div className='d-flex gap-2'>
-                  {actions.map((a) => (
-                    <CButton size='sm' color={a.variant} onClick={() => a.onClick(item)}>
-                      {a.title}
-                    </CButton>
-                  ))}
+                  {actions
+                    .filter((action) => {
+                      if (action.isShow) {
+                        return action.isShow(item)
+                      }
+                      return true
+                    })
+                    .map((a) => (
+                      <CButton size='sm' color={a.variant} onClick={() => a.onClick(item)}>
+                        {a.title}
+                      </CButton>
+                    ))}
                 </div>
               </CTableDataCell>
             )}

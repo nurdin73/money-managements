@@ -11,13 +11,17 @@ import dayjs from 'dayjs'
 
 export default function DatePickerForm(props) {
   const [selected, setSelected] = React.useState<any>(null)
+  React.useEffect(() => {
+    setSelected(props.defaultValue ? new Date(props.defaultValue) : null)
+  }, [props.defaultValue])
+
   return (
     <DatePicker
       {...props}
       selected={selected}
       onChange={(date) => {
         setSelected(date)
-        props.onChange(dayjs(date).format(props.dateFormat))
+        props.onChange(dayjs(date).format(props.dateFormat ?? 'YYYY-MM-DD'))
       }}
       renderCustomHeader={CustomHeader}
       wrapperClassName='w-100'

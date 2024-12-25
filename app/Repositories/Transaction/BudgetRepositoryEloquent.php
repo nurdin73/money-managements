@@ -34,4 +34,11 @@ class BudgetRepositoryEloquent extends BaseRepository implements BudgetRepositor
     {
         $this->pushCriteria(app(DefaultRequestCriteriaCriteria::class));
     }
+
+    public function getBudgetByCategory($category_id)
+    {
+        $now = now()->format('Y-m-d');
+        $this->where('start_date', '<=', $now)->where('end_date', '>=', $now);
+        return $this->where('category_id', $category_id)->first();
+    }
 }

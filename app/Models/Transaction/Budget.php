@@ -30,7 +30,8 @@ class Budget extends Model
         'amount',
         'category_id',
         'user_id',
-        'periode'
+        'start_periode',
+        'end_periode',
     ];
 
     public function category()
@@ -41,5 +42,10 @@ class Budget extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function expense()
+    {
+        return $this->belongsTo(IncomeExpense::class, 'id', 'budget_id')->where('type', 'expense');
     }
 }

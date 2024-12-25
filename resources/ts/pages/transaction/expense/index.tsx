@@ -139,7 +139,6 @@ function TransactionIncomeExpensePage({
       <MTable
         title='Pengeluaran'
         columns={columns}
-        showCheckbox
         data={data}
         meta={meta}
         loading={loading}
@@ -148,23 +147,14 @@ function TransactionIncomeExpensePage({
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}
-        onHandlerSelected={(selecteds) => onBulkDestroy(selecteds)}
         onCreate={onCreate}
         // onExport={onExport}
         filters={filters}
         actions={[
           {
-            iconName: 'pencil',
-            title: 'Edit',
-            variant: 'secondary',
-            onClick: (item) => {
-              onEdit(item)
-            },
-          },
-          {
             iconName: 'trash',
-            title: 'Hapus',
-            variant: 'secondary',
+            title: 'Hapus Pengeluaran',
+            variant: 'danger',
             onClick: (item) => {
               onDestroy(item)
             },

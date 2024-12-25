@@ -6,7 +6,7 @@ export default function TransactionIncomeExpenseForm({ defaultValues }) {
   return (
     <>
       <FormController label='Nama' type='text' name='name' required />
-      <FormController label='Jumlah' type='text' name='amount' required />
+      <FormController label='Jumlah' type='number' name='amount' required />
       <FormController
         label='Jenis Pengeluaran'
         type='autocomplete'

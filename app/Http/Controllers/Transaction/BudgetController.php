@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers\Transaction;
 
+use App\ActionBudgetHistory;
 use App\Http\Controllers\Controller;
 use App\Repositories\Transaction\BudgetRepository;
 use App\Http\Requests\Transaction\BudgetRequest;
 use App\Http\Resources\Transaction\BudgetResource;
+use App\Models\Transaction\BudgetHistory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 // export file content
@@ -29,7 +31,7 @@ class BudgetController extends Controller
      */
     public function index()
     {
-        $results = $this->repository->with('category')->paginate($this->limit());
+        $results = $this->repository->with(['category', 'expense'])->paginate($this->limit());
         return $this->sendResponse(trans('messages.list', ['attr' => 'Budget']), BudgetResource::collection($results), true);
     }
 
@@ -39,7 +41,22 @@ class BudgetController extends Controller
     public function store(BudgetRequest $request)
     {
         $payload = $request->validated();
-        $this->repository->create($payload);
+
+        // check if budget exist for category and date
+        $budget = $this->repository->where('category_id', $payload['category_id'])
+            ->where('end_periode', '>=', $payload['start_periode'])
+            ->first();
+        if ($budget) {
+            return $this->sendError("Budget already exist for this category and date");
+        }
+
+        $create = $this->repository->create($payload);
+        BudgetHistory::create([
+            'budget_id' => $create->id,
+            'new_value' => $create->amount,
+            'old_value' => 0,
+            'action' => ActionBudgetHistory::CREATE,
+        ]);
         return $this->sendResponse(trans('messages.create', ['attr' => "Budget"]));
     }
 
@@ -59,6 +76,16 @@ class BudgetController extends Controller
     {
         $data = $request->validated();
         $find = $this->repository->find($id);
+
+        BudgetHistory::create([
+            'budget_id' => $find->id,
+            'action' => ActionBudgetHistory::UPDATE,
+            'new_value' => $find->amount + $data['amount'],
+            'old_value' => $find->amount
+        ]);
+
+        $data['amount'] = $find->amount + $data['amount'];
+
         $find->update($data);
         return $this->sendResponse(trans('messages.update', ['attr' => "Budget"]), new BudgetResource($find));
     }
