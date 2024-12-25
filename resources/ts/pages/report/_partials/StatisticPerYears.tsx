@@ -56,6 +56,18 @@ function StatisticPerYears({ transactionIncomeExpensesApp }) {
             },
           },
         },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Jumlah (Rupiah)', // Label untuk sumbu Y
+            },
+            ticks: {
+              callback: (value) => stringFormatter().numberFormat(value),
+            },
+          },
+        },
       }}
     />
   )

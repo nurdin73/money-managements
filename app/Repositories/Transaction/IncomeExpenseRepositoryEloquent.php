@@ -7,6 +7,7 @@ use Prettus\Repository\Criteria\RequestCriteria;
 use App\Repositories\Transaction\IncomeExpenseRepository;
 use App\Models\Transaction\IncomeExpense;
 use App\Criteria\DefaultRequestCriteriaCriteria;
+use Carbon\Carbon;
 
 /**
  * Class IncomeExpenseRepositoryEloquent.
@@ -84,7 +85,7 @@ class IncomeExpenseRepositoryEloquent extends BaseRepository implements IncomeEx
         $results = [];
         for ($i = 1; $i <= 12; $i++) {
             // ubah menjadi month string
-            $month = date('F', mktime(0, 0, 0, $i, 10));
+            $month = now()->month($i)->translatedFormat('F');
             $results[$month] = [
                 'income' => $incomes->where('month', $i)->first() ? $incomes->where('month', $i)->first()->total : 0,
                 'expense' => $expenses->where('month', $i)->first() ? $expenses->where('month', $i)->first()->total : 0,

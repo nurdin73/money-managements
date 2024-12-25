@@ -1,6 +1,7 @@
 import { stringFormatter } from '@/helpers/string'
 import { CSpinner } from '@coreui/react'
 import { CChartBar } from '@coreui/react-chartjs'
+import dayjs from 'dayjs'
 import React from 'react'
 import { connect } from 'react-redux'
 
@@ -54,6 +55,27 @@ function StatisticPerDays({ transactionIncomeExpensesApp }) {
                 const formattedValue = stringFormatter().numberFormat(value)
                 return `${context.dataset.label}: ${formattedValue}`
               },
+              title: (context) => {
+                return `Tanggal ${context[0].label} ${dayjs().format('MMMM YYYY')}`
+              },
+            },
+          },
+        },
+        scales: {
+          y: {
+            beginAtZero: true,
+            title: {
+              display: true,
+              text: 'Jumlah (Rupiah)', // Label untuk sumbu Y
+            },
+            ticks: {
+              callback: (value) => stringFormatter().numberFormat(value),
+            },
+          },
+          x: {
+            title: {
+              display: true,
+              text: dayjs().format('MMMM YYYY'), // Label untuk sumbu X
             },
           },
         },

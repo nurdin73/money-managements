@@ -4,7 +4,7 @@ type TFormatter = {
   getLocaleDateString: (date: Date) => string | undefined
   getLocaleDateTimeString: (date: Date) => string | undefined
   transformDate: (date: any, format: string) => string
-  numberFormat: (value: string) => string
+  numberFormat: (value: string | number) => string
 }
 
 export const pluralize = (val, word, plural = word + 's') => {

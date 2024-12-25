@@ -31,7 +31,7 @@ const ReportPage = ({ loadReportIncomeExpenseList }) => {
                   setActiveStat('stat=days')
                 }}
               >
-                Days
+                Hari
               </CButton>
               <CButton
                 color={activeStat === 'months' ? 'primary' : 'light'}
@@ -39,7 +39,7 @@ const ReportPage = ({ loadReportIncomeExpenseList }) => {
                   setActiveStat('stat=months')
                 }}
               >
-                Months
+                Bulan
               </CButton>
               <CButton
                 color={activeStat === 'years' ? 'primary' : 'light'}
@@ -47,7 +47,7 @@ const ReportPage = ({ loadReportIncomeExpenseList }) => {
                   setActiveStat('stat=years')
                 }}
               >
-                Years
+                Tahun
               </CButton>
             </CButtonGroup>
           </div>
