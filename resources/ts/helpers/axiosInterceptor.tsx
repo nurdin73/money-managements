@@ -43,6 +43,21 @@ axiosInterceptorInstance.interceptors.request.use(async (config: any) => {
   }
 })
 
+axios.interceptors.response.use(
+  (response) => response,
+  async (error: any) => {
+    if (error.response?.data) {
+      return Promise.reject(Error(error.response.data.message))
+    }
+
+    if (error.response?.message) {
+      return Promise.reject(Error(error.response.message))
+    }
+
+    return Promise.reject(Error(error.message))
+  }
+)
+
 axiosInterceptorInstance.interceptors.response.use(
   (response) => response,
   async (error: any) => {
@@ -70,6 +85,14 @@ axiosInterceptorInstance.interceptors.response.use(
 
           isRefreshing = false
 
+          if (originalRequest.headers['Content-Type'] === 'multipart/form-data') {
+            const formData = new FormData()
+            for (let [key, value] of Object.entries(originalRequest.data)) {
+              formData.append(key, value as any)
+            }
+            originalRequest.data = formData
+          }
+
           // Kirim ulang request yang gagal dengan token baru
           return axios(originalRequest)
         } catch (refreshError) {
@@ -89,9 +112,27 @@ axiosInterceptorInstance.interceptors.response.use(
       })
         .then((token) => {
           originalRequest.headers['Authorization'] = `Bearer ${token}`
+          if (originalRequest.headers['Content-Type'] === 'multipart/form-data') {
+            const formData = new FormData()
+            for (let [key, value] of Object.entries(originalRequest.data)) {
+              formData.append(key, value as any)
+            }
+            originalRequest.data = formData
+          }
+
           return axios(originalRequest)
         })
-        .catch((err) => Promise.reject(err))
+        .catch((err) => {
+          if (err.response?.data) {
+            return Promise.reject(Error(err.response.data.message))
+          }
+
+          if (err.response?.message) {
+            return Promise.reject(Error(err.response.message))
+          }
+
+          return Promise.reject(Error(err.message))
+        })
     }
 
     if (error.response?.data) {
