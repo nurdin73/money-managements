@@ -29,4 +29,10 @@ export class TransactionIncomeExpenseService {
             }
         })
     }
+    static Report(params?: any, signal?: any) {
+        return axiosInterceptorInstance.get('/transaction/income-expenses/report', {
+            params,
+            signal
+        })
+    }
 }

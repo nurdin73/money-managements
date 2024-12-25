@@ -1,31 +1,67 @@
 import React from 'react'
 import { CChartLine } from '@coreui/react-chartjs'
+import { CCard, CCardBody, CButtonGroup, CButton } from '@coreui/react'
+import { useSearchParams } from 'react-router-dom'
+import StatisticPerDays from './_partials/StatisticPerDays'
+import StatisticPerMonths from './_partials/StatisticPerMonths'
+import StatisticPerYears from './_partials/StatisticPerYears'
+import { connect } from 'react-redux'
+import { loadReportIncomeExpense } from '@/redux/actions'
 
-const ReportPage: React.FC = () => {
-  const data = {
-    labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-    datasets: [
-      {
-        label: 'Income',
-        backgroundColor: 'rgba(75,192,192,0.2)',
-        borderColor: 'rgba(75,192,192,1)',
-        data: [65, 59, 80, 81, 56, 55, 40],
-      },
-      {
-        label: 'Expenses',
-        backgroundColor: 'rgba(255,99,132,0.2)',
-        borderColor: 'rgba(255,99,132,1)',
-        data: [28, 48, 40, 19, 86, 27, 90],
-      },
-    ],
-  }
+const ReportPage = ({ loadReportIncomeExpenseList }) => {
+  const [getActiveStat, setActiveStat] = useSearchParams('stat=days')
+
+  const activeStat = getActiveStat.get('stat')
+
+  React.useEffect(() => {
+    const controller = new AbortController()
+    loadReportIncomeExpenseList(null, controller.signal)
+  }, [])
 
   return (
-    <div>
-      <h2>Financial Report</h2>
-      <CChartLine data={data} />
-    </div>
+    <>
+      <CCard>
+        <CCardBody>
+          <div className='d-flex justify-content-between align-items-center mb-4'>
+            <h4 className='card-title mb-0'>Laporan Keuangan</h4>
+            <CButtonGroup>
+              <CButton
+                color={activeStat === 'days' ? 'primary' : 'light'}
+                onClick={() => {
+                  setActiveStat('stat=days')
+                }}
+              >
+                Days
+              </CButton>
+              <CButton
+                color={activeStat === 'months' ? 'primary' : 'light'}
+                onClick={() => {
+                  setActiveStat('stat=months')
+                }}
+              >
+                Months
+              </CButton>
+              <CButton
+                color={activeStat === 'years' ? 'primary' : 'light'}
+                onClick={() => {
+                  setActiveStat('stat=years')
+                }}
+              >
+                Years
+              </CButton>
+            </CButtonGroup>
+          </div>
+
+          {/* Chart */}
+          {activeStat === 'days' && <StatisticPerDays />}
+          {activeStat === 'months' && <StatisticPerMonths />}
+          {activeStat === 'years' && <StatisticPerYears />}
+        </CCardBody>
+      </CCard>
+    </>
   )
 }
 
-export default ReportPage
+export default connect(null, {
+  loadReportIncomeExpenseList: loadReportIncomeExpense,
+})(ReportPage)

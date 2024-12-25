@@ -2,6 +2,9 @@ import {
     LOAD_TRANSACTION_INCOME_EXPENSES,
     LOAD_TRANSACTION_INCOME_EXPENSES_ERROR,
     LOAD_TRANSACTION_INCOME_EXPENSES_SUCCESS,
+    LOAD_REPORT_INCOME_EXPENSES,
+    LOAD_REPORT_INCOME_EXPENSES_ERROR,
+    LOAD_REPORT_INCOME_EXPENSES_SUCCESS,
 } from './action'
 
 const INITIAL_STATE = {
@@ -18,6 +21,21 @@ const INITIAL_STATE = {
         firstItem: 1,
         lastItem: 1
     },
+    report: {
+        loading: false,
+        error: false,
+        data: {},
+        message: null,
+        meta: {
+            page: 1,
+            perPage: 10,
+            total: 1,
+            totalData: 10,
+            totalPage: 1,
+            firstItem: 1,
+            lastItem: 1
+        }
+    }
 }
 
 export default (state = INITIAL_STATE, action) => {
@@ -42,6 +60,36 @@ export default (state = INITIAL_STATE, action) => {
                 loading: false,
                 error: true,
                 message: action.payload.message,
+            }
+        case LOAD_REPORT_INCOME_EXPENSES:
+            return {
+                ...state,
+                report: {
+                    ...state.report,
+                    loading: true,
+                    error: false,
+                }
+            }
+        case LOAD_REPORT_INCOME_EXPENSES_SUCCESS:
+            return {
+                ...state,
+                report: {
+                    ...state.report,
+                    loading: false,
+                    error: false,
+                    data: action.payload.data,
+                    meta: action.payload.meta,
+                }
+            }
+        case LOAD_REPORT_INCOME_EXPENSES_ERROR:
+            return {
+                ...state,
+                report: {
+                    ...state.report,
+                    loading: false,
+                    error: true,
+                    message: action.payload.message,
+                }
             }
         default:
             return state

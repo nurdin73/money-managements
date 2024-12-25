@@ -11,5 +11,8 @@ use App\Repositories\BaseRepositoryInterface;
  */
 interface IncomeExpenseRepository extends BaseRepositoryInterface
 {
-    //   
+    public function reportByYears(int $totalYear);
+    public function reportByMonths(int $currentYear);
+    public function reportByDays(string $currentMonth);
+    public function reportByDay(string $currentDay);
 }

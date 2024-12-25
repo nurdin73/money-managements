@@ -2,10 +2,6 @@
 
 use Illuminate\Support\Facades\Route;
 
-Route::group(['prefix' => 'incomes', 'as' => 'incomes.'], function () {
-  require 'incomes.php';
-});
-
 Route::group(['prefix' => 'income-expenses', 'as' => 'income-expenses.'], function () {
   require 'income-expenses.php';
 });

@@ -147,5 +147,14 @@ class IncomeExpenseController extends Controller
         return $this->sendResponse(trans('messages.destroy', ['attr' => "IncomeExpense"]));
     }
 
+    public function report(Request $request)
+    {
+        $data['years'] = $this->repository->reportByYears(3);
+        $data['months'] = $this->repository->reportByMonths(now()->format('Y'));
+        $data['days'] = $this->repository->reportByDays(now()->format('Y-m'));
+        $data['todays'] = $this->repository->reportByDay(now()->format('Y-m-d'));
+        return $this->sendResponse("Get report success", $data);
+    }
+
     // export resources
 }
