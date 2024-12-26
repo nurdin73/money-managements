@@ -35,12 +35,12 @@ const _nav = [
     to: '/budgets',
     icon: <CIcon icon={cilDollar} customClassName='nav-icon' />,
   },
-  {
-    component: CNavItem,
-    name: 'Laporan',
-    to: '/reports',
-    icon: <CIcon icon={cilNewspaper} customClassName='nav-icon' />,
-  },
+  // {
+  //   component: CNavItem,
+  //   name: 'Laporan',
+  //   to: '/reports',
+  //   icon: <CIcon icon={cilNewspaper} customClassName='nav-icon' />,
+  // },
   {
     component: CNavTitle,
     name: 'Master',

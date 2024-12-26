@@ -1,6 +1,6 @@
 import React from 'react'
 
-const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
+const Dashboard = React.lazy(() => import('@/pages/dashboard'))
 const TransactionIncomePage = React.lazy(() => import('@/pages/transaction/income'))
 const TransactionExpensePage = React.lazy(() => import('@/pages/transaction/expense'))
 const TransactionBudgetPage = React.lazy(() => import('@/pages/transaction/budgets'))
