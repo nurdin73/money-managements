@@ -18,7 +18,6 @@ export const getColumns = (): IColumns<TMasterCategory>[] => [
     {
         label: 'Is Active',
         id: 'is_active',
-        center: true,
         render: (data) => (
             <Badge className='text-white' color={data.is_active ? 'success' : 'danger'}>
                 {data.is_active ? 'Aktif' : 'Non Aktif'}
