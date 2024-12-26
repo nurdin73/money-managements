@@ -1,13 +1,22 @@
 import { CCard, CCardBody } from '@coreui/react'
 import { CChartBar } from '@coreui/react-chartjs'
+import dayjs from 'dayjs'
 import React from 'react'
+import { connect } from 'react-redux'
 
-function IncomeExpenseLatest() {
+function IncomeExpenseLatest({ dateRanges }) {
+  const periode = React.useMemo(() => {
+    const { startDate, endDate } = dateRanges
+    return startDate
+      ? `${dayjs(startDate).format('DD MMM YYYY')} - ${dayjs(endDate).format('DD MMM YYYY')}`
+      : '-'
+  }, [dateRanges])
+
   return (
     <CCard className='mt-4'>
       <CCardBody>
         <h5>Pemasukkan dan pengeluaran</h5>
-        <span>Periode ......</span>
+        <span>Periode {periode}</span>
         <CChartBar
           data={{
             labels: [
@@ -46,4 +55,10 @@ function IncomeExpenseLatest() {
   )
 }
 
-export default IncomeExpenseLatest
+const mapStateToProps = ({ dashboardApp }) => {
+  return {
+    dateRanges: dashboardApp.dateRanges,
+  }
+}
+
+export default connect(mapStateToProps)(IncomeExpenseLatest)

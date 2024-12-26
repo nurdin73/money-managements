@@ -4,6 +4,8 @@ import authApp from './auth/reducer'
 import transactionIncomeExpensesApp from './transaction/income-expenses/reducer'
 import transactionBudgetsApp from './transaction/budgets/reducer'
 import masterCategoriesApp from './master/categories/reducer'
+import dashboardApp from './dashboard/reducer'
+
 //:end-import: jangan dihapus!
 
 const reducers = combineReducers({
@@ -12,6 +14,7 @@ const reducers = combineReducers({
   transactionIncomeExpensesApp,
   transactionBudgetsApp,
   masterCategoriesApp,
+  dashboardApp,
   //:end-combine: jangan dihapus!
 })
 

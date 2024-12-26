@@ -1,18 +1,16 @@
 import DateRangePicker from '@/components/DateRangePicker'
+import { setRangePeriod } from '@/redux/actions'
 import { cilCloudDownload } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 import { CButton } from '@coreui/react'
 import React from 'react'
 import { connect } from 'react-redux'
 
-function HeaderDashboard({ user }) {
-  const [startDate, setStartDate] = React.useState(new Date())
-  const [endDate, setEndDate] = React.useState(new Date())
-
+function HeaderDashboard({ user, setRangePeriodAction, dateRanges }) {
+  const { startDate, endDate } = dateRanges
   const handleChange = React.useCallback((dates) => {
     const [start, end] = dates
-    setStartDate(start)
-    setEndDate(end)
+    setRangePeriodAction({ startDate: start, endDate: end })
   }, [])
 
   return (
@@ -29,10 +27,13 @@ function HeaderDashboard({ user }) {
   )
 }
 
-const mapStateToProps = ({ authApp }) => {
+const mapStateToProps = ({ authApp, dashboardApp }) => {
   return {
     user: authApp?.currentUser ?? null,
+    dateRanges: dashboardApp.dateRanges,
   }
 }
 
-export default connect(mapStateToProps)(HeaderDashboard)
+export default connect(mapStateToProps, {
+  setRangePeriodAction: setRangePeriod,
+})(HeaderDashboard)

@@ -1,15 +1,24 @@
 import { CCard, CCardBody, CCol, CRow } from '@coreui/react'
 import { CChartBar, CChartDoughnut } from '@coreui/react-chartjs'
+import dayjs from 'dayjs'
 import React from 'react'
+import { connect } from 'react-redux'
 
-function FinanceIndicator() {
+function FinanceIndicator({ dateRanges }) {
+  const periode = React.useMemo(() => {
+    const { startDate, endDate } = dateRanges
+    return startDate
+      ? `${dayjs(startDate).format('DD MMM YYYY')} - ${dayjs(endDate).format('DD MMM YYYY')}`
+      : '-'
+  }, [dateRanges])
+
   return (
     <CRow>
       <CCol sm={4}>
         <CCard className='h-100'>
           <CCardBody>
             <h5>Rasio Pengeluaran</h5>
-            <span>Periode ......</span>
+            <span>Periode {periode}</span>
             <CChartDoughnut
               data={{
                 labels: ['Pengeluaran', 'Sisa Pemasukan'],
@@ -29,7 +38,7 @@ function FinanceIndicator() {
         <CCard>
           <CCardBody>
             <h5>Efesiensi Anggaran</h5>
-            <span>Periode ......</span>
+            <span>Periode {periode}</span>
             <CChartBar
               data={{
                 labels: ['Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Lainnya'],
@@ -53,4 +62,10 @@ function FinanceIndicator() {
   )
 }
 
-export default FinanceIndicator
+const mapStateToProps = ({ dashboardApp }) => {
+  return {
+    dateRanges: dashboardApp.dateRanges,
+  }
+}
+
+export default connect(mapStateToProps)(FinanceIndicator)
