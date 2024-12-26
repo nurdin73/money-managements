@@ -13,9 +13,14 @@ const ReportPage = ({ loadReportIncomeExpenseList }) => {
 
   const activeStat = getActiveStat.get('stat')
 
+  const controller = React.useRef<AbortController | null>()
+
   React.useEffect(() => {
-    const controller = new AbortController()
-    loadReportIncomeExpenseList(null, controller.signal)
+    controller.current = new AbortController()
+    loadReportIncomeExpenseList(null, controller.current.signal)
+    return () => {
+      if (controller.current) controller.current.abort()
+    }
   }, [])
 
   return (
