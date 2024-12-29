@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { CButton, CFormFeedback } from '@coreui/react'
+import { CButton, CFormFeedback, CSpinner } from '@coreui/react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { Formik, FormikHelpers } from 'formik'
 import { initialValues, validationSchema } from './Login.constant'
@@ -10,9 +10,10 @@ import { loadCurrentUser, loginUser, loginUserSuccess } from '@/redux/actions'
 import { toast } from 'react-toastify'
 import axiosInterceptorInstance from '@/helpers/axiosInterceptor'
 
-const Login = ({ loginUserAction }) => {
+const Login = ({ loginUserAction, loading }) => {
   const navigate = useNavigate()
   const onSubmitHandler = React.useCallback(async (values, formikState: FormikHelpers<any>) => {
+    formikState.setSubmitting(true)
     try {
       if (import.meta.env.VITE_OTP_LOGIN == 'true') {
         const response = await axiosInterceptorInstance.post(
@@ -71,8 +72,19 @@ const Login = ({ loginUserAction }) => {
           <>
             <h1>Login</h1>
             <p className='text-body-secondary'>Sign In to your account</p>
-            <FormController type='email' name='email' label='Email' required />
-            <FormController type='password' name='password' label='Kata Sandi' />
+            <FormController
+              type='email'
+              name='email'
+              label='Email'
+              required
+              disabled={isSubmitting || loading}
+            />
+            <FormController
+              type='password'
+              name='password'
+              label='Kata Sandi'
+              disabled={isSubmitting || loading}
+            />
             {import.meta.env.VITE_CAPTCHA_ENABLED == 'true' && (
               <ReCAPTCHA
                 sitekey={import.meta.env.VITE_RECAPTCHA_SITE_KEY as string}
@@ -94,13 +106,13 @@ const Login = ({ loginUserAction }) => {
             )}
             <CButton
               color='primary'
-              disabled={isSubmitting}
+              disabled={loading || isSubmitting}
               onClick={() => handleSubmit()}
               type='submit'
-              className='mt-4 w-100'
+              className='mt-4 w-100 d-flex align-items-center justify-content-center'
               size='lg'
             >
-              Login
+              {(loading || isSubmitting) && <CSpinner />} <span>Login</span>
             </CButton>
           </>
         )}
