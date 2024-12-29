@@ -30,18 +30,17 @@ export const getColumns = (): IColumns<TTransactionBudget>[] => [
   },
   {
     label: 'Jenis Anggaran',
-    id: 'category',
+    id: 'category.name',
     filters: {
       type: 'input',
     },
+    sort: false,
     render: (data) => data.category?.name,
   },
   {
     label: 'Periode',
     id: 'periode',
-    filters: {
-      type: 'input',
-    },
+    sort: false,
     render: (data) =>
       `${dayjs(data.start_periode).format('DD/MM/YYYY')} - ${dayjs(data.end_periode).format('DD/MM/YYYY')}`,
   },

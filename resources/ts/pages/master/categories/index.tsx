@@ -113,6 +113,7 @@ function MasterCategoryPage({ loadMasterCategoryList, masterCategoriesApp }) {
         loading={loading}
         onSort={onSort}
         onSearch={onSearch}
+        searchFields={['name']}
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}

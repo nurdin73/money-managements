@@ -106,13 +106,14 @@ function TransactionBudgetPage({ loadTransactionBudgetList, transactionBudgetsAp
   return (
     <>
       <MTable
-        title='anggaran'
+        title='Anggaran'
         columns={columns}
         data={data}
         meta={meta}
         loading={loading}
         onSort={onSort}
         onSearch={onSearch}
+        searchFields={['name', 'category.name']}
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}

@@ -148,6 +148,7 @@ function TransactionIncomeExpensePage({
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}
         onCreate={onCreate}
+        searchFields={['name', 'category.name']}
         // onExport={onExport}
         filters={filters}
         actions={[

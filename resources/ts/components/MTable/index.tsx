@@ -31,8 +31,9 @@ interface TMTable {
   showButtonBack?: boolean
   showCheckbox?: boolean
   additionalActions?: TAction[]
+  searchFields?: string[]
   onSort: (order: string, sort: 'asc' | 'desc') => void
-  onSearch?: (search: string) => void
+  onSearch?: (search: string, searchFields?: string[]) => void
   onMultiSearch?: (key: string, value: string) => void
   onSearchFields?: (key: string, value: string) => void
   onChangePage: (page) => void
@@ -57,6 +58,7 @@ const MTable = ({
   onCreate,
   showButtonBack,
   additionalActions,
+  searchFields,
   onSearchFields,
   showCheckbox,
   onHandlerSelected,
@@ -157,7 +159,7 @@ const MTable = ({
               className='w-25'
               placeholder='Search'
               onChange={(e) => {
-                onSearch(e.target.value)
+                onSearch(e.target.value, searchFields)
               }}
             />
           </div>

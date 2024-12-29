@@ -28,10 +28,11 @@ export const getColumns = (): IColumns<TTransactionIncomeExpense>[] => [
   },
   {
     label: 'Jenis Pengeluaran',
-    id: 'category',
+    id: 'category.name',
     filters: {
       type: 'input',
     },
+    sort: false,
     render: (data) => {
       return <CBadge color='primary'>{data.category?.name}</CBadge>
     },

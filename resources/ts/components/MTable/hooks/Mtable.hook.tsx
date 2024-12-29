@@ -48,12 +48,19 @@ const useMtableHook = () => {
       page: 1,
     }))
   }, [])
-  const onSearch = React.useCallback((search: string) => {
+  const onSearch = React.useCallback((search: string, by?: string[]) => {
     clearTimeout(timeout.current)
     timeout.current = setTimeout(() => {
+      let searchFields: string | undefined = undefined
+      if (by) {
+        searchFields = by.map((b) => `${b}:like`).join(';')
+      }
+
       setFilters((prevFilter) => ({
         ...prevFilter,
         search,
+        searchFields,
+        searchJoin: 'or',
         page: 1,
       }))
     }, 1000)

@@ -15,6 +15,10 @@ use App\Criteria\DefaultRequestCriteriaCriteria;
  */
 class CategoryRepositoryEloquent extends BaseRepository implements CategoryRepository
 {
+    protected $fieldSearchable = [
+        'name' => 'like',
+        'is_active' => '='
+    ];
     /**
      * Specify Model class name
      *

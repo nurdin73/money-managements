@@ -16,6 +16,12 @@ use Carbon\Carbon;
  */
 class IncomeExpenseRepositoryEloquent extends BaseRepository implements IncomeExpenseRepository
 {
+    protected $fieldSearchable = [
+        'name' => 'like',
+        'amount' => 'like',
+        'category.name' => 'like',
+        'created_at' => 'like'
+    ];
     /**
      * Specify Model class name
      *

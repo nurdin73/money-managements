@@ -15,6 +15,11 @@ use App\Criteria\DefaultRequestCriteriaCriteria;
  */
 class BudgetRepositoryEloquent extends BaseRepository implements BudgetRepository
 {
+    protected $fieldSearchable = [
+        'name' => 'like',
+        'category.name' => 'like',
+        'amount' => 'like',
+    ];
     /**
      * Specify Model class name
      *

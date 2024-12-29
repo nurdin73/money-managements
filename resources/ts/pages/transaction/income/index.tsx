@@ -142,6 +142,7 @@ function TransactionIncomeExpensePage({
         loading={loading}
         onSort={onSort}
         onSearch={onSearch}
+        searchFields={['name', 'category.name']}
         onChangePage={onChangePage}
         onChangeLimit={onChangeLimit}
         onMultiSearch={onMultiSearch}
