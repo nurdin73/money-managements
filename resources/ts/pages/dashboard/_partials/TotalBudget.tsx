@@ -1,10 +1,17 @@
+import { loadBudgetSummary } from '@/redux/actions'
 import { CCard, CCardBody } from '@coreui/react'
 import { CChartDoughnut } from '@coreui/react-chartjs'
 import dayjs from 'dayjs'
 import React from 'react'
 import { connect } from 'react-redux'
+import { Chart, Colors } from 'chart.js'
+import { stringFormatter } from '@/helpers/string'
 
-function TotalBudget({ dateRanges }) {
+Chart.register(Colors)
+
+function TotalBudget({ dateRanges, loadBudgetSummaryAction, budgetSummary }) {
+  const { data } = budgetSummary
+
   const periode = React.useMemo(() => {
     const { startDate, endDate } = dateRanges
     return startDate
@@ -12,21 +19,53 @@ function TotalBudget({ dateRanges }) {
       : '-'
   }, [dateRanges])
 
+  React.useEffect(() => {
+    if (dateRanges.endDate) {
+      const startDate = dayjs(dateRanges.startDate).format('YYYY-MM-DD')
+      const endDate = dayjs(dateRanges.endDate).format('YYYY-MM-DD')
+
+      loadBudgetSummaryAction({
+        start_periode: startDate,
+        end_periode: endDate,
+      })
+    }
+  }, [dateRanges.endDate])
+
+  const colors = Object.values(data ?? {}).map((item: any) => item.color)
+  const dataset = Object.values(data ?? {}).map((item: any) => item.total)
+
   return (
     <CCard className='h-100'>
       <CCardBody>
         <h5>Budget</h5>
-        <span>Periode {periode}</span>
         <CChartDoughnut
           data={{
-            labels: ['Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Lainnya'],
+            labels: data ? Object.keys(data) : [],
             datasets: [
               {
-                data: [300, 50, 100, 200, 150],
-                backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#63FF84', '#84FF63'],
-                hoverBackgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#63FF84', '#84FF63'],
+                label: 'Budget summary',
+                data: dataset,
+                backgroundColor: colors,
               },
             ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const value = context.raw as string
+                    const formattedValue = stringFormatter().numberFormat(value)
+                    return `${context.dataset.label}: ${formattedValue}`
+                  },
+                },
+              },
+              title: {
+                display: true,
+                text: `Periode ${periode}`,
+              },
+            },
           }}
         />
       </CCardBody>
@@ -37,7 +76,10 @@ function TotalBudget({ dateRanges }) {
 const mapStateToProps = ({ dashboardApp }) => {
   return {
     dateRanges: dashboardApp.dateRanges,
+    budgetSummary: dashboardApp.budgetSummary,
   }
 }
 
-export default connect(mapStateToProps)(TotalBudget)
+export default connect(mapStateToProps, {
+  loadBudgetSummaryAction: loadBudgetSummary,
+})(TotalBudget)

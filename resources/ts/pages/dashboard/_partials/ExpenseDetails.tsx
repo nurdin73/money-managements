@@ -1,10 +1,12 @@
+import { stringFormatter } from '@/helpers/string'
+import { loadExpenseDetail } from '@/redux/actions'
 import { CCard, CCardBody } from '@coreui/react'
 import { CChartBar } from '@coreui/react-chartjs'
 import dayjs from 'dayjs'
 import React from 'react'
 import { connect } from 'react-redux'
 
-function ExpenseDetails({ dateRanges }) {
+function ExpenseDetails({ dateRanges, loadExpenseDetailAction, expenseDetail }) {
   const periode = React.useMemo(() => {
     const { startDate, endDate } = dateRanges
     return startDate
@@ -12,14 +14,28 @@ function ExpenseDetails({ dateRanges }) {
       : '-'
   }, [dateRanges])
 
+  React.useEffect(() => {
+    if (dateRanges.endDate) {
+      const startDate = dayjs(dateRanges.startDate).format('YYYY-MM-DD')
+      const endDate = dayjs(dateRanges.endDate).format('YYYY-MM-DD')
+
+      loadExpenseDetailAction({
+        start_periode: startDate,
+        end_periode: endDate,
+      })
+    }
+  }, [dateRanges.endDate])
+
+  const labels = expenseDetail.data?.map((item) => item.name)
+  const dataset = expenseDetail.data?.map((item) => item.total)
+
   return (
     <CCard>
       <CCardBody>
         <h5>Rincian Pengeluaran Terbanyak</h5>
-        <span>Periode {periode}</span>
         <CChartBar
           data={{
-            labels: ['Makanan', 'Transportasi', 'Hiburan', 'Belanja', 'Lainnya'],
+            labels: labels,
             datasets: [
               {
                 label: 'Pengeluaran',
@@ -28,9 +44,39 @@ function ExpenseDetails({ dateRanges }) {
                 borderWidth: 1,
                 hoverBackgroundColor: 'rgba(255,99,132,0.4)',
                 hoverBorderColor: 'rgba(255,99,132,1)',
-                data: [65, 59, 80, 81, 56],
+                data: dataset,
               },
             ],
+          }}
+          options={{
+            responsive: true,
+            plugins: {
+              tooltip: {
+                callbacks: {
+                  label: (context) => {
+                    const value = context.raw as string
+                    const formattedValue = stringFormatter().numberFormat(value)
+                    return `${context.dataset.label}: ${formattedValue}`
+                  },
+                },
+              },
+              title: {
+                display: true,
+                text: `Periode ${periode}`,
+              },
+            },
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Jumlah (Rupiah)', // Label untuk sumbu Y
+                },
+                ticks: {
+                  callback: (value) => stringFormatter().numberFormat(value),
+                },
+              },
+            },
           }}
         />
       </CCardBody>
@@ -41,7 +87,10 @@ function ExpenseDetails({ dateRanges }) {
 const mapStateToProps = ({ dashboardApp }) => {
   return {
     dateRanges: dashboardApp.dateRanges,
+    expenseDetail: dashboardApp.expenseDetail,
   }
 }
 
-export default connect(mapStateToProps)(ExpenseDetails)
+export default connect(mapStateToProps, {
+  loadExpenseDetailAction: loadExpenseDetail,
+})(ExpenseDetails)

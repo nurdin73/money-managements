@@ -13,3 +13,7 @@ Route::group(['prefix' => 'master', 'as' => 'master.'], function ($routes) {
 Route::group(['prefix' => 'transaction', 'as' => 'transaction.'], function ($routes) {
   require 'transaction/index.php';
 });
+
+Route::group(['prefix' => 'dashboard', 'as' => 'dashboard.'], function ($routes) {
+  require 'dashboard.php';
+});

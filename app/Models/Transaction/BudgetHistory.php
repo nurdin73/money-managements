@@ -24,4 +24,9 @@ class BudgetHistory extends Model
         'new_value',
         'action',
     ];
+
+    public function budget()
+    {
+        return $this->belongsTo(Budget::class, 'budget_id');
+    }
 }

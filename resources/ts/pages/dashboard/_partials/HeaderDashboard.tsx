@@ -18,10 +18,10 @@ function HeaderDashboard({ user, setRangePeriodAction, dateRanges }) {
       <h4 className='mb-0 fw-bold'>Halo,{user?.name}</h4>
       <div className='d-flex gap-2'>
         <DateRangePicker startDate={startDate} endDate={endDate} onChange={handleChange} />
-        <CButton color='primary' className='d-flex align-items-center gap-2'>
+        {/* <CButton color='primary' className='d-flex align-items-center gap-2'>
           <CIcon icon={cilCloudDownload} />
           <span>Export</span>
-        </CButton>
+        </CButton> */}
       </div>
     </div>
   )
