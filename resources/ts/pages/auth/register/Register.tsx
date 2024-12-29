@@ -41,7 +41,7 @@ const Register = () => {
       >
         {({ handleSubmit, isSubmitting, values, setFieldValue, errors }) => (
           <>
-            <h1>Login</h1>
+            <h1>Register</h1>
             <p className='text-body-secondary'>Buat akun baru</p>
             <FormController type='text' name='name' label='Nama Lengkap' required />
             <FormController type='email' name='email' label='Email' required />
